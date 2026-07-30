@@ -6,7 +6,7 @@
  */
 
 :root {
-  /* Brand / primary — deep clinical teal-blue */
+  /* Brand / primary: deep clinical teal-blue */
   --brand-50:  #ecfdf9;
   --brand-100: #cffaef;
   --brand-200: #a0f0e0;
@@ -18,7 +18,7 @@
   --brand-800: #115650;
   --brand-900: #123f3b;
 
-  /* Accent — clinical indigo, for headings/links and "trial" evidence */
+  /* Accent: clinical indigo, for headings/links and "trial" evidence */
   --accent-500: #4f6ef7;
   --accent-600: #3b53d6;
   --accent-700: #2f42ab;
