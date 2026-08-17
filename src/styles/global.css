@@ -482,6 +482,14 @@ kbd {
 }
 .next-condition strong { font-size: 1.1rem; }
 
+/* ---------- Figures / diagrams ---------- */
+.figure { margin: 0 0 1.25rem; padding: 1.35rem 1.5rem; }
+.figure__cap { display: flex; flex-direction: column; margin-bottom: 0.9rem; }
+.figure__title { font-weight: 600; font-size: 1.12rem; letter-spacing: -0.008em; }
+.figure__sub { color: var(--text-mute); font-size: 0.9rem; font-style: italic; margin-top: 0.15rem; }
+.figure__svg { overflow-x: auto; }
+.figure__svg svg { display: block; min-width: 460px; }
+
 /* ---------- Comparison tables ---------- */
 .compare { padding: 1.35rem 1.5rem; margin-bottom: 1.25rem; }
 .compare__head { margin-bottom: 1rem; }

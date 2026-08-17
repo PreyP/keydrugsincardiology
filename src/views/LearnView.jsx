@@ -6,6 +6,7 @@ import ComparisonTable from '../components/ComparisonTable.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import RichText from '../components/RichText.jsx'
 import { comparisonsForCondition } from '../data/comparisons.js'
+import { conditionDiagrams } from '../components/Diagrams.jsx'
 import { useProgress } from '../hooks/useProgress.js'
 import { ClipboardCheck, Timer, ChevronRight } from '../components/Icons.jsx'
 
@@ -27,6 +28,7 @@ export default function LearnView() {
   const idx = conditions.findIndex((c) => c.id === condition.id)
   const next = conditions[idx + 1] || null
   const tables = comparisonsForCondition(condition.id)
+  const diagrams = conditionDiagrams[condition.id] || []
 
   return (
     <div className="content">
@@ -62,6 +64,13 @@ export default function LearnView() {
           </div>
           <RichText as="p" className="muted">{condition.mnemonic.expansion}</RichText>
         </div>
+      )}
+
+      {diagrams.length > 0 && (
+        <section style={{ marginBottom: '2rem' }}>
+          <h2>How it works</h2>
+          {diagrams.map((D, i) => <D key={i} />)}
+        </section>
       )}
 
       {/* Sample case */}
