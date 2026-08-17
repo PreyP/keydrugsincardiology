@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import { conditions, categories } from '../data/conditions.js'
-import { HeartPulse, Home, Book, ClipboardCheck, Timer } from './Icons.jsx'
+import { HeartPulse, Home, Book, ClipboardCheck, Timer, Pill } from './Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
-export default function Sidebar({ open, onNavigate }) {
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
+
+export default function Sidebar({ open, onNavigate, onOpenSearch }) {
   const byCat = catOrder.map((cat) => ({
     cat,
     label: categories[cat].label,
@@ -24,8 +26,19 @@ export default function Sidebar({ open, onNavigate }) {
         </span>
       </div>
 
+      <button
+        className="search-trigger"
+        onClick={(e) => { e.stopPropagation(); onOpenSearch && onOpenSearch() }}
+      >
+        <span>Search</span>
+        <kbd className="search-trigger__kbd">{isMac ? '⌘' : 'Ctrl'} K</kbd>
+      </button>
+
       <NavLink to="/" end className="nav-link">
         <span className="nav-link__icon"><Home size={17} /></span> Overview
+      </NavLink>
+      <NavLink to="/drugs" className="nav-link">
+        <span className="nav-link__icon"><Pill size={17} /></span> Drug library
       </NavLink>
       <NavLink to="/test" className="nav-link">
         <span className="nav-link__icon"><Timer size={17} /></span> Test my knowledge

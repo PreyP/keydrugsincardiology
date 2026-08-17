@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { buildQuestionBank, shuffle } from '../data/quiz.js'
 import { conditionById } from '../data/conditions.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
+import { useProgress } from '../hooks/useProgress.js'
 import { Timer } from '../components/Icons.jsx'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -51,8 +52,10 @@ function Setup({ onStart, bankSize }) {
 
 /* ---- Results screen ---- */
 function Results({ questions, answers, onRestart, timeUp }) {
+  const { recordScore } = useProgress()
   const correct = questions.reduce((n, q, i) => n + (answers[i] === q.answer ? 1 : 0), 0)
   const pct = Math.round((correct / questions.length) * 100)
+  useEffect(() => { recordScore(pct) }, [])
 
   const byTopic = {}
   questions.forEach((q, i) => {

@@ -460,3 +460,8 @@ export const conditions = [
 ]
 
 export const conditionById = Object.fromEntries(conditions.map((c) => [c.id, c]))
+
+/** Every condition that lists this drug class, for cross-linking. */
+export function conditionsForDrug(drugId) {
+  return conditions.filter((c) => c.drugClassIds.includes(drugId))
+}

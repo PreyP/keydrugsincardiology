@@ -13,6 +13,19 @@ For each condition students can:
 - **Test** themselves against a settable timer, then review a score broken down
   by topic.
 
+Learning tools inspired by Amboss and Osmosis:
+
+- **Hover bubbles:** key terms are highlighted inline; hovering or tapping one
+  shows a short definition and deep links to the relevant drug and practice
+  questions. Terms live in `src/data/glossary.js`.
+- **Knowledge-graph cross-links:** each drug card lists every condition it
+  appears in, so learners can move between pharmacology and clinical context.
+- **Drug library** (`/drugs`): an A-to-Z index of every drug class, searchable,
+  with anchors so bubbles can deep-link to a specific drug.
+- **Command palette:** Cmd/Ctrl+K searches conditions, drugs, and terms.
+- **Progress:** mark a condition as learned and keep your best test score
+  (stored in `localStorage`), surfaced on the overview.
+
 Content is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures
 and DIL cases (Dr. Amar Thakrar). This is an educational tool, not clinical
 guidance.
