@@ -7,6 +7,11 @@ import ThemeToggle from '../components/ThemeToggle.jsx'
 import RichText from '../components/RichText.jsx'
 import { comparisonsForCondition } from '../data/comparisons.js'
 import { conditionDiagrams } from '../components/Diagrams.jsx'
+import { Cha2ds2VascCalc, HasBledCalc } from '../components/Calculators.jsx'
+
+const conditionCalculators = {
+  'atrial-fibrillation': [Cha2ds2VascCalc, HasBledCalc],
+}
 import { useProgress } from '../hooks/useProgress.js'
 import { ClipboardCheck, Timer, ChevronRight } from '../components/Icons.jsx'
 
@@ -29,6 +34,7 @@ export default function LearnView() {
   const next = conditions[idx + 1] || null
   const tables = comparisonsForCondition(condition.id)
   const diagrams = conditionDiagrams[condition.id] || []
+  const calculators = conditionCalculators[condition.id] || []
 
   return (
     <div className="content">
@@ -119,6 +125,16 @@ export default function LearnView() {
           return <DrugClassCard key={id} drug={drug} currentConditionId={condition.id} />
         })}
       </section>
+
+      {calculators.length > 0 && (
+        <section style={{ marginBottom: '2rem' }}>
+          <h2>Clinical tools</h2>
+          <p className="muted" style={{ marginTop: '-0.4rem' }}>
+            Interactive risk scores for education. Not a substitute for current guidelines or clinical judgement.
+          </p>
+          {calculators.map((C, i) => <C key={i} />)}
+        </section>
+      )}
 
       {tables.length > 0 && (
         <section style={{ marginBottom: '2rem' }}>
