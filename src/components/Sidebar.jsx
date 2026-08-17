@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import { conditions, categories } from '../data/conditions.js'
-import { HeartPulse, Home, Book, ClipboardCheck, Timer, Pill } from './Icons.jsx'
+import { useSRS } from '../hooks/useSRS.js'
+import { HeartPulse, Home, Book, ClipboardCheck, Timer, Pill, Cards, Compare } from './Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
 export default function Sidebar({ open, onNavigate, onOpenSearch }) {
+  const { dueCount } = useSRS()
   const byCat = catOrder.map((cat) => ({
     cat,
     label: categories[cat].label,
@@ -39,6 +41,13 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
       </NavLink>
       <NavLink to="/drugs" className="nav-link">
         <span className="nav-link__icon"><Pill size={17} /></span> Drug library
+      </NavLink>
+      <NavLink to="/compare" className="nav-link">
+        <span className="nav-link__icon"><Compare size={17} /></span> Comparisons
+      </NavLink>
+      <NavLink to="/review" className="nav-link">
+        <span className="nav-link__icon"><Cards size={17} /></span> Review deck
+        {dueCount > 0 && <span className="nav-badge">{dueCount}</span>}
       </NavLink>
       <NavLink to="/test" className="nav-link">
         <span className="nav-link__icon"><Timer size={17} /></span> Test my knowledge

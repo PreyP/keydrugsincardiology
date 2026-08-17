@@ -78,3 +78,31 @@ export const Pill = ({ size }) => (
     <path d="m8.5 8.5 7 7" />
   </svg>
 )
+
+export const Cards = ({ size }) => (
+  <svg {...base(size)}>
+    <rect x="3" y="5" width="13" height="16" rx="2" />
+    <path d="M8 5V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-1" />
+  </svg>
+)
+
+export const Compare = ({ size }) => (
+  <svg {...base(size)}>
+    <path d="M4 5h7v14H4zM13 5h7v14h-7z" />
+  </svg>
+)
+
+export const Route = ({ size }) => (
+  <svg {...base(size)}>
+    <circle cx="6" cy="19" r="2" />
+    <circle cx="18" cy="5" r="2" />
+    <path d="M8 19h6a4 4 0 0 0 0-8H10a4 4 0 0 1 0-8h6" />
+  </svg>
+)
+
+export const Print = ({ size }) => (
+  <svg {...base(size)}>
+    <path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2" />
+    <rect x="6" y="14" width="12" height="8" rx="1" />
+  </svg>
+)

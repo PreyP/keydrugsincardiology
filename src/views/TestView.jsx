@@ -3,7 +3,9 @@ import { buildQuestionBank, shuffle } from '../data/quiz.js'
 import { conditionById } from '../data/conditions.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import { useProgress } from '../hooks/useProgress.js'
-import { Timer } from '../components/Icons.jsx'
+import { useSRS } from '../hooks/useSRS.js'
+import { Link } from 'react-router-dom'
+import { Timer, Cards } from '../components/Icons.jsx'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -51,11 +53,32 @@ function Setup({ onStart, bankSize }) {
 }
 
 /* ---- Results screen ---- */
-function Results({ questions, answers, onRestart, timeUp }) {
+function stemHash(s) {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0
+  return Math.abs(h).toString(36)
+}
+
+function Results({ questions, answers, confidence, onRestart, timeUp }) {
   const { recordScore } = useProgress()
+  const { addMissed } = useSRS()
   const correct = questions.reduce((n, q, i) => n + (answers[i] === q.answer ? 1 : 0), 0)
   const pct = Math.round((correct / questions.length) * 100)
-  useEffect(() => { recordScore(pct) }, [])
+
+  // Record best score and add every missed question to the review deck.
+  useEffect(() => {
+    recordScore(pct)
+    questions.forEach((q, i) => {
+      if (answers[i] !== undefined && answers[i] !== q.answer) {
+        addMissed({
+          id: `mc:${q.conditionId}:${stemHash(q.stem)}`,
+          front: q.stem,
+          back: `${q.choices[q.answer]}. ${q.explanation}`,
+          conditionId: q.conditionId,
+        })
+      }
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const byTopic = {}
   questions.forEach((q, i) => {
@@ -64,6 +87,11 @@ function Results({ questions, answers, onRestart, timeUp }) {
     byTopic[key].total += 1
     if (answers[i] === q.answer) byTopic[key].correct += 1
   })
+
+  // Wrong-but-confident: the highest-priority review bucket.
+  const wrongConfident = questions
+    .map((q, i) => ({ q, i }))
+    .filter(({ q, i }) => answers[i] !== undefined && answers[i] !== q.answer && confidence[i] === true)
 
   return (
     <div>
@@ -83,10 +111,28 @@ function Results({ questions, answers, onRestart, timeUp }) {
           ))}
         </div>
 
-        <div style={{ marginTop: '1.5rem' }}>
+        <div className="row" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
           <button className="btn btn--primary" onClick={onRestart}>New test</button>
+          <Link to="/review" className="btn btn--ghost"><Cards size={16} /> Review missed cards</Link>
         </div>
       </div>
+
+      {wrongConfident.length > 0 && (
+        <div className="card priority-card" style={{ padding: '1.2rem 1.4rem', marginBottom: '1.5rem' }}>
+          <div className="row" style={{ gap: '0.5rem', marginBottom: '0.5rem' }}>
+            <span className="tag tag--caution">Review these first</span>
+            <span className="muted" style={{ fontSize: '0.88rem' }}>Wrong, but you felt sure</span>
+          </div>
+          <p className="muted" style={{ fontSize: '0.9rem', margin: '0 0 0.75rem' }}>
+            These are your blind spots: confident answers that were wrong. They have been added to your review deck.
+          </p>
+          <ul style={{ margin: 0 }}>
+            {wrongConfident.map(({ q, i }) => (
+              <li key={i}>{q.stem}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <h2>Review</h2>
       {questions.map((q, i) => {
@@ -96,8 +142,13 @@ function Results({ questions, answers, onRestart, timeUp }) {
           <div className="card" style={{ padding: '1.1rem 1.35rem', marginBottom: '1rem' }} key={i}>
             <div className="row" style={{ justifyContent: 'space-between' }}>
               <span className="tag">{conditionById[q.conditionId]?.shortName || q.conditionId}</span>
-              <span className="tag" style={{ color: gotIt ? 'var(--correct)' : 'var(--incorrect)' }}>
-                {gotIt ? 'Correct' : userAns == null ? 'Unanswered' : 'Incorrect'}
+              <span className="row" style={{ gap: '0.4rem' }}>
+                {confidence[i] !== undefined && (
+                  <span className="tag">{confidence[i] ? 'was sure' : 'was unsure'}</span>
+                )}
+                <span className="tag" style={{ color: gotIt ? 'var(--correct)' : 'var(--incorrect)' }}>
+                  {gotIt ? 'Correct' : userAns == null ? 'Unanswered' : 'Incorrect'}
+                </span>
               </span>
             </div>
             <p style={{ fontWeight: 600, margin: '0.6rem 0' }}>{q.stem}</p>
@@ -121,6 +172,7 @@ function Results({ questions, answers, onRestart, timeUp }) {
 function Active({ questions, seconds, onFinish }) {
   const [idx, setIdx] = useState(0)
   const [answers, setAnswers] = useState({})
+  const [confidence, setConfidence] = useState({})
   const [remaining, setRemaining] = useState(seconds)
   const finishedRef = useRef(false)
 
@@ -131,7 +183,7 @@ function Active({ questions, seconds, onFinish }) {
           clearInterval(t)
           if (!finishedRef.current) {
             finishedRef.current = true
-            onFinish(answersRef.current, true)
+            onFinish(answersRef.current, confidenceRef.current, true)
           }
           return 0
         }
@@ -142,9 +194,11 @@ function Active({ questions, seconds, onFinish }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // keep a ref of answers for the timeout callback
+  // keep refs for the timeout callback
   const answersRef = useRef(answers)
   answersRef.current = answers
+  const confidenceRef = useRef(confidence)
+  confidenceRef.current = confidence
 
   const q = questions[idx]
   const picked = answers[idx]
@@ -155,11 +209,15 @@ function Active({ questions, seconds, onFinish }) {
     setAnswers((a) => ({ ...a, [idx]: i }))
   }
 
+  function setConf(v) {
+    setConfidence((c) => ({ ...c, [idx]: v }))
+  }
+
   function next() {
     if (idx + 1 < questions.length) setIdx(idx + 1)
     else if (!finishedRef.current) {
       finishedRef.current = true
-      onFinish(answersRef.current, false)
+      onFinish(answersRef.current, confidenceRef.current, false)
     }
   }
 
@@ -197,6 +255,20 @@ function Active({ questions, seconds, onFinish }) {
         )}
       </div>
 
+      {answered && (
+        <div className="row conf-row" style={{ marginTop: '0.9rem' }}>
+          <span className="muted" style={{ fontSize: '0.85rem' }}>How sure were you?</span>
+          <button
+            className={`conf-chip ${confidence[idx] === true ? 'is-on' : ''}`}
+            onClick={() => setConf(true)}
+          >Sure</button>
+          <button
+            className={`conf-chip ${confidence[idx] === false ? 'is-on conf-chip--unsure' : ''}`}
+            onClick={() => setConf(false)}
+          >Unsure</button>
+        </div>
+      )}
+
       <div className="row" style={{ justifyContent: 'flex-end', marginTop: '1rem' }}>
         <button className="btn btn--ghost btn--sm" onClick={next}>Skip</button>
         <button className="btn btn--primary" onClick={next} disabled={!answered}>
@@ -212,17 +284,17 @@ export default function TestView() {
   const [phase, setPhase] = useState('setup') // setup | active | results
   const [questions, setQuestions] = useState([])
   const [seconds, setSeconds] = useState(300)
-  const [result, setResult] = useState({ answers: {}, timeUp: false })
+  const [result, setResult] = useState({ answers: {}, confidence: {}, timeUp: false })
 
   function start(count, secs) {
     setQuestions(shuffle(bank).slice(0, count))
     setSeconds(secs)
-    setResult({ answers: {}, timeUp: false })
+    setResult({ answers: {}, confidence: {}, timeUp: false })
     setPhase('active')
   }
 
-  function finish(answers, timeUp) {
-    setResult({ answers, timeUp })
+  function finish(answers, confidence, timeUp) {
+    setResult({ answers, confidence, timeUp })
     setPhase('results')
   }
 
@@ -251,6 +323,7 @@ export default function TestView() {
         <Results
           questions={questions}
           answers={result.answers}
+          confidence={result.confidence}
           timeUp={result.timeUp}
           onRestart={() => setPhase('setup')}
         />

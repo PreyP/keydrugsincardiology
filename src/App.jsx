@@ -9,6 +9,8 @@ import LearnView from './views/LearnView.jsx'
 import PracticeView from './views/PracticeView.jsx'
 import TestView from './views/TestView.jsx'
 import DrugLibraryView from './views/DrugLibraryView.jsx'
+import ReviewView from './views/ReviewView.jsx'
+import CompareView from './views/CompareView.jsx'
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -60,6 +62,8 @@ export default function App() {
           <Route path="/practice" element={<PracticeView />} />
           <Route path="/practice/:conditionId" element={<PracticeView />} />
           <Route path="/test" element={<TestView />} />
+          <Route path="/review" element={<ReviewView />} />
+          <Route path="/compare" element={<CompareView />} />
         </Routes>
       </main>
 

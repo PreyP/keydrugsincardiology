@@ -3,13 +3,16 @@ import { conditions, categories } from '../data/conditions.js'
 import { drugClasses } from '../data/drugClasses.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import { useProgress } from '../hooks/useProgress.js'
-import { Book, ClipboardCheck, Timer, ChevronRight, Pill } from '../components/Icons.jsx'
+import { useSRS } from '../hooks/useSRS.js'
+import { Book, ClipboardCheck, Timer, ChevronRight, Pill, Cards, Route } from '../components/Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
 export default function HomeView() {
   const { learnedCount, bestScore, isLearned } = useProgress()
+  const { dueCount } = useSRS()
   const pct = Math.round((learnedCount / conditions.length) * 100)
+  const nextUp = conditions.find((c) => !isLearned(c.id))
 
   return (
     <div className="content">
@@ -26,6 +29,18 @@ export default function HomeView() {
         dosing, side effects, and the landmark trials behind it, work a sample case, then practise
         on your own and test yourself against the clock.
       </p>
+
+      {/* Continue / up-next banner */}
+      <Link to={nextUp ? `/learn/${nextUp.id}` : '/review'} className="continue-banner card">
+        <span className="continue-banner__icon"><Route size={20} /></span>
+        <span className="continue-banner__text">
+          <span className="continue-banner__eyebrow">{nextUp ? 'Continue learning' : 'All conditions learned'}</span>
+          <strong>{nextUp ? nextUp.name : 'Keep your review deck sharp'}</strong>
+        </span>
+        <span className="continue-banner__go">
+          {nextUp ? 'Start' : 'Review'} <ChevronRight size={16} />
+        </span>
+      </Link>
 
       {/* Progress strip */}
       <div className="progress-strip card">
@@ -51,8 +66,11 @@ export default function HomeView() {
         <Link to="/practice" className="btn btn--primary">
           <ClipboardCheck size={17} /> Work through cases
         </Link>
+        <Link to="/review" className="btn btn--ghost">
+          <Cards size={17} /> Review deck{dueCount > 0 ? ` (${dueCount} due)` : ''}
+        </Link>
         <Link to="/drugs" className="btn btn--ghost">
-          <Pill size={17} /> Browse the drug library
+          <Pill size={17} /> Drug library
         </Link>
       </div>
 

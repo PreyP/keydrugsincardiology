@@ -1,11 +1,13 @@
 import { useParams, Link } from 'react-router-dom'
-import { conditionById, categories } from '../data/conditions.js'
+import { conditions, conditionById, categories } from '../data/conditions.js'
 import { drugClassById } from '../data/drugClasses.js'
 import DrugClassCard from '../components/DrugClassCard.jsx'
+import ComparisonTable from '../components/ComparisonTable.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import RichText from '../components/RichText.jsx'
+import { comparisonsForCondition } from '../data/comparisons.js'
 import { useProgress } from '../hooks/useProgress.js'
-import { ClipboardCheck, Timer } from '../components/Icons.jsx'
+import { ClipboardCheck, Timer, ChevronRight } from '../components/Icons.jsx'
 
 export default function LearnView() {
   const { conditionId } = useParams()
@@ -22,6 +24,9 @@ export default function LearnView() {
 
   const cat = categories[condition.category]
   const learned = isLearned(condition.id)
+  const idx = conditions.findIndex((c) => c.id === condition.id)
+  const next = conditions[idx + 1] || null
+  const tables = comparisonsForCondition(condition.id)
 
   return (
     <div className="content">
@@ -38,6 +43,15 @@ export default function LearnView() {
       </div>
 
       <h1>{condition.name}</h1>
+
+      <div className="stepper">
+        <span className="stepper__step is-current"><span className="stepper__dot">1</span> Learn</span>
+        <span className="stepper__line" />
+        <Link to={`/practice/${condition.id}`} className="stepper__step"><span className="stepper__dot">2</span> Practise</Link>
+        <span className="stepper__line" />
+        <Link to="/test" className="stepper__step"><span className="stepper__dot">3</span> Test</Link>
+      </div>
+
       <RichText as="p" className="lead">{condition.overview}</RichText>
 
       {condition.mnemonic && (
@@ -97,6 +111,15 @@ export default function LearnView() {
         })}
       </section>
 
+      {tables.length > 0 && (
+        <section style={{ marginBottom: '2rem' }}>
+          <h2>Compare</h2>
+          {tables.map((t) => (
+            <ComparisonTable key={t.id} table={t} />
+          ))}
+        </section>
+      )}
+
       <div className="row">
         <Link to={`/practice/${condition.id}`} className="btn btn--primary">
           <ClipboardCheck size={17} /> Practise {condition.shortName} cases
@@ -105,6 +128,16 @@ export default function LearnView() {
           <Timer size={17} /> Timed test
         </Link>
       </div>
+
+      {next && (
+        <Link to={`/learn/${next.id}`} className="next-condition card">
+          <span>
+            <span className="next-condition__eyebrow">Next condition</span>
+            <strong>{next.name}</strong>
+          </span>
+          <ChevronRight size={20} />
+        </Link>
+      )}
     </div>
   )
 }
