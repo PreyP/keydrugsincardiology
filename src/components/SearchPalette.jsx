@@ -30,7 +30,10 @@ export default function SearchPalette({ open, onClose }) {
     if (open) {
       setQuery('')
       setActive(0)
+      const prev = document.activeElement
       setTimeout(() => inputRef.current?.focus(), 20)
+      // Restore focus to the element that opened the palette on close.
+      return () => { if (prev && prev.focus) prev.focus() }
     }
   }, [open])
 
@@ -62,7 +65,8 @@ export default function SearchPalette({ open, onClose }) {
 
   return (
     <div className="palette-scrim" onClick={onClose}>
-      <div className="palette" onClick={(e) => e.stopPropagation()}>
+      <div className="palette" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Search">
+
         <input
           ref={inputRef}
           className="palette__input"

@@ -84,7 +84,12 @@ function TermBubble({ entry, children }) {
                   <Link className="bubble__link" to={`/learn/${cond.id}`}>Go to {cond.shortName}</Link>
                 )}
                 {entry.practice && (
-                  <Link className="bubble__link" to={`/practice/${entry.practice}`}>Practise</Link>
+                  <Link
+                    className="bubble__link"
+                    to={`/practice/${entry.practice}${entry.questionId ? `#${entry.questionId}` : ''}`}
+                  >
+                    {entry.questionId ? 'Practise question' : 'Practise'}
+                  </Link>
                 )}
               </div>
             )}

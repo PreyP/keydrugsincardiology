@@ -25,6 +25,23 @@ Learning tools inspired by Amboss and Osmosis:
 - **Command palette:** Cmd/Ctrl+K searches conditions, drugs, and terms.
 - **Progress:** mark a condition as learned and keep your best test score
   (stored in `localStorage`), surfaced on the overview.
+- **Spaced-repetition review deck** (`/review`): an SM-2-flavoured scheduler with
+  Again/Hard/Good/Easy grading, seeded from every flashcard. Missed test
+  questions are added automatically. Logic lives in `src/lib/srs.js`.
+- **Guided path:** a continue banner on the overview and a Learn/Practise/Test
+  stepper with a next-condition link on each Learn page.
+- **Confidence rating** on timed-test questions; wrong-but-confident answers are
+  surfaced as a priority bucket and fed into the review deck.
+- **Comparison tables** (`/compare`): high-yield side-by-side matrices, also
+  embedded on the relevant Learn pages (`src/data/comparisons.js`).
+- **Mechanism diagrams:** theme-aware inline SVGs (oxygen supply/demand, RAAS,
+  nephron diuretic sites, cardiac action potential) in `src/components/Diagrams.jsx`.
+- **Clinical calculators:** interactive CHA2DS2-VASc and HAS-BLED on the AFib page.
+- **Branching case simulator** (`src/data/simulations.js`): choices lead to
+  consequences with a running decision log.
+- **Printable cheat sheets** (`/cheatsheet/:condition`): a print-optimized,
+  one-page summary with a save-as-PDF button.
+- **Sources page** (`/about`): consolidates trials flagged for faculty review.
 
 Content is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures
 and DIL cases (Dr. Amar Thakrar). This is an educational tool, not clinical
@@ -37,6 +54,7 @@ npm install
 npm run dev      # start the dev server
 npm run build    # production build into dist/
 npm run preview  # preview the production build
+npm test         # run the Vitest unit + data-integrity tests
 ```
 
 ## Project structure

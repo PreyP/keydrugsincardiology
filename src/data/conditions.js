@@ -286,6 +286,7 @@ export const conditions = [
               'Non-selective beta blockade can worsen bronchospasm in asthma, so a rate-limiting calcium channel blocker (diltiazem) was chosen instead.',
           },
           {
+            id: 'q-cast',
             type: 'mc',
             stem: 'The CAST trial is the reason we avoid which drugs in structural heart disease?',
             choices: [
@@ -505,6 +506,7 @@ export const conditions = [
             back: 'ACE inhibitor (or ARNI), beta blocker, mineralocorticoid receptor antagonist (spironolactone), and an SGLT2 inhibitor.',
           },
           {
+            id: 'q-ivabradine',
             type: 'mc',
             stem: 'Ivabradine is being considered. Which patient is an appropriate candidate?',
             choices: [

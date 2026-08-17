@@ -28,7 +28,7 @@ export function MultipleChoice({ q, onAnswered }) {
         )
       })}
       {done && (
-        <div className="explain">
+        <div className="explain" role="status" aria-live="polite">
           <div className="explain__label">
             {picked === q.answer ? 'Correct' : 'Explanation'}
           </div>

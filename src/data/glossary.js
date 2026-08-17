@@ -182,6 +182,8 @@ export const glossary = [
     aliases: ['If', 'I funny', 'Ifunny', 'funny (If) channel', 'funny (If) current'],
     def: 'The pacemaker current in the sinus node. Ivabradine inhibits it to slow heart rate without affecting contractility.',
     link: { type: 'drug', id: 'ivabradine' },
+    practice: 'heart-failure',
+    questionId: 'q-ivabradine',
   },
   {
     id: 'raas',
@@ -304,6 +306,8 @@ export const glossary = [
     aliases: ['CAST', 'Cardiac Arrhythmia Suppression Trial'],
     def: 'The Cardiac Arrhythmia Suppression Trial: Class Ic agents increased mortality after MI, so they are avoided in structural heart disease.',
     link: { type: 'drug', id: 'class-ic' },
+    practice: 'atrial-fibrillation',
+    questionId: 'q-cast',
   },
   {
     id: 'plaque-rupture',

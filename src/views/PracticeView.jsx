@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import { conditions, conditionById, categories } from '../data/conditions.js'
 import { simulationsForCondition } from '../data/simulations.js'
 import Question from '../components/Question.jsx'
@@ -30,7 +30,9 @@ function CaseBlock({ pc }) {
       )}
       <div className="stack">
         {pc.questions.map((q, i) => (
-          <Question key={i} q={q} onAnswered={handleAnswered} />
+          <div key={i} id={q.id} style={q.id ? { scrollMarginTop: '90px' } : undefined}>
+            <Question q={q} onAnswered={handleAnswered} />
+          </div>
         ))}
       </div>
     </div>
@@ -39,8 +41,24 @@ function CaseBlock({ pc }) {
 
 export default function PracticeView() {
   const { conditionId } = useParams()
+  const location = useLocation()
   const active = conditionId ? conditionById[conditionId] : null
   const list = active ? [active] : conditions
+
+  // Scroll to and highlight a specific question when arriving via a bubble link.
+  useEffect(() => {
+    const id = location.hash.replace('#', '')
+    if (!id) return
+    const t = setTimeout(() => {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        el.classList.add('flash-highlight')
+        setTimeout(() => el.classList.remove('flash-highlight'), 1600)
+      }
+    }, 80)
+    return () => clearTimeout(t)
+  }, [location.hash, conditionId])
 
   return (
     <div className="content">

@@ -13,7 +13,7 @@ const conditionCalculators = {
   'atrial-fibrillation': [Cha2ds2VascCalc, HasBledCalc],
 }
 import { useProgress } from '../hooks/useProgress.js'
-import { ClipboardCheck, Timer, ChevronRight } from '../components/Icons.jsx'
+import { ClipboardCheck, Timer, ChevronRight, Print } from '../components/Icons.jsx'
 
 export default function LearnView() {
   const { conditionId } = useParams()
@@ -41,6 +41,9 @@ export default function LearnView() {
       <div className="topbar">
         <span className="pill">{cat.label}</span>
         <div className="topbar__spacer" />
+        <Link to={`/cheatsheet/${condition.id}`} className="btn btn--ghost btn--sm">
+          <Print size={15} /> Cheat sheet
+        </Link>
         <button
           className={`btn btn--sm ${learned ? 'btn--primary' : 'btn--ghost'}`}
           onClick={() => toggleLearned(condition.id)}

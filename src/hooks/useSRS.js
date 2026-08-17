@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { staticCards, staticCardById } from '../data/cards.js'
+import { schedule } from '../lib/srs.js'
 
 /*
  * A small SM-2-flavoured spaced-repetition scheduler kept in localStorage.
@@ -13,8 +14,6 @@ import { staticCards, staticCardById } from '../data/cards.js'
  * Grades: 'again' | 'hard' | 'good' | 'easy'.
  */
 const KEY = 'kdc-srs'
-const DAY = 86_400_000
-const MIN_EASE = 1.3
 
 function read() {
   try {
@@ -24,33 +23,6 @@ function read() {
     /* ignore */
   }
   return { sched: {}, extra: {} }
-}
-
-function schedule(prev, grade) {
-  const now = Date.now()
-  let { ease = 2.5, intervalDays = 0, reps = 0, lapses = 0 } = prev || {}
-
-  if (grade === 'again') {
-    ease = Math.max(MIN_EASE, ease - 0.2)
-    reps = 0
-    lapses += 1
-    return { ease, intervalDays: 0, reps, lapses, due: now + 60_000 } // ~1 min, same session
-  }
-  if (grade === 'hard') {
-    ease = Math.max(MIN_EASE, ease - 0.15)
-    intervalDays = reps === 0 ? 1 : Math.max(1, intervalDays * 1.2)
-    reps += 1
-  } else if (grade === 'easy') {
-    ease = ease + 0.15
-    intervalDays = reps === 0 ? 3 : Math.max(1, intervalDays * ease * 1.3)
-    reps += 1
-  } else {
-    // good
-    intervalDays = reps === 0 ? 1 : Math.max(1, intervalDays * ease)
-    reps += 1
-  }
-  intervalDays = Math.round(intervalDays)
-  return { ease, intervalDays, reps, lapses, due: now + intervalDays * DAY }
 }
 
 export function useSRS() {

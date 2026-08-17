@@ -135,7 +135,8 @@ export default function HomeView() {
       <p className="muted" style={{ fontSize: '0.82rem', marginTop: '1.5rem' }}>
         Content adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures and DIL cases
         (Dr. Amar Thakrar). Trials marked "verify vs course refs" were added from standard references
-        and should be checked against your course materials. For education only, not clinical guidance.
+        and should be checked against your course materials. For education only, not clinical guidance.{' '}
+        <Link to="/about">Sources and content notes</Link>.
       </p>
     </div>
   )

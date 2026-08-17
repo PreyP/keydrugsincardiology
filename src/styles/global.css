@@ -43,6 +43,23 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 button { font-family: var(--font-serif); cursor: pointer; }
 :focus-visible { outline: 2.5px solid var(--sky-400); outline-offset: 2px; border-radius: 6px; }
 
+/* Skip link for keyboard users */
+.skip-link {
+  position: fixed; top: -60px; left: 12px; z-index: 400;
+  background: var(--navy-700); color: #fff; padding: 0.6rem 1rem; border-radius: 0 0 10px 10px;
+  font-family: var(--font-sans); font-size: 0.9rem; transition: top 0.15s;
+}
+.skip-link:focus { top: 0; text-decoration: none; color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ---------- App shell ---------- */
 .app { display: flex; min-height: 100%; }
 
@@ -652,6 +669,31 @@ kbd {
   width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 1rem;
   background: var(--correct-bg); color: var(--correct); display: grid; place-items: center;
   font-size: 1.9rem; font-weight: 700;
+}
+
+/* ---------- Cheat sheet ---------- */
+.sheet__title { border-bottom: 2px solid var(--navy-600); padding-bottom: 0.6rem; margin-bottom: 1rem; }
+.sheet__h2 { margin-top: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }
+.sheet__drug { margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); break-inside: avoid; }
+.sheet__drugname { margin: 0 0 0.3rem; font-size: 1.05rem; }
+.sheet__mech { margin: 0 0 0.5rem; font-size: 0.92rem; color: var(--text-soft); }
+.sheet__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.sheet__cols ul { margin: 0.2rem 0 0; font-size: 0.9rem; }
+.sheet__label { font-family: var(--font-sans); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--navy-600); }
+.sheet__trials { font-size: 0.85rem; color: var(--text-mute); margin: 0.5rem 0 0; }
+.sheet__foot { font-size: 0.78rem; margin-top: 1.5rem; }
+
+@media print {
+  .sidebar, .mobile-header, .no-print, .topbar { display: none !important; }
+  .main { padding: 0 !important; }
+  .app { display: block; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  body { background-image: none !important; }
+  .sheet { max-width: 100%; }
+  .card, .compare { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+  .sheet__drugname .muted, .sheet__mech, .sheet__trials, .muted { color: #333 !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+  .compare__table thead th { position: static; }
 }
 
 /* ---------- Mobile ---------- */

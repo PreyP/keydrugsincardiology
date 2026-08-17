@@ -11,6 +11,8 @@ import TestView from './views/TestView.jsx'
 import DrugLibraryView from './views/DrugLibraryView.jsx'
 import ReviewView from './views/ReviewView.jsx'
 import CompareView from './views/CompareView.jsx'
+import CheatSheetView from './views/CheatSheetView.jsx'
+import AboutView from './views/AboutView.jsx'
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -38,6 +40,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <a href="#main" className="skip-link">Skip to content</a>
       <div className="mobile-header">
         <button className="icon-btn menu-toggle" onClick={() => setMenuOpen(true)} aria-label="Open menu">
           <Menu />
@@ -54,7 +57,7 @@ export default function App() {
       {menuOpen && <div className="scrim" onClick={closeMenu} />}
       <Sidebar open={menuOpen} onNavigate={closeMenu} onOpenSearch={() => setSearchOpen(true)} />
 
-      <main className="main">
+      <main className="main" id="main">
         <Routes>
           <Route path="/" element={<HomeView />} />
           <Route path="/learn/:conditionId" element={<LearnView />} />
@@ -64,6 +67,8 @@ export default function App() {
           <Route path="/test" element={<TestView />} />
           <Route path="/review" element={<ReviewView />} />
           <Route path="/compare" element={<CompareView />} />
+          <Route path="/cheatsheet/:conditionId" element={<CheatSheetView />} />
+          <Route path="/about" element={<AboutView />} />
         </Routes>
       </main>
 
