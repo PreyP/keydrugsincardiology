@@ -94,6 +94,24 @@ export const conditions = [
             hint: 'Think about how it interacts with the oral antiplatelet agents you are trying to load.',
           },
           {
+            type: 'mc',
+            stem: 'What intensity of statin is appropriate after an acute coronary syndrome?',
+            choices: [
+              'No statin unless LDL is very high',
+              'High-intensity statin (for example atorvastatin 80 mg)',
+              'A statin only if the patient is diabetic',
+              'A low dose, tapering off after a month',
+            ],
+            answer: 1,
+            explanation:
+              'Secondary prevention after ACS uses a high-intensity statin regardless of baseline cholesterol, for its mortality reduction and plaque-stabilizing effects.',
+          },
+          {
+            type: 'flash',
+            front: 'What do the initial "A, B, C, IV" measures and MONA cover in ACS?',
+            back: 'Airway, breathing, circulation, and IV access, plus considering morphine, oxygen (if hypoxic), nitrates, and an anticoagulant. Morphine is de-emphasized because it delays antiplatelet absorption.',
+          },
+          {
             type: 'flash',
             front: 'Expand the ACS mnemonic ASA / APA / BETA / STATA / PRIL.',
             back: 'Aspirin, a P2Y12 antiplatelet agent, Beta blocker, Statin, and an ACE inhibitor. These form the ongoing secondary-prevention regimen after acute measures.',
@@ -176,6 +194,19 @@ export const conditions = [
             modelAnswer:
               'A nitrate-free interval each day prevents the development of nitrate tolerance, preserving the drug’s effect.',
             hint: 'Think about what happens to the response with continuous, uninterrupted exposure.',
+          },
+          {
+            type: 'mc',
+            stem: 'Which calcium channel blocker property makes diltiazem useful as an antianginal beyond vasodilation?',
+            choices: [
+              'It increases heart rate',
+              'It is a negative inotrope and chronotrope, lowering oxygen demand',
+              'It irreversibly blocks COX',
+              'It raises preload',
+            ],
+            answer: 1,
+            explanation:
+              'As a non-dihydropyridine, diltiazem lowers heart rate and contractility (negative chronotrope and inotrope) in addition to reducing afterload, cutting myocardial oxygen demand.',
           },
           {
             type: 'flash',
@@ -275,6 +306,24 @@ export const conditions = [
             hint: 'What do you co-prescribe to protect the AV node?',
           },
           {
+            type: 'mc',
+            stem: 'A patient on amiodarone needs monitoring because of its tissue toxicities. Which panel fits?',
+            choices: [
+              'INR only',
+              'TSH, chest X-ray, liver function, and ECG for QT',
+              'Digoxin level and potassium',
+              'No monitoring needed',
+            ],
+            answer: 1,
+            explanation:
+              'Amiodarone can affect the thyroid, lungs, and liver and prolongs the QT, so monitor TSH, chest X-ray, LFTs, and the ECG. It is not eliminated by the kidney.',
+          },
+          {
+            type: 'flash',
+            front: 'What are the two independent decisions in managing atrial fibrillation?',
+            back: 'First, whether to anticoagulate for stroke prevention (driven by risk factors, not symptoms). Second, rate control versus rhythm control.',
+          },
+          {
             type: 'flash',
             front: 'Where does the thrombus that causes stroke in AF usually form?',
             back: 'Usually the left atrial appendage (sometimes the left atrium proper). It can embolize to the brain, often affecting multiple territories.',
@@ -345,6 +394,13 @@ export const conditions = [
             answer: 1,
             explanation:
               'Anticoagulation is not indicated in SVT. The thrombus and stroke risk that drives anticoagulation applies to sustained atrial fibrillation and flutter.',
+          },
+          {
+            type: 'free',
+            stem: 'How do vagal maneuvers terminate an episode of SVT?',
+            modelAnswer:
+              'They increase vagal (parasympathetic) tone, which slows AV-node conduction. Because AVNRT and AVRT depend on the AV node, slowing it can break the reentrant circuit.',
+            hint: 'Think about what the AV node does in the reentry circuit.',
           },
           {
             type: 'flash',
@@ -447,6 +503,19 @@ export const conditions = [
             type: 'flash',
             front: 'Name the four survival pillars of HFrEF therapy.',
             back: 'ACE inhibitor (or ARNI), beta blocker, mineralocorticoid receptor antagonist (spironolactone), and an SGLT2 inhibitor.',
+          },
+          {
+            type: 'mc',
+            stem: 'Ivabradine is being considered. Which patient is an appropriate candidate?',
+            choices: [
+              'A patient in atrial fibrillation',
+              'A patient in sinus rhythm with LVEF 30% and resting HR 78 who cannot tolerate a higher beta-blocker dose',
+              'A patient with a resting heart rate of 55',
+              'A patient with preserved ejection fraction',
+            ],
+            answer: 1,
+            explanation:
+              'Ivabradine is for HFrEF (LVEF <= 35%) in sinus rhythm with resting HR over 70 when a goal beta-blocker dose is not tolerated. It acts on the sinus node, so it does not work in atrial fibrillation.',
           },
           {
             type: 'flash',

@@ -305,6 +305,69 @@ export const glossary = [
     def: 'The Cardiac Arrhythmia Suppression Trial: Class Ic agents increased mortality after MI, so they are avoided in structural heart disease.',
     link: { type: 'drug', id: 'class-ic' },
   },
+  {
+    id: 'plaque-rupture',
+    term: 'plaque rupture',
+    def: 'The trigger of acute coronary syndrome: an atherosclerotic plaque ruptures and a thrombus forms on it, acutely limiting coronary flow.',
+    link: { type: 'condition', id: 'acs' },
+  },
+  {
+    id: 'vasospasm',
+    term: 'coronary vasospasm',
+    aliases: ['vasospasm'],
+    def: 'Reversible constriction of a coronary artery. Calcium channel blockers can prevent or reverse it, including catheter-induced spasm.',
+    link: { type: 'drug', id: 'ccb' },
+  },
+  {
+    id: 'secondary-prevention',
+    term: 'secondary prevention',
+    def: 'Reducing further events in someone with established vascular disease, for example aspirin and a statin after ACS.',
+  },
+  {
+    id: 'primary-prevention',
+    term: 'primary prevention',
+    def: 'Preventing a first cardiovascular event in a higher-risk person who has not yet had one.',
+  },
+  {
+    id: 'vagal',
+    term: 'vagal maneuvers',
+    def: 'Techniques that increase vagal tone to slow AV-node conduction and can terminate SVT, such as breath-holding or leg raising.',
+    link: { type: 'condition', id: 'svt' },
+  },
+  {
+    id: 'ablation',
+    term: 'ablation',
+    def: 'A catheter procedure that destroys the arrhythmia circuit. Often pursued when SVT or AF is refractory to drugs.',
+  },
+  {
+    id: 'structural',
+    term: 'structural heart disease',
+    def: 'A structurally abnormal heart (for example prior infarct or reduced EF). It contraindicates Class Ic antiarrhythmics and rate-limiting CCBs in heart failure.',
+  },
+  {
+    id: 'pleiotropic',
+    term: 'pleiotropic effects',
+    aliases: ['pleiotropic'],
+    def: 'Benefits of statins beyond LDL lowering: plaque stabilization, more nitric oxide, and less inflammation.',
+    link: { type: 'drug', id: 'statin' },
+  },
+  {
+    id: 'orthostasis',
+    term: 'orthostasis',
+    aliases: ['orthostatic', 'presyncope', 'presyncopal'],
+    def: 'A drop in blood pressure on standing, causing lightheadedness. A risk when giving rate or blood-pressure lowering drugs to young normotensive patients.',
+  },
+  {
+    id: 'bradycardia',
+    term: 'bradycardia',
+    def: 'A slow heart rate. A dose-limiting effect of beta blockers, non-dihydropyridine CCBs, digoxin, and ivabradine.',
+  },
+  {
+    id: 'holter',
+    term: 'Holter monitor',
+    aliases: ['holter'],
+    def: 'A continuous ambulatory ECG (often 24 hours) used to capture and characterize intermittent arrhythmias.',
+  },
 ]
 
 // Build a fast lookup and a matching regex.

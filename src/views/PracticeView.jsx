@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { conditions, conditionById, categories } from '../data/conditions.js'
+import { simulationsForCondition } from '../data/simulations.js'
 import Question from '../components/Question.jsx'
+import CaseSimulator from '../components/CaseSimulator.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import { Book } from '../components/Icons.jsx'
 
@@ -74,18 +76,24 @@ export default function PracticeView() {
         </div>
       )}
 
-      {list.map((c) => (
-        <section key={c.id} style={{ marginBottom: '1rem' }}>
-          {!active && (
-            <div className="nav-section-label" style={{ margin: '0 0 0.5rem' }}>
-              {categories[c.category].label} · {c.name}
-            </div>
-          )}
-          {c.practiceCases.map((pc) => (
-            <CaseBlock key={pc.id} pc={pc} />
-          ))}
-        </section>
-      ))}
+      {list.map((c) => {
+        const sims = simulationsForCondition(c.id)
+        return (
+          <section key={c.id} style={{ marginBottom: '1rem' }}>
+            {!active && (
+              <div className="nav-section-label" style={{ margin: '0 0 0.5rem' }}>
+                {categories[c.category].label} · {c.name}
+              </div>
+            )}
+            {sims.map((s) => (
+              <CaseSimulator key={s.id} sim={s} />
+            ))}
+            {c.practiceCases.map((pc) => (
+              <CaseBlock key={pc.id} pc={pc} />
+            ))}
+          </section>
+        )
+      })}
     </div>
   )
 }
