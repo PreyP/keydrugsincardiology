@@ -1,0 +1,21 @@
+/*
+ * Figure chrome for the v2 mechanism diagrams.
+ * Import after global.css (it overrides the .figure rules there).
+ */
+
+.figure { margin: 0 0 1.5rem; padding: 1.4rem 1.5rem 1.55rem; }
+.figure__cap { display: flex; flex-direction: column; margin-bottom: 1rem; }
+.figure__title { font-weight: 600; font-size: 1.15rem; letter-spacing: -0.008em; }
+.figure__sub { color: var(--text-mute); font-size: 0.92rem; font-style: italic; margin-top: 0.15rem; }
+.figure__svg { overflow-x: auto; }
+.figure__svg svg { display: block; min-width: 620px; }
+
+/* Diagrams read better a little wider than the text column. */
+@media (min-width: 1180px) {
+  .figure--wide { margin-left: -72px; margin-right: -72px; }
+}
+
+@media print {
+  .figure--wide { margin-left: 0; margin-right: 0; }
+  .figure__svg svg { min-width: 0; }
+}

@@ -1,14 +1,18 @@
 /*
- * Theme-aware inline SVG mechanism diagrams.
+ * Theme-aware inline SVG mechanism diagrams (v2).
  *
- * Colours reference CSS custom properties via fill/stroke="var(--token)" so the
- * diagrams adapt to light and dark mode. Each diagram is wrapped in <Figure>
- * with a caption. Content matches the MEDS230 lectures.
+ * Rebuilt on a shared visual grid: one type scale (13-16px sans labels), 8px
+ * spacing, rounded 14px panels, curved arrow connectors, numbered sites of
+ * action and a legend panel instead of labels crowded into the drawing.
+ *
+ * Every colour is a CSS custom property, so light and dark themes both work.
+ * Extra tokens (--teal-500 and friends) live in src/styles/diagram-tokens.css.
+ * Figure chrome lives in src/styles/diagrams.css.
  */
 
-function Figure({ title, caption, children }) {
+function Figure({ title, caption, wide = true, children }) {
   return (
-    <figure className="figure card">
+    <figure className={`figure card${wide ? ' figure--wide' : ''}`}>
       <figcaption className="figure__cap">
         <span className="figure__title">{title}</span>
         {caption && <span className="figure__sub">{caption}</span>}
@@ -18,209 +22,279 @@ function Figure({ title, caption, children }) {
   )
 }
 
-const chip = {
-  rx: 7,
-  fill: 'var(--navy-50)',
-  stroke: 'var(--sky-200)',
-}
-const chipText = { fill: 'var(--navy-700)', fontSize: 12, fontWeight: 600, fontFamily: 'var(--font-sans)' }
-const label = { fill: 'var(--text)', fontFamily: 'var(--font-sans)' }
-const soft = { fill: 'var(--text-soft)', fontFamily: 'var(--font-sans)' }
-
-/* ---------------- Oxygen supply and demand ---------------- */
+/* ---------------- Myocardial oxygen supply and demand ---------------- */
 export function OxygenBalanceDiagram() {
   return (
     <Figure
       title="Myocardial oxygen supply and demand"
       caption="Antianginal therapy tips the balance: raise supply, lower demand."
     >
-      <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Balance of myocardial oxygen supply and demand">
-        {/* beam */}
-        <line x1="120" y1="90" x2="520" y2="118" stroke="var(--border-strong)" strokeWidth="4" strokeLinecap="round" />
-        {/* fulcrum */}
-        <polygon points="320,104 305,150 335,150" fill="var(--navy-500)" />
-        <rect x="290" y="150" width="60" height="10" rx="4" fill="var(--border-strong)" />
+      <svg data-diagram="oxygen" viewBox="0 110 960 410" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="Balance of myocardial oxygen supply and demand" fontFamily="var(--font-sans)">
+        <line x1="140" y1="152" x2="820" y2="196" stroke="var(--border-strong)" strokeWidth="7" strokeLinecap="round"></line>
+        <polygon points="480,196 452,268 508,268" fill="var(--navy-200)"></polygon>
+        <rect x="436" y="268" width="88" height="12" rx="6" fill="var(--border-strong)"></rect>
+        <line x1="200" y1="156" x2="200" y2="212" stroke="var(--border-strong)" strokeWidth="2"></line>
+        <line x1="760" y1="192" x2="760" y2="240" stroke="var(--border-strong)" strokeWidth="2"></line>
 
-        {/* left pan: supply */}
-        <line x1="150" y1="92" x2="150" y2="140" stroke="var(--border-strong)" strokeWidth="2" />
-        <rect x="70" y="140" width="160" height="42" rx="12" fill="var(--indication-bg)" stroke="var(--indication)" />
-        <text x="150" y="166" textAnchor="middle" style={label} fontWeight="700" fontSize="15">Supply</text>
-        <text x="150" y="205" textAnchor="middle" style={soft} fontSize="12">Coronary blood flow,</text>
-        <text x="150" y="222" textAnchor="middle" style={soft} fontSize="12">diastolic filling time</text>
+        <rect x="60" y="212" width="280" height="120" rx="16" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="84" y="240" fontSize="10.5" fontWeight="700" letterSpacing="1.4" fill="var(--text-mute)">OXYGEN DELIVERY</text>
+        <text x="84" y="270" fontSize="21" fontWeight="600" fill="var(--text)">Supply</text>
+        <text x="84" y="298" fontSize="13" fill="var(--text-soft)">Coronary blood flow</text>
+        <text x="84" y="318" fontSize="13" fill="var(--text-soft)">Diastolic filling time</text>
+        <circle cx="304" cy="248" r="17" fill="var(--surface)" stroke="var(--border-strong)"></circle>
+        <text x="304" y="254" textAnchor="middle" fontSize="15" fontWeight="700" fill="var(--indication)">↑</text>
 
-        {/* right pan: demand */}
-        <line x1="490" y1="120" x2="490" y2="140" stroke="var(--border-strong)" strokeWidth="2" />
-        <rect x="410" y="140" width="160" height="42" rx="12" fill="var(--sideeffect-bg)" stroke="var(--sideeffect)" />
-        <text x="490" y="166" textAnchor="middle" style={label} fontWeight="700" fontSize="15">Demand</text>
-        <text x="490" y="205" textAnchor="middle" style={soft} fontSize="12">Heart rate, contractility,</text>
-        <text x="490" y="222" textAnchor="middle" style={soft} fontSize="12">wall stress (preload/afterload)</text>
+        <rect x="620" y="240" width="280" height="120" rx="16" fill="var(--sideeffect-bg)" stroke="var(--sideeffect)" strokeOpacity=".35"></rect>
+        <text x="644" y="268" fontSize="10.5" fontWeight="700" letterSpacing="1.4" fill="var(--text-mute)">OXYGEN CONSUMPTION</text>
+        <text x="644" y="298" fontSize="21" fontWeight="600" fill="var(--text)">Demand</text>
+        <text x="644" y="326" fontSize="13" fill="var(--text-soft)">Heart rate, contractility</text>
+        <text x="644" y="346" fontSize="13" fill="var(--text-soft)">Wall stress: preload, afterload</text>
+        <circle cx="864" cy="276" r="17" fill="var(--surface)" stroke="var(--sideeffect)" strokeOpacity=".35"></circle>
+        <text x="864" y="282" textAnchor="middle" fontSize="15" fontWeight="700" fill="var(--sideeffect)">↓</text>
 
-        {/* demand-lowering drugs */}
-        <text x="490" y="252" textAnchor="middle" style={soft} fontSize="11" fontWeight="700">LOWERED BY</text>
-        {['Beta blockers', 'Nitrates', 'CCBs'].map((t, i) => (
-          <g key={t} transform={`translate(${372 + i * 82}, 262)`}>
-            <rect width="76" height="26" {...chip} />
-            <text x="38" y="17" textAnchor="middle" style={chipText}>{t}</text>
-          </g>
-        ))}
-      </svg>
+        <text x="60" y="374" fontSize="10.5" fontWeight="700" letterSpacing="1.4" fill="var(--text-mute)">RAISED BY</text>
+        <g transform="translate(60, 386)">
+        <rect width="180" height="30" rx="9" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="90" y="20" textAnchor="middle" fontSize="12.5" fontWeight="600" fill="var(--dosing)">Coronary vasodilation</text>
+        </g>
+        <g transform="translate(250, 386)">
+        <rect width="150" height="30" rx="9" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="75" y="20" textAnchor="middle" fontSize="12.5" fontWeight="600" fill="var(--dosing)">Longer diastole</text>
+        </g>
+
+        <text x="596" y="374" fontSize="10.5" fontWeight="700" letterSpacing="1.4" fill="var(--text-mute)">LOWERED BY</text>
+        <g transform="translate(596, 386)">
+        <rect width="136" height="30" rx="9" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="68" y="20" textAnchor="middle" fontSize="12.5" fontWeight="600" fill="var(--dosing)">Beta blockers</text>
+        </g>
+        <g transform="translate(742, 386)">
+        <rect width="102" height="30" rx="9" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="51" y="20" textAnchor="middle" fontSize="12.5" fontWeight="600" fill="var(--dosing)">Nitrates</text>
+        </g>
+        <g transform="translate(854, 386)">
+        <rect width="88" height="30" rx="9" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="44" y="20" textAnchor="middle" fontSize="12.5" fontWeight="600" fill="var(--dosing)">CCBs</text>
+        </g>
+
+        <g>
+        <rect x="60" y="440" width="882" height="58" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="84" y="476" fontSize="13.5" fill="var(--text-soft)">Ischemia appears when demand outruns supply — antianginal drugs work on whichever pan is loaded.</text>
+        </g>
+        </svg>
     </Figure>
   )
 }
 
-/* ---------------- RAAS with drug block points ---------------- */
+/* ---------------- Renin-angiotensin-aldosterone system ---------------- */
 export function RaasDiagram() {
-  const box = (x, y, w, t) => (
-    <g transform={`translate(${x}, ${y})`}>
-      <rect width={w} height="40" rx="10" fill="var(--surface-2)" stroke="var(--border-strong)" />
-      <text x={w / 2} y="25" textAnchor="middle" style={label} fontSize="13" fontWeight="600">{t}</text>
-    </g>
-  )
-  const arrow = (x1, x2, y, tag) => (
-    <g>
-      <line x1={x1} y1={y} x2={x2 - 8} y2={y} stroke="var(--text-mute)" strokeWidth="2" />
-      <polygon points={`${x2},${y} ${x2 - 9},${y - 5} ${x2 - 9},${y + 5}`} fill="var(--text-mute)" />
-      {tag && <text x={(x1 + x2) / 2} y={y - 9} textAnchor="middle" style={soft} fontSize="11">{tag}</text>}
-    </g>
-  )
   return (
     <Figure
       title="Renin-angiotensin-aldosterone system"
-      caption="ACE inhibitors block conversion to angiotensin II; ARNIs add neprilysin inhibition."
+      caption="ACE inhibitors block the conversion to angiotensin II; ARBs and ARNIs block the receptor."
     >
-      <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="RAAS pathway with drug block points">
-        {box(20, 40, 120, 'Angiotensinogen')}
-        {arrow(140, 200, 60, 'renin')}
-        {box(200, 40, 100, 'Angiotensin I')}
-        {arrow(300, 380, 60, 'ACE')}
-        {box(380, 40, 110, 'Angiotensin II')}
+      <svg data-diagram="raas" viewBox="0 0 960 700" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="RAAS pathway with drug block points" fontFamily="var(--font-sans)">
+        <defs>
+        <marker id="raas-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 1 L9 5 L0 9 z" fill="var(--text-mute)"></path>
+        </marker>
+        </defs>
 
-        {/* ACE inhibitor block marker */}
-        <line x1="340" y1="30" x2="340" y2="78" stroke="var(--caution)" strokeWidth="2.5" strokeDasharray="4 3" />
-        <g transform="translate(300, 6)">
-          <rect width="80" height="24" rx="7" fill="var(--caution-bg)" stroke="var(--caution)" />
-          <text x="40" y="16" textAnchor="middle" fill="var(--caution)" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)">ACE inhibitor</text>
+        <rect x="350" y="36" width="260" height="60" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="480" y="64" textAnchor="middle" fontSize="16" fontWeight="600" fill="var(--text)">Angiotensinogen</text>
+        <text x="480" y="83" textAnchor="middle" fontSize="11.5" fill="var(--text-mute)">from the liver</text>
+
+        <line x1="480" y1="96" x2="480" y2="166" stroke="var(--text-mute)" strokeWidth="2" markerEnd="url(#raas-arrow)"></line>
+        <text x="336" y="130" textAnchor="end" fontSize="13" fontWeight="700" fill="var(--dosing)">Renin</text>
+        <text x="336" y="148" textAnchor="end" fontSize="11.5" fill="var(--text-mute)">released by the kidney</text>
+
+        <rect x="350" y="172" width="260" height="60" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="480" y="208" textAnchor="middle" fontSize="16" fontWeight="600" fill="var(--text)">Angiotensin I</text>
+
+        <line x1="480" y1="232" x2="480" y2="302" stroke="var(--text-mute)" strokeWidth="2" markerEnd="url(#raas-arrow)"></line>
+        <text x="336" y="266" textAnchor="end" fontSize="13" fontWeight="700" fill="var(--dosing)">ACE</text>
+        <text x="336" y="284" textAnchor="end" fontSize="11.5" fill="var(--text-mute)">pulmonary endothelium</text>
+
+        <line x1="452" y1="270" x2="508" y2="270" stroke="var(--caution)" strokeWidth="3.5" strokeLinecap="round"></line>
+        <line x1="512" y1="270" x2="556" y2="270" stroke="var(--caution)" strokeWidth="1.5" strokeDasharray="4 3"></line>
+        <rect x="556" y="252" width="240" height="36" rx="10" fill="var(--caution-bg)" stroke="var(--caution)" strokeOpacity=".5"></rect>
+        <text x="676" y="275" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--caution)">ACE inhibitors block here</text>
+
+        <rect x="350" y="308" width="260" height="66" rx="14" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="480" y="341" textAnchor="middle" fontSize="16.5" fontWeight="600" fill="var(--text)">Angiotensin II</text>
+        <text x="480" y="360" textAnchor="middle" fontSize="11.5" fill="var(--text-mute)">acting at the AT₁ receptor</text>
+
+        <line x1="614" y1="341" x2="652" y2="341" stroke="var(--caution)" strokeWidth="3.5" strokeLinecap="round"></line>
+        <rect x="656" y="323" width="270" height="36" rx="10" fill="var(--caution-bg)" stroke="var(--caution)" strokeOpacity=".5"></rect>
+        <text x="791" y="346" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--caution)">ARB / ARNI block the receptor</text>
+
+        <line x1="480" y1="374" x2="480" y2="404" stroke="var(--text-mute)" strokeWidth="2"></line>
+        <line x1="175" y1="404" x2="785" y2="404" stroke="var(--text-mute)" strokeWidth="2"></line>
+        <line x1="175" y1="404" x2="175" y2="418" stroke="var(--text-mute)" strokeWidth="2" markerEnd="url(#raas-arrow)"></line>
+        <line x1="480" y1="404" x2="480" y2="418" stroke="var(--text-mute)" strokeWidth="2" markerEnd="url(#raas-arrow)"></line>
+        <line x1="785" y1="404" x2="785" y2="418" stroke="var(--text-mute)" strokeWidth="2" markerEnd="url(#raas-arrow)"></line>
+
+        <rect x="30" y="424" width="290" height="88" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="175" y="462" textAnchor="middle" fontSize="15" fontWeight="600" fill="var(--text)">Vasoconstriction</text>
+        <text x="175" y="486" textAnchor="middle" fontSize="12.5" fill="var(--text-soft)">raises afterload and blood pressure</text>
+
+        <rect x="335" y="424" width="290" height="88" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="480" y="462" textAnchor="middle" fontSize="15" fontWeight="600" fill="var(--text)">Aldosterone release</text>
+        <text x="480" y="486" textAnchor="middle" fontSize="12.5" fill="var(--text-soft)">sodium and water retention, fibrosis</text>
+
+        <rect x="640" y="424" width="290" height="88" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="785" y="462" textAnchor="middle" fontSize="15" fontWeight="600" fill="var(--text)">Sympathetic activation</text>
+        <text x="785" y="486" textAnchor="middle" fontSize="12.5" fill="var(--text-soft)">faster heart rate, more remodeling</text>
+
+        <line x1="480" y1="512" x2="480" y2="528" stroke="var(--caution)" strokeWidth="1.5" strokeDasharray="4 3"></line>
+        <rect x="335" y="528" width="290" height="36" rx="10" fill="var(--caution-bg)" stroke="var(--caution)" strokeOpacity=".5"></rect>
+        <text x="480" y="551" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--caution)">MRA (spironolactone) blocks this</text>
+
+        <g>
+        <rect x="30" y="596" width="900" height="80" rx="14" fill="var(--trial-bg)" stroke="var(--trial)" strokeOpacity=".35"></rect>
+        <text x="54" y="624" fontSize="13" fontWeight="700" fill="var(--indication)">ARNI — sacubitril / valsartan</text>
+        <text x="54" y="646" fontSize="12.5" fill="var(--text-soft)">Valsartan blocks the angiotensin II receptor while sacubitril inhibits neprilysin, so natriuretic</text>
+        <text x="54" y="666" fontSize="12.5" fill="var(--text-soft)">peptides rise: natriuresis, diuresis, vasodilation, and less fibrosis.</text>
         </g>
-
-        {/* effects of Ang II */}
-        <line x1="435" y1="80" x2="435" y2="110" stroke="var(--text-mute)" strokeWidth="2" />
-        {['Vasoconstriction (afterload)', 'Aldosterone: Na and water retention', 'Sympathetic activation'].map((t, i) => (
-          <g key={t} transform={`translate(300, ${118 + i * 34})`}>
-            <rect width="300" height="26" rx="8" fill="var(--sideeffect-bg)" stroke="var(--sideeffect)" opacity="0.9" />
-            <text x="150" y="17" textAnchor="middle" style={soft} fontSize="12">{t}</text>
-          </g>
-        ))}
-
-        {/* ARNI note */}
-        <g transform="translate(20, 210)">
-          <rect width="580" height="72" rx="12" fill="var(--trial-bg)" stroke="var(--trial)" opacity="0.9" />
-          <text x="16" y="26" style={{ fill: 'var(--trial)' }} fontSize="12" fontWeight="700" fontFamily="var(--font-sans)">ARNI (sacubitril / valsartan)</text>
-          <text x="16" y="46" style={soft} fontSize="12">Valsartan blocks the angiotensin II receptor, while sacubitril inhibits neprilysin so</text>
-          <text x="16" y="62" style={soft} fontSize="12">natriuretic peptides rise: natriuresis, diuresis, vasodilation, and less fibrosis.</text>
-        </g>
-      </svg>
+        </svg>
     </Figure>
   )
 }
 
-/* ---------------- Nephron sites of diuretic action ---------------- */
+/* ---------------- Where diuretics act in the nephron ---------------- */
 export function NephronDiagram() {
   return (
     <Figure
       title="Where diuretics act in the nephron"
-      caption="Different agents block sodium handling at different segments."
+      caption="Each agent blocks sodium handling at a different segment."
     >
-      <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Nephron with diuretic sites of action">
-        {/* glomerulus */}
-        <circle cx="90" cy="70" r="26" fill="var(--surface-2)" stroke="var(--border-strong)" strokeWidth="2" />
-        <text x="90" y="118" textAnchor="middle" style={soft} fontSize="11">Glomerulus</text>
+      <svg data-diagram="nephron" viewBox="0 40 960 495" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="Nephron with numbered diuretic sites of action" fontFamily="var(--font-sans)">
+        <defs>
+        <marker id="neph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 1 L9 5 L0 9 z" fill="var(--text-mute)"></path>
+        </marker>
+        </defs>
 
-        {/* tubule path: PCT -> loop -> DCT -> collecting duct */}
-        <path
-          d="M116 70 H180 C210 70 210 70 210 110 V190 C210 220 250 220 250 190 V110 C250 78 250 78 285 78 H360"
-          fill="none" stroke="var(--navy-400)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" opacity="0.55"
-        />
-        {/* collecting duct down */}
-        <path d="M360 78 H420 C450 78 450 78 450 120 V250" fill="none" stroke="var(--navy-400)" strokeWidth="10" strokeLinecap="round" opacity="0.55" />
+        <path d="M154 112 q 22 -22 44 0 q 22 22 44 0 q 22 -22 44 0 C 316 112 330 128 330 158 V 358 A 34 34 0 0 0 398 358 V 158 C 398 128 412 112 442 112 q 20 -20 40 0 q 20 20 40 0 C 552 112 566 128 566 158 V 470"
+         fill="none" stroke="var(--navy-300)" strokeWidth="19" strokeLinecap="round" strokeLinejoin="round"></path>
+        <path d="M154 112 q 22 -22 44 0 q 22 22 44 0 q 22 -22 44 0 C 316 112 330 128 330 158 V 358 A 34 34 0 0 0 398 358 V 158 C 398 128 412 112 442 112 q 20 -20 40 0 q 20 20 40 0 C 552 112 566 128 566 158 V 470"
+         fill="none" stroke="var(--surface)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round"></path>
 
-        {/* SGLT2 at PCT */}
-        <g transform="translate(120, 20)">
-          <rect width="150" height="26" {...chip} />
-          <text x="75" y="17" textAnchor="middle" style={chipText}>SGLT2 inhibitors</text>
+        <circle cx="120" cy="112" r="34" fill="var(--indication-bg)" stroke="var(--trial)" strokeWidth="2"></circle>
+        <circle cx="120" cy="112" r="17" fill="var(--sky-300)"></circle>
+        <text x="120" y="176" textAnchor="middle" fontSize="12" fill="var(--text-mute)">Glomerulus</text>
+
+        <line x1="566" y1="470" x2="566" y2="496" stroke="var(--text-mute)" strokeWidth="2" markerEnd="url(#neph-arrow)"></line>
+        <text x="566" y="520" textAnchor="middle" fontSize="12" fill="var(--text-mute)">To urine</text>
+
+        <g>
+        <text x="220" y="72" textAnchor="middle" fontSize="12" fill="var(--text-mute)">Proximal convoluted tubule</text>
+        <text x="312" y="266" textAnchor="end" fontSize="12" fill="var(--text-mute)">Descending limb</text>
+        <text x="418" y="300" fontSize="12" fill="var(--text-mute)">Thick ascending limb</text>
+        <text x="482" y="72" textAnchor="middle" fontSize="12" fill="var(--text-mute)">Distal tubule</text>
+        <text x="524" y="418" textAnchor="end" fontSize="12" fill="var(--text-mute)">Collecting duct</text>
         </g>
-        <line x1="170" y1="46" x2="175" y2="64" stroke="var(--sky-400)" strokeWidth="2" />
-        <text x="150" y="60" textAnchor="middle" style={soft} fontSize="10">Proximal tubule</text>
 
-        {/* Loop diuretic at ascending loop */}
-        <g transform="translate(255, 150)">
-          <rect width="150" height="26" {...chip} />
-          <text x="75" y="17" textAnchor="middle" style={chipText}>Loop diuretics</text>
+        <circle cx="220" cy="112" r="15" fill="var(--navy-500)"></circle>
+        <text x="220" y="117" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff">1</text>
+        <circle cx="398" cy="240" r="15" fill="var(--navy-500)"></circle>
+        <text x="398" y="245" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff">2</text>
+        <circle cx="566" cy="380" r="15" fill="var(--navy-500)"></circle>
+        <text x="566" y="385" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff">3</text>
+
+        <rect x="620" y="72" width="310" height="268" rx="16" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="644" y="104" fontSize="10.5" fontWeight="700" letterSpacing="1.4" fill="var(--text-mute)">SITES OF ACTION</text>
+
+        <circle cx="659" cy="142" r="13" fill="var(--navy-500)"></circle>
+        <text x="659" y="147" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">1</text>
+        <text x="684" y="138" fontSize="14" fontWeight="600" fill="var(--text)">SGLT2 inhibitors</text>
+        <text x="684" y="158" fontSize="12" fill="var(--text-soft)">Proximal tubule: glucose and sodium</text>
+
+        <circle cx="659" cy="210" r="13" fill="var(--navy-500)"></circle>
+        <text x="659" y="215" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">2</text>
+        <text x="684" y="206" fontSize="14" fontWeight="600" fill="var(--text)">Loop diuretics</text>
+        <text x="684" y="226" fontSize="12" fill="var(--text-soft)">Thick ascending limb: Na⁺/K⁺/2Cl⁻</text>
+
+        <circle cx="659" cy="278" r="13" fill="var(--navy-500)"></circle>
+        <text x="659" y="283" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">3</text>
+        <text x="684" y="274" fontSize="14" fontWeight="600" fill="var(--text)">MRA (spironolactone)</text>
+        <text x="684" y="294" fontSize="12" fill="var(--text-soft)">Collecting duct: aldosterone receptor</text>
+
+        <g>
+        <rect x="620" y="364" width="310" height="86" rx="14" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="644" y="396" fontSize="12.5" fill="var(--text-soft)">Loops relieve congestion; the MRA and</text>
+        <text x="644" y="416" fontSize="12.5" fill="var(--text-soft)">SGLT2 inhibitor are the segments that</text>
+        <text x="644" y="436" fontSize="12.5" fill="var(--text-soft)">also carry a mortality benefit in HFrEF.</text>
         </g>
-        <line x1="255" y1="163" x2="230" y2="170" stroke="var(--sky-400)" strokeWidth="2" />
-        <text x="330" y="196" textAnchor="middle" style={soft} fontSize="10">Thick ascending loop of Henle</text>
-
-        {/* MRA at DCT / collecting duct */}
-        <g transform="translate(470, 120)">
-          <rect width="150" height="26" {...chip} />
-          <text x="75" y="17" textAnchor="middle" style={chipText}>MRA (spironolactone)</text>
-        </g>
-        <line x1="470" y1="133" x2="452" y2="150" stroke="var(--sky-400)" strokeWidth="2" />
-        <text x="500" y="180" textAnchor="middle" style={soft} fontSize="10">Distal tubule /</text>
-        <text x="500" y="194" textAnchor="middle" style={soft} fontSize="10">collecting duct</text>
-
-        <text x="450" y="272" textAnchor="middle" style={soft} fontSize="11">To collecting duct and urine</text>
-      </svg>
+        </svg>
     </Figure>
   )
 }
 
-/* ---------------- Cardiac action potential + Vaughan-Williams ---------------- */
+/* ---------------- Cardiac action potential and antiarrhythmic classes ---------------- */
 export function ActionPotentialDiagram() {
   return (
     <Figure
       title="Cardiac action potential and antiarrhythmic classes"
       caption="Each Vaughan-Williams class targets a different phase or current."
     >
-      <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Action potential with Vaughan Williams class targets">
-        {/* axes */}
-        <line x1="60" y1="30" x2="60" y2="230" stroke="var(--border-strong)" strokeWidth="2" />
-        <line x1="60" y1="230" x2="600" y2="230" stroke="var(--border-strong)" strokeWidth="2" />
-        <text x="30" y="130" style={soft} fontSize="11" transform="rotate(-90 30 130)">mV</text>
-        <text x="330" y="256" textAnchor="middle" style={soft} fontSize="11">time</text>
+      <svg data-diagram="ap" viewBox="0 0 960 560" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="Cardiac action potential with Vaughan-Williams class targets" fontFamily="var(--font-sans)">
+        <rect x="198" y="70" width="204" height="270" fill="var(--surface-2)"></rect>
+        <text x="300" y="88" textAnchor="middle" fontSize="11" letterSpacing=".08em" fill="var(--text-mute)">PLATEAU</text>
 
-        {/* action potential curve */}
-        <path
-          d="M60 210 L110 210 L120 50 L150 70 L165 66 L300 92 L360 205 L600 210"
-          fill="none" stroke="var(--navy-500)" strokeWidth="3.5" strokeLinejoin="round"
-        />
+        <line x1="90" y1="130" x2="660" y2="130" stroke="var(--border)" strokeWidth="1.5" strokeDasharray="5 4"></line>
+        <line x1="90" y1="300" x2="660" y2="300" stroke="var(--border)" strokeWidth="1.5" strokeDasharray="5 4"></line>
+        <text x="78" y="134" textAnchor="end" fontSize="11.5" fill="var(--text-mute)">0</text>
+        <text x="78" y="304" textAnchor="end" fontSize="11.5" fill="var(--text-mute)">−85</text>
+        <text x="46" y="200" fontSize="11.5" fill="var(--text-mute)" transform="rotate(-90 46 200)">mV</text>
 
-        {/* phase 0 (Na) - Class I */}
-        <circle cx="118" cy="120" r="5" fill="var(--caution)" />
-        <g transform="translate(120, 44)">
-          <rect width="150" height="24" rx="7" fill="var(--caution-bg)" stroke="var(--caution)" />
-          <text x="75" y="16" textAnchor="middle" fill="var(--caution)" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)">Class I: Na (flecainide)</text>
+        <line x1="90" y1="50" x2="90" y2="360" stroke="var(--border-strong)" strokeWidth="2"></line>
+        <line x1="90" y1="360" x2="672" y2="360" stroke="var(--border-strong)" strokeWidth="2"></line>
+        <text x="660" y="384" textAnchor="end" fontSize="11.5" fill="var(--text-mute)">time</text>
+
+        <path d="M90 300 H152 L170 76 C178 68 188 110 198 122 C270 130 330 134 402 144 C430 152 448 250 472 296 C480 308 484 300 492 300 H660"
+         fill="none" stroke="var(--dosing)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
+
+        <line x1="152" y1="384" x2="472" y2="384" stroke="var(--navy-200)" strokeWidth="2"></line>
+        <line x1="152" y1="378" x2="152" y2="390" stroke="var(--navy-200)" strokeWidth="2"></line>
+        <line x1="472" y1="378" x2="472" y2="390" stroke="var(--navy-200)" strokeWidth="2"></line>
+        <text x="312" y="406" textAnchor="middle" fontSize="11.5" fill="var(--text-mute)">Refractory period</text>
+
+        <circle cx="161" cy="190" r="13" fill="var(--surface)" stroke="var(--caution)" strokeWidth="2"></circle>
+        <text x="161" y="195" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--caution)">0</text>
+        <circle cx="200" cy="100" r="13" fill="var(--surface)" stroke="var(--indication)" strokeWidth="2"></circle>
+        <text x="200" y="105" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--indication)">1</text>
+        <circle cx="300" cy="133" r="13" fill="var(--surface)" stroke="var(--dosing)" strokeWidth="2"></circle>
+        <text x="300" y="138" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--dosing)">2</text>
+        <circle cx="460" cy="258" r="13" fill="var(--surface)" stroke="var(--trial)" strokeWidth="2"></circle>
+        <text x="460" y="263" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--trial)">3</text>
+        <circle cx="600" cy="300" r="13" fill="var(--surface)" stroke="var(--teal-500)" strokeWidth="2"></circle>
+        <text x="600" y="305" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--teal-500)">4</text>
+
+        <rect x="700" y="60" width="230" height="280" rx="16" fill="var(--surface)" stroke="var(--border-strong)"></rect>
+        <text x="722" y="92" fontSize="10" fontWeight="700" letterSpacing="1.3" fill="var(--text-mute)">VAUGHAN-WILLIAMS</text>
+
+        <rect x="722" y="112" width="4" height="26" rx="2" fill="var(--caution)"></rect>
+        <text x="738" y="122" fontSize="13.5" fontWeight="600" fill="var(--text)">Class I — Na⁺ channels</text>
+        <text x="738" y="140" fontSize="11.5" fill="var(--text-soft)">Flecainide · phase 0 upstroke</text>
+
+        <rect x="722" y="168" width="4" height="26" rx="2" fill="var(--teal-500)"></rect>
+        <text x="738" y="178" fontSize="13.5" fontWeight="600" fill="var(--text)">Class II — beta blockade</text>
+        <text x="738" y="196" fontSize="11.5" fill="var(--text-soft)">Metoprolol · phase 4, nodes</text>
+
+        <rect x="722" y="224" width="4" height="26" rx="2" fill="var(--trial)"></rect>
+        <text x="738" y="234" fontSize="13.5" fontWeight="600" fill="var(--text)">Class III — K⁺ channels</text>
+        <text x="738" y="252" fontSize="11.5" fill="var(--text-soft)">Amiodarone · phase 3</text>
+
+        <rect x="722" y="280" width="4" height="26" rx="2" fill="var(--dosing)"></rect>
+        <text x="738" y="290" fontSize="13.5" fontWeight="600" fill="var(--text)">Class IV — Ca²⁺ channels</text>
+        <text x="738" y="308" fontSize="11.5" fill="var(--text-soft)">Diltiazem · phase 2, AV node</text>
+
+        <g>
+        <rect x="90" y="440" width="840" height="86" rx="14" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="114" y="472" fontSize="12.5" fill="var(--text-soft)">Phases: 0 upstroke · 1 early repolarization · 2 plateau · 3 repolarization · 4 resting membrane potential.</text>
+        <text x="114" y="500" fontSize="13" fill="var(--text-soft)">Nodal cells depolarize through calcium rather than sodium, which is why beta blockers and diltiazem slow the sinus and AV nodes.</text>
         </g>
-
-        {/* plateau phase 2 (Ca) - Class IV */}
-        <circle cx="230" cy="86" r="5" fill="var(--dosing)" />
-        <g transform="translate(190, 96)">
-          <rect width="180" height="24" rx="7" fill="var(--dosing-bg)" stroke="var(--dosing)" />
-          <text x="90" y="16" textAnchor="middle" fill="var(--dosing)" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)">Class IV: Ca (diltiazem)</text>
-        </g>
-
-        {/* phase 3 repolarization (K) - Class III */}
-        <circle cx="360" cy="150" r="5" fill="var(--trial)" />
-        <g transform="translate(365, 120)">
-          <rect width="185" height="24" rx="7" fill="var(--trial-bg)" stroke="var(--trial)" />
-          <text x="92" y="16" textAnchor="middle" fill="var(--trial)" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)">Class III: K (amiodarone)</text>
-        </g>
-
-        {/* Class II note */}
-        <g transform="translate(60, 258)">
-          <rect width="540" height="30" rx="8" fill="var(--surface-2)" stroke="var(--border-strong)" />
-          <text x="270" y="20" textAnchor="middle" style={soft} fontSize="12">Class II (beta blockers) blunt sympathetic drive, slowing the sinus and AV nodes.</text>
-        </g>
-      </svg>
+        </svg>
     </Figure>
   )
 }

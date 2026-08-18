@@ -1,0 +1,28 @@
+/*
+ * Palette extensions used by the v2 mechanism diagrams.
+ * Import after theme.css. Blue family kept intact; teal added as the one new
+ * hue (beta blockade / class II) plus dark-mode-safe diagram neutrals.
+ */
+
+:root {
+  /* Teal: the single added hue, tuned to sit beside --navy-500 */
+  --teal-50:  #eef9f8;
+  --teal-100: #d7f0ed;
+  --teal-300: #86cfc8;
+  --teal-500: #2f9d95;
+  --teal-700: #1c6a66;
+
+  /* Diagram neutrals */
+  --dx-line: var(--text-mute);   /* connectors and arrowheads */
+  --dx-tube: var(--navy-300);    /* nephron tubule wall */
+}
+
+:root[data-theme='dark'] {
+  --teal-50:  #10302e;
+  --teal-100: #16403d;
+  --teal-300: #3f9a93;
+  --teal-500: #5fc9bf;
+  --teal-700: #8fdcd4;
+
+  --dx-tube: var(--navy-400);
+}
