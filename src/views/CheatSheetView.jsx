@@ -70,6 +70,7 @@ export default function CheatSheetView() {
       )}
 
       <p className="muted sheet__foot">
+        Created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with support from Dr. Amar Thakrar.
         Adapted from the Queen's MEDS230 lectures and DIL cases. Education only, not clinical guidance.
       </p>
     </div>

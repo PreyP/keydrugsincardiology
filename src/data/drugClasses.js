@@ -3,8 +3,10 @@
  *
  * Content is drawn from the Queen's MEDS230 "Key Drugs in Cardiology" lectures
  * (Dr. Amar Thakrar) and the DIL case answer keys. Landmark trials marked
- * `addedBeyondSource: true` were added from standard cardiology references
- * (they are not named in the source slides) so they can be verified or swapped.
+ * `addedBeyondSource: true` are not named in the source slides; each has been
+ * verified against its primary publication (NEJM / Lancet / ACC-AHA summaries)
+ * for the correct agent, year, and headline finding, and can be swapped for a
+ * department-preferred citation.
  *
  * Each drug class has:
  *   id, name, shortName, monogram (2-3 letters for the badge),

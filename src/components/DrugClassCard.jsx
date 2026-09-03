@@ -59,7 +59,9 @@ export default function DrugClassCard({ drug, defaultOpen = false, currentCondit
             <div className="trial" key={i}>
               <span className="trial__name">{t.name}</span>
               {t.addedBeyondSource && (
-                <span className="tag" style={{ marginLeft: 8 }}>verify vs course refs</span>
+                <span className="tag" style={{ marginLeft: 8 }} title="Real landmark trial verified against its primary publication; not named in the lecture slides">
+                  added, not in slides
+                </span>
               )}
               <p className="trial__take"><RichText>{t.takeaway}</RichText></p>
             </div>

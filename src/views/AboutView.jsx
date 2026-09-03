@@ -18,6 +18,10 @@ export default function AboutView() {
       </div>
 
       <h1>Sources and content notes</h1>
+      <p className="byline">
+        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with support
+        from Dr. Amar Thakrar.
+      </p>
       <p className="lead">
         Core content is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures and the
         DIL cases (Dr. Amar Thakrar). This module is for education only and is not clinical guidance.
@@ -33,11 +37,14 @@ export default function AboutView() {
         </ul>
       </div>
 
-      <h2>Trials to verify</h2>
+      <h2>Trials added beyond the slides</h2>
       <p className="muted" style={{ marginTop: '-0.4rem' }}>
-        The source slides name only the CAST trial. The trials below were added from standard
-        references to support the "landmark trials" sections. Please verify or replace them against
-        your department's preferred citations. They are tagged "verify vs course refs" throughout the app.
+        The lecture slides name only the CAST trial. The trials below were added to support the
+        "landmark trials" sections and have each been checked against their primary publication
+        (NEJM, Lancet, or the ACC/AHA trial summaries) for the correct agent, year, and headline
+        finding. They are tagged "added, not in slides" throughout the app. If your department
+        prefers different citations for these teaching points, they are easy to swap in
+        src/data/drugClasses.js.
       </p>
       <div className="card compare" style={{ marginTop: '1rem' }}>
         <div className="compare__scroll">

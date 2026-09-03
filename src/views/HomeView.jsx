@@ -23,6 +23,10 @@ export default function HomeView() {
       </div>
 
       <h1>Key Drugs in Cardiology</h1>
+      <p className="byline">
+        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with support
+        from Dr. Amar Thakrar.
+      </p>
       <p className="lead">
         An interactive module for learning cardiology pharmacotherapy the way it is prescribed:
         organized by the condition you are treating. Review each drug class with its indications,
