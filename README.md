@@ -5,9 +5,8 @@ condition you are treating. Built with React and Vite.
 
 For each condition students can:
 
-- **Learn** the relevant drug classes (indications, mechanism, dosing, side
-  effects, and the landmark trials behind the decisions) and read a worked
-  sample case.
+- **Learn** the relevant drug classes (indications, mechanism, dosing, and side
+  effects) and read a worked sample case.
 - **Practice** with case-based questions in three formats: auto-graded multiple
   choice, short free-text with a model answer, and reveal-to-check flashcards.
 - **Test** themselves against a settable timer, then review a score broken down
@@ -38,7 +37,7 @@ Learning tools inspired by Amboss and Osmosis:
   consequences with a running decision log.
 - **Printable cheat sheets** (`/cheatsheet/:condition`): a print-optimized,
   one-page summary with a save-as-PDF button.
-- **Sources page** (`/about`): consolidates trials flagged for faculty review.
+- **Sources page** (`/about`): the source materials the module is built from.
 
 Content is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures
 and DIL cases (Dr. Amar Thakrar). This is an educational tool, not clinical
@@ -86,9 +85,8 @@ changes are needed to extend it.
   - `{ type: 'free', stem, modelAnswer, hint? }`
   - `{ type: 'flash', front, back }`
 
-Trials marked `addedBeyondSource: true` were added from standard references
-(they are not named in the source slides) and show a "verify vs course refs"
-tag in the UI so they can be checked or swapped.
+Only trials named in the source slides are included (a drug class's `trials`
+array is optional); the Sources page lists them.
 
 ## Deploying
 

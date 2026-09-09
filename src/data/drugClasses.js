@@ -2,11 +2,8 @@
  * Canonical drug-class reference for the module.
  *
  * Content is drawn from the Queen's MEDS230 "Key Drugs in Cardiology" lectures
- * (Dr. Amar Thakrar) and the DIL case answer keys. Landmark trials marked
- * `addedBeyondSource: true` are not named in the source slides; each has been
- * verified against its primary publication (NEJM / Lancet / ACC-AHA summaries)
- * for the correct agent, year, and headline finding, and can be swapped for a
- * department-preferred citation.
+ * (Dr. Amar Thakrar) and the DIL case answer keys. Landmark trials are included
+ * only where the source slides name them (currently CAST).
  *
  * Each drug class has:
  *   id, name, shortName, monogram (2-3 letters for the badge),
@@ -16,7 +13,7 @@
  *   dosing[]     - representative dosing (reference only; the course notes dosing
  *                  is secondary to knowing class / indication / adverse effects)
  *   sideEffects[]- key adverse effects, cautions flagged with `caution: true`
- *   trials[]     - landmark evidence { name, takeaway, addedBeyondSource? }
+ *   trials[]     - landmark evidence { name, takeaway } (optional)
  *   pearls[]     - teaching pearls / mnemonics (optional)
  */
 
@@ -43,14 +40,6 @@ export const drugClasses = [
       { text: 'GI upset, nausea' },
       { text: 'Can exacerbate asthma or gout in sensitive patients' },
     ],
-    trials: [
-      {
-        name: 'ISIS-2 (1988)',
-        takeaway:
-          'Aspirin in acute MI reduced vascular mortality, with benefit additive to thrombolysis. A foundation of antiplatelet therapy in ACS.',
-        addedBeyondSource: true,
-      },
-    ],
     pearls: ['Remembered in the ACS mnemonic ASA / APA / BETA / STATA / PRIL as the first "A".'],
   },
   {
@@ -75,19 +64,6 @@ export const drugClasses = [
       { text: 'Bleeding', caution: true },
       { text: 'Dyspepsia, diarrhea' },
       { text: 'Dyspnea, specific to ticagrelor' },
-    ],
-    trials: [
-      {
-        name: 'PLATO (2009)',
-        takeaway:
-          'Ticagrelor reduced cardiovascular death, MI, and stroke versus clopidogrel in ACS, with more non-procedural bleeding.',
-        addedBeyondSource: true,
-      },
-      {
-        name: 'CURE (2001)',
-        takeaway: 'Clopidogrel added to aspirin reduced ischemic events in non-ST-elevation ACS.',
-        addedBeyondSource: true,
-      },
     ],
   },
   {
@@ -116,18 +92,6 @@ export const drugClasses = [
       { text: 'Low mood / depression, fatigue' },
       { text: 'Sexual dysfunction / impotence' },
     ],
-    trials: [
-      {
-        name: 'MERIT-HF (1999)',
-        takeaway: 'Metoprolol succinate reduced mortality in HFrEF.',
-        addedBeyondSource: true,
-      },
-      {
-        name: 'CIBIS-II (1999)',
-        takeaway: 'Bisoprolol reduced mortality in HFrEF.',
-        addedBeyondSource: true,
-      },
-    ],
     pearls: [
       'In heart failure the primary benefit is neurohormonal blockade, preventing chronic overstimulation and negative remodeling, not just rate control.',
     ],
@@ -153,14 +117,6 @@ export const drugClasses = [
       { text: 'Mild GI upset' },
       { text: 'Hepatotoxicity, small risk, higher with excess alcohol' },
     ],
-    trials: [
-      {
-        name: '4S (1994)',
-        takeaway:
-          'Simvastatin reduced mortality in patients with coronary disease, establishing statins for secondary prevention.',
-        addedBeyondSource: true,
-      },
-    ],
   },
   {
     id: 'ace-inhibitor',
@@ -184,18 +140,6 @@ export const drugClasses = [
       { text: 'Dry cough' },
       { text: 'Rare: angioedema, agranulocytosis', caution: true },
     ],
-    trials: [
-      {
-        name: 'SOLVD (1991)',
-        takeaway: 'Enalapril reduced mortality and hospitalization in HFrEF.',
-        addedBeyondSource: true,
-      },
-      {
-        name: 'HOPE (2000)',
-        takeaway: 'Ramipril reduced cardiovascular events in high-risk vascular patients.',
-        addedBeyondSource: true,
-      },
-    ],
   },
   {
     id: 'nitrate',
@@ -218,14 +162,6 @@ export const drugClasses = [
       { text: 'Headache' },
       { text: 'Hypotension', caution: true },
       { text: 'Avoid with recent PDE-5 inhibitor use and use caution in inferior / right ventricular MI', caution: true },
-    ],
-    trials: [
-      {
-        name: 'GISSI-3 / ISIS-4',
-        takeaway:
-          'Nitrates relieve symptoms but did not show a mortality benefit in acute MI; they are used for symptom control.',
-        addedBeyondSource: true,
-      },
     ],
   },
   {
@@ -313,18 +249,6 @@ export const drugClasses = [
       { text: 'Gynecomastia' },
       { text: 'Menstrual irregularities' },
     ],
-    trials: [
-      {
-        name: 'RALES (1999)',
-        takeaway: 'Spironolactone reduced mortality in severe HFrEF.',
-        addedBeyondSource: true,
-      },
-      {
-        name: 'EMPHASIS-HF (2011)',
-        takeaway: 'Eplerenone reduced mortality and hospitalization in mild (NYHA II) HFrEF.',
-        addedBeyondSource: true,
-      },
-    ],
   },
   {
     id: 'digoxin',
@@ -345,13 +269,6 @@ export const drugClasses = [
       { text: 'Xanthopsia (yellow-tinged vision)' },
       { text: 'Nausea, vomiting' },
       { text: 'Toxicity is potentiated by hypokalemia', caution: true },
-    ],
-    trials: [
-      {
-        name: 'DIG trial (1997)',
-        takeaway: 'Digoxin reduced heart failure hospitalizations but was mortality-neutral.',
-        addedBeyondSource: true,
-      },
     ],
   },
   {
@@ -374,13 +291,6 @@ export const drugClasses = [
       { text: 'Hyperkalemia' },
       { text: 'Contraindicated with a history of angioedema (see the omapatrilat story)', caution: true },
     ],
-    trials: [
-      {
-        name: 'PARADIGM-HF (2014)',
-        takeaway: 'Sacubitril/valsartan was superior to enalapril for cardiovascular death and HF hospitalization in HFrEF.',
-        addedBeyondSource: true,
-      },
-    ],
   },
   {
     id: 'ivabradine',
@@ -398,13 +308,6 @@ export const drugClasses = [
       { text: 'Bradycardia', caution: true },
       { text: 'Phosphenes (transient luminous visual phenomena)' },
       { text: 'Atrial fibrillation' },
-    ],
-    trials: [
-      {
-        name: 'SHIFT (2010)',
-        takeaway: 'Ivabradine reduced heart failure hospitalizations in HFrEF patients in sinus rhythm with HR >= 70.',
-        addedBeyondSource: true,
-      },
     ],
   },
   {
@@ -424,18 +327,6 @@ export const drugClasses = [
       { text: 'Genital mycotic infections' },
       { text: 'Volume depletion' },
       { text: 'Euglycemic diabetic ketoacidosis (rare)', caution: true },
-    ],
-    trials: [
-      {
-        name: 'DAPA-HF (2019)',
-        takeaway: 'Dapagliflozin reduced worsening heart failure and cardiovascular death in HFrEF, including patients without diabetes.',
-        addedBeyondSource: true,
-      },
-      {
-        name: 'EMPEROR-Reduced (2020)',
-        takeaway: 'Empagliflozin reduced cardiovascular death or HF hospitalization in HFrEF.',
-        addedBeyondSource: true,
-      },
     ],
   },
   {
@@ -474,14 +365,6 @@ export const drugClasses = [
       {
         text: 'Contraindicated with mechanical valves, rheumatic / valvular AF, and significant liver or renal dysfunction',
         caution: true,
-      },
-    ],
-    trials: [
-      {
-        name: 'RE-LY, ROCKET-AF, ARISTOTLE',
-        takeaway:
-          'DOACs were non-inferior or superior to warfarin for stroke prevention in atrial fibrillation with less intracranial bleeding.',
-        addedBeyondSource: true,
       },
     ],
     pearls: ['Preferred over warfarin in most non-valvular AF, but warfarin may be chosen when bleeding risk needs a reversible, monitorable agent.'],

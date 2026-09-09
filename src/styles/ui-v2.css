@@ -97,7 +97,6 @@ p { text-wrap: pretty; }
 /* ---------- Trials ---------- */
 .trial__name { font-family: var(--font-sans); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .trial__take { font-size: 0.96rem; color: var(--text-soft); }
-.trial .tag { font-size: 0.62rem; }
 
 /* ---------- Cross-reference footer ---------- */
 .crossref { background: color-mix(in srgb, var(--surface-2) 45%, var(--surface)); }

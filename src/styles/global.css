@@ -193,7 +193,6 @@ a.card:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-co
 }
 :root[data-theme='dark'] .trial { border-color: var(--border-strong); }
 .trial__name { font-weight: 600; color: var(--trial); }
-.trial__flag { margin-left: 0.5rem; }
 .trial__take { margin: 0.4rem 0 0; }
 
 /* ---------- Drug class disclosure card ---------- */
