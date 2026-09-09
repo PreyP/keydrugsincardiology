@@ -27,7 +27,12 @@ export function useProgress() {
 
   const persist = useCallback((next) => {
     setState(next)
-    localStorage.setItem(KEY, JSON.stringify(next))
+    // Private-mode browsers throw on write; keep the in-memory state either way.
+    try {
+      localStorage.setItem(KEY, JSON.stringify(next))
+    } catch {
+      /* progress will not survive a reload in this context */
+    }
   }, [])
 
   const toggleLearned = useCallback(

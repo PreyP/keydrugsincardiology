@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useId } from 'react'
 import { buildQuestionBank, shuffle } from '../data/quiz.js'
 import { conditionById } from '../data/conditions.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
+import ChoiceButton from '../components/ChoiceButton.jsx'
 import { useProgress } from '../hooks/useProgress.js'
-import { useSRS } from '../hooks/useSRS.js'
 import { Link } from 'react-router-dom'
-import { Timer, Cards } from '../components/Icons.jsx'
+import { Timer, ClipboardCheck } from '../components/Icons.jsx'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -15,36 +15,43 @@ function fmt(sec) {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+/* Spoken form of the countdown, only at the thresholds that matter. */
+function timeCallout(sec) {
+  if (sec === 60) return '1 minute remaining'
+  if (sec === 30) return '30 seconds remaining'
+  if (sec === 10) return '10 seconds remaining'
+  if (sec === 0) return "Time's up"
+  return null
+}
+
 /* ---- Setup screen ---- */
 function Setup({ onStart, bankSize }) {
   const [count, setCount] = useState(Math.min(10, bankSize))
   const [minutes, setMinutes] = useState(5)
+  const countId = useId()
+  const minutesId = useId()
 
   return (
     <div className="card" style={{ padding: '1.5rem', maxWidth: 520 }}>
       <h3 style={{ marginTop: 0 }}>Set up your test</h3>
       <p className="muted">Choose how many questions and how long you have. Questions are shuffled.</p>
 
-      <label className="nav-section-label" style={{ margin: '1rem 0 0.35rem', display: 'block' }}>
-        Number of questions
-      </label>
-      <select className="select" value={count} onChange={(e) => setCount(Number(e.target.value))}>
+      <label className="field-label" htmlFor={countId}>Number of questions</label>
+      <select id={countId} className="select" value={count} onChange={(e) => setCount(Number(e.target.value))}>
         {[5, 10, 15, bankSize].filter((n, i, a) => n <= bankSize && a.indexOf(n) === i).map((n) => (
           <option key={n} value={n}>{n === bankSize ? `${n} (all)` : n}</option>
         ))}
       </select>
 
-      <label className="nav-section-label" style={{ margin: '1.25rem 0 0.35rem', display: 'block' }}>
-        Timer
-      </label>
-      <select className="select" value={minutes} onChange={(e) => setMinutes(Number(e.target.value))}>
+      <label className="field-label" htmlFor={minutesId}>Timer</label>
+      <select id={minutesId} className="select" value={minutes} onChange={(e) => setMinutes(Number(e.target.value))}>
         {[3, 5, 10, 15, 20].map((m) => (
           <option key={m} value={m}>{m} minutes</option>
         ))}
       </select>
 
       <div style={{ marginTop: '1.5rem' }}>
-        <button className="btn btn--primary" onClick={() => onStart(count, minutes * 60)}>
+        <button type="button" className="btn btn--primary" onClick={() => onStart(count, minutes * 60)}>
           <Timer size={17} /> Start test
         </button>
       </div>
@@ -53,31 +60,14 @@ function Setup({ onStart, bankSize }) {
 }
 
 /* ---- Results screen ---- */
-function stemHash(s) {
-  let h = 0
-  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0
-  return Math.abs(h).toString(36)
-}
-
 function Results({ questions, answers, confidence, onRestart, timeUp }) {
   const { recordScore } = useProgress()
-  const { addMissed } = useSRS()
   const correct = questions.reduce((n, q, i) => n + (answers[i] === q.answer ? 1 : 0), 0)
   const pct = Math.round((correct / questions.length) * 100)
 
-  // Record best score and add every missed question to the review deck.
+  // Record the best score once, on mount.
   useEffect(() => {
     recordScore(pct)
-    questions.forEach((q, i) => {
-      if (answers[i] !== undefined && answers[i] !== q.answer) {
-        addMissed({
-          id: `mc:${q.conditionId}:${stemHash(q.stem)}`,
-          front: q.stem,
-          back: `${q.choices[q.answer]}. ${q.explanation}`,
-          conditionId: q.conditionId,
-        })
-      }
-    })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const byTopic = {}
@@ -88,15 +78,15 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
     if (answers[i] === q.answer) byTopic[key].correct += 1
   })
 
-  // Wrong-but-confident: the highest-priority review bucket.
+  // Wrong-but-confident: the highest-priority study bucket.
   const wrongConfident = questions
     .map((q, i) => ({ q, i }))
-    .filter(({ q, i }) => answers[i] !== undefined && answers[i] !== q.answer && confidence[i] === true)
+    .filter(({ i }) => answers[i] !== undefined && answers[i] !== questions[i].answer && confidence[i] === true)
 
   return (
     <div>
       <div className="card" style={{ padding: '1.75rem', textAlign: 'center', marginBottom: '1.5rem' }}>
-        {timeUp && <p className="tag" style={{ color: 'var(--caution)' }}>Time expired</p>}
+        {timeUp && <p className="tag tag--caution">Time expired</p>}
         <div className="score-ring" style={{ '--score-deg': `${pct * 3.6}deg` }}>
           <div className="score-ring__inner">{pct}%</div>
         </div>
@@ -112,8 +102,8 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
         </div>
 
         <div className="row" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
-          <button className="btn btn--primary" onClick={onRestart}>New test</button>
-          <Link to="/review" className="btn btn--ghost"><Cards size={16} /> Review missed cards</Link>
+          <button type="button" className="btn btn--primary" onClick={onRestart}>New test</button>
+          <Link to="/practice" className="btn btn--ghost"><ClipboardCheck size={16} /> Practise the cases</Link>
         </div>
       </div>
 
@@ -124,7 +114,8 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
             <span className="muted" style={{ fontSize: '0.88rem' }}>Wrong, but you felt sure</span>
           </div>
           <p className="muted" style={{ fontSize: '0.9rem', margin: '0 0 0.75rem' }}>
-            These are your blind spots: confident answers that were wrong. They have been added to your review deck.
+            These are your blind spots: confident answers that turned out wrong. Start your next study
+            session here.
           </p>
           <ul style={{ margin: 0 }}>
             {wrongConfident.map(({ q, i }) => (
@@ -146,17 +137,17 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
                 {confidence[i] !== undefined && (
                   <span className="tag">{confidence[i] ? 'was sure' : 'was unsure'}</span>
                 )}
-                <span className="tag" style={{ color: gotIt ? 'var(--correct)' : 'var(--incorrect)' }}>
+                <span className={`tag ${gotIt ? 'tag--correct' : 'tag--caution'}`}>
                   {gotIt ? 'Correct' : userAns == null ? 'Unanswered' : 'Incorrect'}
                 </span>
               </span>
             </div>
             <p style={{ fontWeight: 600, margin: '0.6rem 0' }}>{q.stem}</p>
-            <p style={{ margin: '0 0 0.3rem', color: 'var(--correct)' }}>
+            <p className="answer-line answer-line--correct">
               Answer: {KEYS[q.answer]}. {q.choices[q.answer]}
             </p>
             {!gotIt && userAns != null && (
-              <p style={{ margin: '0 0 0.3rem', color: 'var(--incorrect)' }}>
+              <p className="answer-line answer-line--wrong">
                 You chose: {KEYS[userAns]}. {q.choices[userAns]}
               </p>
             )}
@@ -174,31 +165,35 @@ function Active({ questions, seconds, onFinish }) {
   const [answers, setAnswers] = useState({})
   const [confidence, setConfidence] = useState({})
   const [remaining, setRemaining] = useState(seconds)
+  const [callout, setCallout] = useState('')
   const finishedRef = useRef(false)
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setRemaining((r) => {
-        if (r <= 1) {
-          clearInterval(t)
-          if (!finishedRef.current) {
-            finishedRef.current = true
-            onFinish(answersRef.current, confidenceRef.current, true)
-          }
-          return 0
-        }
-        return r - 1
-      })
-    }, 1000)
-    return () => clearInterval(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const confGroupId = useId()
 
   // keep refs for the timeout callback
   const answersRef = useRef(answers)
   answersRef.current = answers
   const confidenceRef = useRef(confidence)
   confidenceRef.current = confidence
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setRemaining((r) => {
+        const nextR = r <= 1 ? 0 : r - 1
+        const spoken = timeCallout(nextR)
+        if (spoken) setCallout(spoken)
+        if (nextR === 0) {
+          clearInterval(t)
+          if (!finishedRef.current) {
+            finishedRef.current = true
+            onFinish(answersRef.current, confidenceRef.current, true)
+          }
+        }
+        return nextR
+      })
+    }, 1000)
+    return () => clearInterval(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const q = questions[idx]
   const picked = answers[idx]
@@ -222,33 +217,54 @@ function Active({ questions, seconds, onFinish }) {
   }
 
   const answeredCount = Object.keys(answers).length
-  const pctDone = (answeredCount / questions.length) * 100
+  const fraction = answeredCount / questions.length
   const timerCls = remaining <= 30 ? 'timer danger' : remaining <= 60 ? 'timer warn' : 'timer'
 
   return (
     <div>
       <div className="row" style={{ justifyContent: 'space-between' }}>
         <span className="muted">Question {idx + 1} of {questions.length}</span>
-        <span className={timerCls}>{fmt(remaining)}</span>
+        <span className={timerCls} role="timer" aria-label={`Time remaining ${fmt(remaining)}`}>
+          {fmt(remaining)}
+        </span>
       </div>
-      <div className="progress"><div className="progress__bar" style={{ width: `${pctDone}%` }} /></div>
+      <div className="sr-only" role="status" aria-live="assertive">{callout}</div>
+      <div
+        className="progress"
+        role="progressbar"
+        aria-label="Questions answered"
+        aria-valuenow={answeredCount}
+        aria-valuemin={0}
+        aria-valuemax={questions.length}
+      >
+        <div className="progress__bar" style={{ transform: `scaleX(${fraction})` }} />
+      </div>
 
       <div className="card" style={{ padding: '1.35rem' }}>
         <span className="tag">{conditionById[q.conditionId]?.shortName || q.conditionId}</span>
         <p className="question__stem" style={{ marginTop: '0.7rem' }}>{q.stem}</p>
         {q.choices.map((choice, i) => {
-          let cls = 'choice'
-          if (answered && i === q.answer) cls += ' correct'
-          else if (answered && i === picked) cls += ' incorrect'
+          const state = !answered
+            ? 'idle'
+            : i === q.answer
+              ? 'correct'
+              : i === picked
+                ? 'incorrect'
+                : 'idle'
           return (
-            <button key={i} className={cls} onClick={() => choose(i)} disabled={answered}>
-              <span className="choice__key">{KEYS[i]}</span>
-              <span>{choice}</span>
-            </button>
+            <ChoiceButton
+              key={i}
+              letter={KEYS[i]}
+              state={state}
+              disabled={answered}
+              onClick={() => choose(i)}
+            >
+              {choice}
+            </ChoiceButton>
           )
         })}
         {answered && (
-          <div className="explain">
+          <div className="explain" role="status" aria-live="polite">
             <div className="explain__label">{picked === q.answer ? 'Correct' : 'Explanation'}</div>
             {q.explanation}
           </div>
@@ -256,22 +272,26 @@ function Active({ questions, seconds, onFinish }) {
       </div>
 
       {answered && (
-        <div className="row conf-row" style={{ marginTop: '0.9rem' }}>
-          <span className="muted" style={{ fontSize: '0.85rem' }}>How sure were you?</span>
+        <div className="row conf-row" style={{ marginTop: '0.9rem' }} role="group" aria-labelledby={confGroupId}>
+          <span className="muted" id={confGroupId} style={{ fontSize: '0.85rem' }}>How sure were you?</span>
           <button
+            type="button"
             className={`conf-chip ${confidence[idx] === true ? 'is-on' : ''}`}
+            aria-pressed={confidence[idx] === true}
             onClick={() => setConf(true)}
           >Sure</button>
           <button
-            className={`conf-chip ${confidence[idx] === false ? 'is-on conf-chip--unsure' : ''}`}
+            type="button"
+            className={`conf-chip conf-chip--unsure ${confidence[idx] === false ? 'is-on' : ''}`}
+            aria-pressed={confidence[idx] === false}
             onClick={() => setConf(false)}
           >Unsure</button>
         </div>
       )}
 
       <div className="row" style={{ justifyContent: 'flex-end', marginTop: '1rem' }}>
-        <button className="btn btn--ghost btn--sm" onClick={next}>Skip</button>
-        <button className="btn btn--primary" onClick={next} disabled={!answered}>
+        <button type="button" className="btn btn--ghost btn--sm" onClick={next}>Skip</button>
+        <button type="button" className="btn btn--primary" onClick={next} disabled={!answered}>
           {idx + 1 === questions.length ? 'Finish' : 'Next'}
         </button>
       </div>

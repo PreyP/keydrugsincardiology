@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
+import ChoiceButton from './ChoiceButton.jsx'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -17,14 +18,23 @@ export function MultipleChoice({ q, onAnswered }) {
     <div className="question">
       <p className="question__stem">{q.stem}</p>
       {q.choices.map((choice, i) => {
-        let cls = 'choice'
-        if (done && i === q.answer) cls += ' correct'
-        else if (done && i === picked) cls += ' incorrect'
+        const state = !done
+          ? 'idle'
+          : i === q.answer
+            ? 'correct'
+            : i === picked
+              ? 'incorrect'
+              : 'idle'
         return (
-          <button key={i} className={cls} onClick={() => choose(i)} disabled={done}>
-            <span className="choice__key">{KEYS[i]}</span>
-            <span>{choice}</span>
-          </button>
+          <ChoiceButton
+            key={i}
+            letter={KEYS[i]}
+            state={state}
+            disabled={done}
+            onClick={() => choose(i)}
+          >
+            {choice}
+          </ChoiceButton>
         )
       })}
       {done && (
@@ -43,25 +53,30 @@ export function MultipleChoice({ q, onAnswered }) {
 export function FreeText({ q }) {
   const [text, setText] = useState('')
   const [revealed, setRevealed] = useState(false)
+  const fieldId = useId()
+  const hintId = useId()
+
   return (
     <div className="question">
-      <p className="question__stem">{q.stem}</p>
+      <label className="question__stem" htmlFor={fieldId}>{q.stem}</label>
       <textarea
+        id={fieldId}
         className="freetext"
         placeholder="Write your answer, then reveal the model answer to compare."
+        aria-describedby={q.hint && !revealed ? hintId : undefined}
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
       <div className="row" style={{ marginTop: '0.6rem' }}>
         {!revealed && (
-          <button className="btn btn--primary btn--sm" onClick={() => setRevealed(true)}>
+          <button type="button" className="btn btn--primary btn--sm" onClick={() => setRevealed(true)}>
             Reveal model answer
           </button>
         )}
-        {!revealed && q.hint && <span className="muted">Hint: {q.hint}</span>}
+        {!revealed && q.hint && <span className="muted" id={hintId}>Hint: {q.hint}</span>}
       </div>
       {revealed && (
-        <div className="explain">
+        <div className="explain" role="status" aria-live="polite">
           <div className="explain__label">Model answer</div>
           {q.modelAnswer}
         </div>
@@ -73,16 +88,22 @@ export function FreeText({ q }) {
 /* Flashcard: prompt on front, reveal the back. */
 export function Flashcard({ q }) {
   const [flipped, setFlipped] = useState(false)
+  const backId = useId()
+
   return (
-    <div className="flashcard" onClick={() => setFlipped((f) => !f)} role="button" tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setFlipped((f) => !f) }}>
-      <div className="flashcard__front">{q.front}</div>
-      {flipped ? (
-        <div className="flashcard__back">{q.back}</div>
-      ) : (
-        <span className="muted" style={{ fontSize: '0.85rem' }}>Click to reveal</span>
-      )}
-    </div>
+    <button
+      type="button"
+      className="flashcard"
+      aria-expanded={flipped}
+      aria-controls={backId}
+      onClick={() => setFlipped((f) => !f)}
+    >
+      <span className="flashcard__front">{q.front}</span>
+      <span id={backId} className="flashcard__back" hidden={!flipped}>
+        {flipped ? q.back : null}
+      </span>
+      {!flipped && <span className="flashcard__hint">Reveal answer</span>}
+    </button>
   )
 }
 

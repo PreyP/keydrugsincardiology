@@ -1,27 +1,11 @@
-import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useId, useState } from 'react'
 import { drugClasses } from '../data/drugClasses.js'
 import DrugClassCard from '../components/DrugClassCard.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 
 export default function DrugLibraryView() {
   const [query, setQuery] = useState('')
-  const location = useLocation()
-
-  // Scroll to a drug when arriving via /drugs#drugId (from a bubble link).
-  useEffect(() => {
-    const id = location.hash.replace('#', '')
-    if (!id) return
-    const t = setTimeout(() => {
-      const el = document.getElementById(id)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        el.classList.add('flash-highlight')
-        setTimeout(() => el.classList.remove('flash-highlight'), 1600)
-      }
-    }, 60)
-    return () => clearTimeout(t)
-  }, [location.hash])
+  const fieldId = useId()
 
   const q = query.trim().toLowerCase()
   const list = q
@@ -46,14 +30,17 @@ export default function DrugLibraryView() {
         so you can move between the pharmacology and the clinical context.
       </p>
 
+      <label className="sr-only" htmlFor={fieldId}>Filter drugs by name or example agent</label>
       <input
+        id={fieldId}
         className="search-input"
+        type="search"
         placeholder="Filter drugs by name or example agent"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      <p className="muted" style={{ fontSize: '0.9rem', margin: '0.75rem 0 1.5rem' }}>
+      <p className="muted" style={{ fontSize: '0.9rem', margin: '0.75rem 0 1.5rem' }} aria-live="polite">
         {sorted.length} drug {sorted.length === 1 ? 'class' : 'classes'}
       </p>
 

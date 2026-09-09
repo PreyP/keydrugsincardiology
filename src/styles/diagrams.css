@@ -9,6 +9,9 @@
 .figure__sub { color: var(--text-mute); font-size: 0.92rem; font-style: italic; margin-top: 0.15rem; }
 .figure__svg { overflow-x: auto; }
 .figure__svg svg { display: block; min-width: 620px; }
+/* Diagram labels use the sans stack (CSS vars don't resolve in SVG presentation
+   attributes, so this must be a real style rule, not an attribute). */
+[data-diagram] text { font-family: var(--font-sans); }
 
 /* Diagrams read better a little wider than the text column. */
 @media (min-width: 1180px) {

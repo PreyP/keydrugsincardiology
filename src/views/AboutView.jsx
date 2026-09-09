@@ -19,8 +19,8 @@ export default function AboutView() {
 
       <h1>Sources and content notes</h1>
       <p className="byline">
-        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with support
-        from Dr. Amar Thakrar.
+        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with content
+        and support from Dr. Thakrar.
       </p>
       <p className="lead">
         Core content is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures and the
@@ -47,15 +47,20 @@ export default function AboutView() {
         src/data/drugClasses.js.
       </p>
       <div className="card compare" style={{ marginTop: '1rem' }}>
-        <div className="compare__scroll">
+        <div className="compare__scroll" tabIndex={0} role="region" aria-label="Trials added beyond the slides — table, scrolls horizontally">
           <table className="compare__table">
+            <caption className="sr-only">Landmark trials added beyond the lecture slides, with the agent and stated takeaway.</caption>
             <thead>
-              <tr><th className="compare__rowhead">Drug</th><th>Trial</th><th>Stated takeaway</th></tr>
+              <tr>
+                <th scope="col" className="compare__rowhead">Drug</th>
+                <th scope="col">Trial</th>
+                <th scope="col">Stated takeaway</th>
+              </tr>
             </thead>
             <tbody>
               {added.map((t, i) => (
                 <tr key={i}>
-                  <td className="compare__rowhead">{t.drug}</td>
+                  <th scope="row" className="compare__rowhead">{t.drug}</th>
                   <td>{t.name}</td>
                   <td>{t.takeaway}</td>
                 </tr>
@@ -69,15 +74,20 @@ export default function AboutView() {
         <>
           <h2 style={{ marginTop: '2rem' }}>From the source slides</h2>
           <div className="card compare">
-            <div className="compare__scroll">
+            <div className="compare__scroll" tabIndex={0} role="region" aria-label="Trials from the source slides — table, scrolls horizontally">
               <table className="compare__table">
+                <caption className="sr-only">Landmark trials named in the source lecture slides, with the agent and takeaway.</caption>
                 <thead>
-                  <tr><th className="compare__rowhead">Drug</th><th>Trial</th><th>Takeaway</th></tr>
+                  <tr>
+                    <th scope="col" className="compare__rowhead">Drug</th>
+                    <th scope="col">Trial</th>
+                    <th scope="col">Takeaway</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {fromSource.map((t, i) => (
                     <tr key={i}>
-                      <td className="compare__rowhead">{t.drug}</td>
+                      <th scope="row" className="compare__rowhead">{t.drug}</th>
                       <td>{t.name}</td>
                       <td>{t.takeaway}</td>
                     </tr>

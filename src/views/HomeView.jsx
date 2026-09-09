@@ -3,14 +3,12 @@ import { conditions, categories } from '../data/conditions.js'
 import { drugClasses } from '../data/drugClasses.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import { useProgress } from '../hooks/useProgress.js'
-import { useSRS } from '../hooks/useSRS.js'
-import { Book, ClipboardCheck, Timer, ChevronRight, Pill, Cards, Route } from '../components/Icons.jsx'
+import { Book, ClipboardCheck, Timer, ChevronRight, Pill, Route, Check } from '../components/Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
 export default function HomeView() {
   const { learnedCount, bestScore, isLearned } = useProgress()
-  const { dueCount } = useSRS()
   const pct = Math.round((learnedCount / conditions.length) * 100)
   const nextUp = conditions.find((c) => !isLearned(c.id))
 
@@ -24,8 +22,8 @@ export default function HomeView() {
 
       <h1>Key Drugs in Cardiology</h1>
       <p className="byline">
-        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with support
-        from Dr. Amar Thakrar.
+        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with content
+        and support from Dr. Thakrar.
       </p>
       <p className="lead">
         An interactive module for learning cardiology pharmacotherapy the way it is prescribed:
@@ -35,14 +33,14 @@ export default function HomeView() {
       </p>
 
       {/* Continue / up-next banner */}
-      <Link to={nextUp ? `/learn/${nextUp.id}` : '/review'} className="continue-banner card">
-        <span className="continue-banner__icon"><Route size={20} /></span>
+      <Link to={nextUp ? `/learn/${nextUp.id}` : '/test'} className="continue-banner card">
+        <span className="continue-banner__icon" aria-hidden="true"><Route size={20} /></span>
         <span className="continue-banner__text">
           <span className="continue-banner__eyebrow">{nextUp ? 'Continue learning' : 'All conditions learned'}</span>
-          <strong>{nextUp ? nextUp.name : 'Keep your review deck sharp'}</strong>
+          <strong>{nextUp ? nextUp.name : 'Put it to the test'}</strong>
         </span>
         <span className="continue-banner__go">
-          {nextUp ? 'Start' : 'Review'} <ChevronRight size={16} />
+          {nextUp ? 'Start' : 'Test'} <ChevronRight size={16} aria-hidden="true" />
         </span>
       </Link>
 
@@ -62,36 +60,23 @@ export default function HomeView() {
           </div>
         </div>
         <div className="progress-strip__cta">
-          <Link to="/test" className="btn btn--primary btn--sm"><Timer size={15} /> Test yourself</Link>
+          <Link to="/test" className="btn btn--primary btn--sm"><Timer size={15} aria-hidden="true" /> Test yourself</Link>
         </div>
       </div>
 
-      <div className="row" style={{ margin: '1.5rem 0 2rem' }}>
+      <div className="row" style={{ margin: '1.5rem 0 1.75rem' }}>
         <Link to="/practice" className="btn btn--primary">
-          <ClipboardCheck size={17} /> Work through cases
-        </Link>
-        <Link to="/review" className="btn btn--ghost">
-          <Cards size={17} /> Review deck{dueCount > 0 ? ` (${dueCount} due)` : ''}
+          <ClipboardCheck size={17} aria-hidden="true" /> Work through cases
         </Link>
         <Link to="/drugs" className="btn btn--ghost">
-          <Pill size={17} /> Drug library
+          <Pill size={17} aria-hidden="true" /> Drug library
         </Link>
       </div>
 
-      <div className="row" style={{ gap: '2.5rem', marginBottom: '2rem' }}>
-        <div>
-          <div className="stat-num">{conditions.length}</div>
-          <div className="muted">conditions</div>
-        </div>
-        <div>
-          <div className="stat-num">{drugClasses.length}</div>
-          <div className="muted">drug classes</div>
-        </div>
-        <div>
-          <div className="stat-num">3</div>
-          <div className="muted">practice formats</div>
-        </div>
-      </div>
+      <p className="muted" style={{ margin: '0 0 2.25rem' }}>
+        {drugClasses.length} drug classes across {conditions.length} conditions, each one to learn,
+        practise, and test.
+      </p>
 
       {catOrder.map((cat) => {
         const items = conditions.filter((c) => c.category === cat)
@@ -109,7 +94,9 @@ export default function HomeView() {
                 >
                   <div className="row" style={{ justifyContent: 'space-between' }}>
                     <strong>{c.name}</strong>
-                    {isLearned(c.id) ? <span className="learned-dot" title="Marked learned">✓</span> : <ChevronRight size={18} />}
+                    {isLearned(c.id)
+                      ? <span className="learned-dot"><Check size={14} aria-hidden="true" /><span className="sr-only">Marked learned</span></span>
+                      : <ChevronRight size={18} aria-hidden="true" />}
                   </div>
                   <p className="muted" style={{ margin: '0.45rem 0 0', fontSize: '0.92rem' }}>
                     {c.oneLiner}
@@ -126,7 +113,7 @@ export default function HomeView() {
 
       <div className="card" style={{ padding: '1.35rem 1.5rem', marginTop: '1rem' }}>
         <div className="row" style={{ gap: '0.6rem' }}>
-          <Book size={18} />
+          <Book size={18} aria-hidden="true" />
           <strong>How to use this module</strong>
         </div>
         <ol style={{ marginTop: '0.75rem', marginBottom: 0 }}>

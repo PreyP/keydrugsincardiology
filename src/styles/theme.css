@@ -43,12 +43,16 @@
   --indication-bg:   #e8f1fb;
   --caution:         #c0392b; /* red: contraindications / warnings */
   --caution-bg:      #fbecea;
-  --sideeffect:      #b26a00; /* amber: adverse effects */
+  --sideeffect:      #8a5300; /* amber: adverse effects (AA on white at text sizes) */
   --sideeffect-bg:   #fbf1e0;
-  --trial:           #4a7cbe; /* blue: landmark trials / evidence */
+  --trial:           #3f6ca8; /* blue: landmark trials / evidence */
   --trial-bg:        #eaf2fc;
   --dosing:          #2b5b9c; /* blue: dosing */
   --dosing-bg:       #e8f1fb;
+
+  /* Text that sits on the always-dark brand surfaces (navy gradients, active
+     nav, primary buttons, semantic keys). Fixed white in both themes. */
+  --on-accent: #ffffff;
 
   /* Neutral surfaces (light) */
   --bg:            #f4f8fd;
@@ -64,7 +68,7 @@
   /* Text */
   --text:      #0d1f36;
   --text-soft: #3c536e;
-  --text-mute: #6b7f96;
+  --text-mute: #566579; /* AA (>=4.5:1) on --bg / --surface / --surface-2 */
   --text-inv:  #ffffff;
 
   /* Feedback */

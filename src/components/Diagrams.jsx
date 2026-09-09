@@ -29,7 +29,15 @@ export function OxygenBalanceDiagram() {
       title="Myocardial oxygen supply and demand"
       caption="Antianginal therapy tips the balance: raise supply, lower demand."
     >
-      <svg data-diagram="oxygen" viewBox="0 110 960 410" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="Balance of myocardial oxygen supply and demand" fontFamily="var(--font-sans)">
+      <svg data-diagram="oxygen" viewBox="0 110 960 410" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-oxygen-t dx-oxygen-d">
+        <title id="dx-oxygen-t">Myocardial oxygen supply and demand</title>
+        <desc id="dx-oxygen-d">
+          A balance scale. On the supply side: coronary blood flow and diastolic filling time,
+          raised by coronary vasodilation and a longer diastole. On the demand side: heart rate,
+          contractility, and wall stress from preload and afterload, lowered by beta blockers,
+          nitrates, and calcium channel blockers. Ischemia appears when demand outruns supply, and
+          antianginal drugs act on whichever side of the balance is loaded.
+        </desc>
         <line x1="140" y1="152" x2="820" y2="196" stroke="var(--border-strong)" strokeWidth="7" strokeLinecap="round"></line>
         <polygon points="480,196 452,268 508,268" fill="var(--navy-200)"></polygon>
         <rect x="436" y="268" width="88" height="12" rx="6" fill="var(--border-strong)"></rect>
@@ -92,7 +100,17 @@ export function RaasDiagram() {
       title="Renin-angiotensin-aldosterone system"
       caption="ACE inhibitors block the conversion to angiotensin II; ARBs and ARNIs block the receptor."
     >
-      <svg data-diagram="raas" viewBox="0 0 960 700" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="RAAS pathway with drug block points" fontFamily="var(--font-sans)">
+      <svg data-diagram="raas" viewBox="0 0 960 700" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-raas-t dx-raas-d">
+        <title id="dx-raas-t">The renin-angiotensin-aldosterone system and where its drugs act</title>
+        <desc id="dx-raas-d">
+          Angiotensinogen from the liver is cleaved by renin to angiotensin I, then by ACE in the
+          pulmonary endothelium to angiotensin II. ACE inhibitors block that conversion; ARBs and
+          ARNIs block the AT-one receptor instead. Angiotensin II drives vasoconstriction (raising
+          afterload and blood pressure), aldosterone release (sodium and water retention, fibrosis),
+          and sympathetic activation. The MRA spironolactone blocks the aldosterone step. An ARNI,
+          sacubitril with valsartan, blocks the receptor while also inhibiting neprilysin so
+          natriuretic peptides rise.
+        </desc>
         <defs>
         <marker id="raas-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M0 1 L9 5 L0 9 z" fill="var(--text-mute)"></path>
@@ -167,7 +185,16 @@ export function NephronDiagram() {
       title="Where diuretics act in the nephron"
       caption="Each agent blocks sodium handling at a different segment."
     >
-      <svg data-diagram="nephron" viewBox="0 40 960 495" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="Nephron with numbered diuretic sites of action" fontFamily="var(--font-sans)">
+      <svg data-diagram="nephron" viewBox="0 40 960 495" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-nephron-t dx-nephron-d">
+        <title id="dx-nephron-t">Where diuretics act along the nephron</title>
+        <desc id="dx-nephron-d">
+          Following filtrate from the glomerulus to the urine: site one, the proximal tubule, where
+          SGLT2 inhibitors block glucose and sodium reabsorption; site two, the thick ascending
+          limb, where loop diuretics block the sodium-potassium-two-chloride transporter; site
+          three, the collecting duct, where the MRA spironolactone blocks the aldosterone receptor.
+          Loop diuretics relieve congestion, while the MRA and the SGLT2 inhibitor are the segments
+          that also carry a mortality benefit in heart failure with reduced ejection fraction.
+        </desc>
         <defs>
         <marker id="neph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M0 1 L9 5 L0 9 z" fill="var(--text-mute)"></path>
@@ -237,7 +264,18 @@ export function ActionPotentialDiagram() {
       title="Cardiac action potential and antiarrhythmic classes"
       caption="Each Vaughan-Williams class targets a different phase or current."
     >
-      <svg data-diagram="ap" viewBox="0 0 960 560" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-label="Cardiac action potential with Vaughan-Williams class targets" fontFamily="var(--font-sans)">
+      <svg data-diagram="ap" viewBox="0 0 960 560" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-ap-t dx-ap-d">
+        <title id="dx-ap-t">The cardiac action potential and the Vaughan-Williams classes</title>
+        <desc id="dx-ap-d">
+          A voltage-versus-time curve with five phases: phase 0 upstroke, phase 1 early
+          repolarization, phase 2 plateau, phase 3 repolarization, and phase 4 resting membrane
+          potential. Class I agents such as flecainide block sodium channels and the phase 0
+          upstroke. Class II, beta blockade with metoprolol, acts on phase 4 and the nodes. Class
+          III such as amiodarone blocks potassium channels in phase 3. Class IV such as diltiazem
+          blocks calcium channels in phase 2 and the AV node. Nodal cells depolarize through
+          calcium rather than sodium, which is why beta blockers and diltiazem slow the sinus and
+          AV nodes.
+        </desc>
         <rect x="198" y="70" width="204" height="270" fill="var(--surface-2)"></rect>
         <text x="300" y="88" textAnchor="middle" fontSize="11" letterSpacing=".08em" fill="var(--text-mute)">PLATEAU</text>
 

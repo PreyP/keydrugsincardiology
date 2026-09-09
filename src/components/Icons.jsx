@@ -1,4 +1,7 @@
-/* Minimal inline SVG icon set (no emoji). Each takes an optional size prop. */
+/* Minimal inline SVG icon set (no emoji). Each takes an optional size prop.
+ * Icons are decorative by default: aria-hidden + focusable="false" so they are
+ * skipped by assistive tech and never land in the tab order. Every icon in the
+ * app sits next to a visible text label or on a control with its own aria-label. */
 const base = (size = 18) => ({
   width: size,
   height: size,
@@ -8,6 +11,8 @@ const base = (size = 18) => ({
   strokeWidth: 2,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
+  'aria-hidden': 'true',
+  focusable: 'false',
 })
 
 export const HeartPulse = ({ size }) => (
@@ -79,10 +84,15 @@ export const Pill = ({ size }) => (
   </svg>
 )
 
-export const Cards = ({ size }) => (
+export const Check = ({ size }) => (
   <svg {...base(size)}>
-    <rect x="3" y="5" width="13" height="16" rx="2" />
-    <path d="M8 5V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-1" />
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+)
+
+export const X = ({ size }) => (
+  <svg {...base(size)}>
+    <path d="M18 6 6 18M6 6l12 12" />
   </svg>
 )
 
