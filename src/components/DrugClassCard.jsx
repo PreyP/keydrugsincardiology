@@ -95,11 +95,6 @@ export default function DrugClassCard({ drug, currentConditionId, initialOpen = 
               {drug.trials.map((t, i) => (
                 <div className="trial" key={i}>
                   <span className="trial__name">{t.name}</span>
-                  {t.addedBeyondSource && (
-                    <span className="tag trial__flag" title="Real landmark trial verified against its primary publication; not named in the lecture slides">
-                      added, not in slides
-                    </span>
-                  )}
                   <p className="trial__take"><RichText>{t.takeaway}</RichText></p>
                 </div>
               ))}

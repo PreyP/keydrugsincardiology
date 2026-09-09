@@ -51,9 +51,9 @@ cases), is what a generic pharmacology resource cannot truthfully copy.
   assessments; must tolerate being opened from a static host and used offline.
 - **Mnemonics are part of the teaching** (e.g. ASA / APA / BETA / STATA / PRIL
   for ACS) and appear inline with their expansions.
-- **Source traceability:** trials or details added beyond the source slides carry
-  a visible "verify vs course refs" tag; the `/about` page consolidates them for
-  checking or swapping.
+- **Source traceability:** the module carries only what the MEDS230 lectures and
+  DIL cases cover — the one landmark trial included (CAST) is the one the slides
+  name. The `/about` page lists the source materials.
 - A "for education only, not clinical guidance" disclaimer currently appears on
   the home page and `/about`. (Not selected as a hard commitment in the init
   interview — see wrap-up note — but it is the present state and matters more, not
@@ -139,9 +139,9 @@ cases), is what a generic pharmacology resource cannot truthfully copy.
 2. **One loop: learn → practise → test.** Every feature should move a student
    around that loop or pull them back into it; the timed test's blind-spot list
    points them back to the parts of the loop they have not yet locked in.
-3. **Traceable to the course.** Content stays mappable to the MEDS230 lectures
-   and DIL cases; anything beyond the source is visibly flagged so it can be
-   verified or swapped. Trust comes from being checkable, not exhaustive.
+3. **Traceable to the course.** Every teaching point maps to the MEDS230 lectures
+   and DIL cases; material the slides do not cover is left out rather than added
+   from elsewhere. Trust comes from being checkable, not exhaustive.
 4. **Runs anywhere, holds nothing of the student's.** Client-side only, no
    accounts, static-host friendly, works offline; a student's progress is theirs
    and never leaves their browser.

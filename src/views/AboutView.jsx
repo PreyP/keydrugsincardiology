@@ -1,12 +1,10 @@
 import { drugClasses } from '../data/drugClasses.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 
-// Collect every trial, flagging those added beyond the source slides.
+// Every landmark trial in the module (all named in the source slides).
 const trials = drugClasses.flatMap((d) =>
   (d.trials || []).map((t) => ({ drug: d.shortName, ...t })),
 )
-const added = trials.filter((t) => t.addedBeyondSource)
-const fromSource = trials.filter((t) => !t.addedBeyondSource)
 
 export default function AboutView() {
   return (
@@ -23,8 +21,9 @@ export default function AboutView() {
         and support from Dr. Thakrar.
       </p>
       <p className="lead">
-        Core content is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures and the
-        DIL cases (Dr. Amar Thakrar). This module is for education only and is not clinical guidance.
+        Every teaching point is adapted from the Queen's MEDS230 "Key Drugs in Cardiology" lectures
+        and the DIL cases (Dr. Amar Thakrar). Material the slides do not cover is left out rather
+        than added from other sources. This module is for education only and is not clinical guidance.
       </p>
 
       <div className="card" style={{ padding: '1.35rem 1.5rem', marginBottom: '1.5rem' }}>
@@ -37,44 +36,14 @@ export default function AboutView() {
         </ul>
       </div>
 
-      <h2>Trials added beyond the slides</h2>
-      <p className="muted" style={{ marginTop: '-0.4rem' }}>
-        The lecture slides name only the CAST trial. The trials below were added to support the
-        "landmark trials" sections and have each been checked against their primary publication
-        (NEJM, Lancet, or the ACC/AHA trial summaries) for the correct agent, year, and headline
-        finding. They are tagged "added, not in slides" throughout the app. If your department
-        prefers different citations for these teaching points, they are easy to swap in
-        src/data/drugClasses.js.
-      </p>
-      <div className="card compare" style={{ marginTop: '1rem' }}>
-        <div className="compare__scroll" tabIndex={0} role="region" aria-label="Trials added beyond the slides — table, scrolls horizontally">
-          <table className="compare__table">
-            <caption className="sr-only">Landmark trials added beyond the lecture slides, with the agent and stated takeaway.</caption>
-            <thead>
-              <tr>
-                <th scope="col" className="compare__rowhead">Drug</th>
-                <th scope="col">Trial</th>
-                <th scope="col">Stated takeaway</th>
-              </tr>
-            </thead>
-            <tbody>
-              {added.map((t, i) => (
-                <tr key={i}>
-                  <th scope="row" className="compare__rowhead">{t.drug}</th>
-                  <td>{t.name}</td>
-                  <td>{t.takeaway}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {fromSource.length > 0 && (
+      {trials.length > 0 && (
         <>
-          <h2 style={{ marginTop: '2rem' }}>From the source slides</h2>
+          <h2>Landmark trials</h2>
+          <p className="muted" style={{ marginTop: '-0.4rem' }}>
+            The trial{trials.length === 1 ? '' : 's'} named in the lecture slides.
+          </p>
           <div className="card compare">
-            <div className="compare__scroll" tabIndex={0} role="region" aria-label="Trials from the source slides — table, scrolls horizontally">
+            <div className="compare__scroll" tabIndex={0} role="region" aria-label="Landmark trials — table, scrolls horizontally">
               <table className="compare__table">
                 <caption className="sr-only">Landmark trials named in the source lecture slides, with the agent and takeaway.</caption>
                 <thead>
@@ -85,7 +54,7 @@ export default function AboutView() {
                   </tr>
                 </thead>
                 <tbody>
-                  {fromSource.map((t, i) => (
+                  {trials.map((t, i) => (
                     <tr key={i}>
                       <th scope="row" className="compare__rowhead">{t.drug}</th>
                       <td>{t.name}</td>
