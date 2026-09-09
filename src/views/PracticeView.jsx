@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useLocation, Link } from 'react-router-dom'
 import { conditions, conditionById, categories } from '../data/conditions.js'
 import { simulationsForCondition } from '../data/simulations.js'
 import Question from '../components/Question.jsx'
 import CaseSimulator from '../components/CaseSimulator.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
+import RichText from '../components/RichText.jsx'
+import { scrollBehavior } from '../lib/motion.js'
 import { Book } from '../components/Icons.jsx'
 
 function CaseBlock({ pc }) {
@@ -19,8 +21,8 @@ function CaseBlock({ pc }) {
     <div className="card" style={{ padding: '1.35rem', marginBottom: '1.5rem' }}>
       <h3 style={{ marginTop: 0 }}>{pc.title}</h3>
       <div className="case-vignette">
-        <div className="case-vignette__label">Case</div>
-        {pc.vignette}
+        <span className="case-vignette__label">Case</span>
+        <RichText>{pc.vignette}</RichText>
       </div>
       {total > 0 && (
         <p className="muted" style={{ fontSize: '0.85rem' }}>
@@ -52,7 +54,7 @@ export default function PracticeView() {
     const t = setTimeout(() => {
       const el = document.getElementById(id)
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        el.scrollIntoView({ behavior: scrollBehavior(), block: 'center' })
         el.classList.add('flash-highlight')
         setTimeout(() => el.classList.remove('flash-highlight'), 1600)
       }

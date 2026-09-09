@@ -119,8 +119,8 @@ export default function LearnView() {
       <section style={{ marginBottom: '2rem' }}>
         <h2>Drug classes for {condition.shortName}</h2>
         <p className="muted" style={{ marginTop: '-0.4rem' }}>
-          Hover the highlighted terms for quick definitions. Expand each section for dosing, side
-          effects, and the trials behind the decisions.
+          Open a card for its mechanism, dosing, side effects, and the landmark trials behind the
+          decision. Hover the highlighted terms for quick definitions.
         </p>
         {condition.drugClassIds.map((id) => {
           const drug = drugClassById[id]

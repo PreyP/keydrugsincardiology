@@ -18,23 +18,26 @@ export default function ComparisonTable({ table, showRelated = false }) {
           </div>
         )}
       </div>
-      <div className="compare__scroll">
+      <div className="compare__scroll" tabIndex={0} role="region" aria-label={`${table.title} — table, scrolls horizontally`}>
         <table className="compare__table">
+          <caption className="sr-only">{table.title}. {table.blurb}</caption>
           <thead>
             <tr>
               {table.headers.map((h, i) => (
-                <th key={i} className={i === 0 ? 'compare__rowhead' : ''}>{h}</th>
+                <th key={i} scope="col" className={i === 0 ? 'compare__rowhead' : ''}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {table.rows.map((row, r) => (
               <tr key={r}>
-                {row.map((cell, c) => (
-                  <td key={c} className={c === 0 ? 'compare__rowhead' : ''}>
-                    {c === 0 ? cell : <RichText>{cell}</RichText>}
-                  </td>
-                ))}
+                {row.map((cell, c) =>
+                  c === 0 ? (
+                    <th key={c} scope="row" className="compare__rowhead">{cell}</th>
+                  ) : (
+                    <td key={c}><RichText>{cell}</RichText></td>
+                  ),
+                )}
               </tr>
             ))}
           </tbody>

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
+import { Check } from './Icons.jsx'
 
 /*
  * Interactive clinical risk calculators for atrial fibrillation.
@@ -8,11 +9,46 @@ import { useState } from 'react'
 
 function Toggle({ on, points, label, onClick }) {
   return (
-    <button className={`calc-row ${on ? 'is-on' : ''}`} onClick={onClick} aria-pressed={on}>
-      <span className="calc-row__check" aria-hidden>{on ? '✓' : ''}</span>
+    <button type="button" className={`calc-row ${on ? 'is-on' : ''}`} onClick={onClick} aria-pressed={on}>
+      <span className="calc-row__check" aria-hidden="true">{on ? <Check size={15} /> : null}</span>
       <span className="calc-row__label">{label}</span>
       <span className="calc-row__pts">+{points}</span>
     </button>
+  )
+}
+
+/* A small single-select segmented control with radio semantics. */
+function SegGroup({ label, value, options, onChange }) {
+  const labelId = useId()
+  function onKeyDown(e) {
+    const i = options.findIndex(([v]) => v === value)
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault()
+      onChange(options[(i + 1) % options.length][0])
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      onChange(options[(i - 1 + options.length) % options.length][0])
+    }
+  }
+  return (
+    <div className="calc-seg">
+      <span className="calc-seg__label" id={labelId}>{label}</span>
+      <div className="calc-seg__opts" role="radiogroup" aria-labelledby={labelId} onKeyDown={onKeyDown}>
+        {options.map(([v, l, p]) => (
+          <button
+            key={v}
+            type="button"
+            className={`seg ${value === v ? 'is-on' : ''}`}
+            role="radio"
+            aria-checked={value === v}
+            tabIndex={value === v ? 0 : -1}
+            onClick={() => onChange(v)}
+          >
+            {l} <span className="seg__pts">+{p}</span>
+          </button>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -45,19 +81,15 @@ export function Cha2ds2VascCalc() {
         <Toggle on={f.dm} points={1} label="Diabetes mellitus" onClick={() => t('dm')} />
         <Toggle on={f.stroke} points={2} label="Prior stroke, TIA, or thromboembolism" onClick={() => t('stroke')} />
         <Toggle on={f.vasc} points={1} label="Vascular disease (MI, PAD, aortic plaque)" onClick={() => t('vasc')} />
-        <div className="calc-seg">
-          <span className="calc-seg__label">Age</span>
-          <div className="calc-seg__opts">
-            {[['lt65', '< 65', 0], ['65to74', '65 to 74', 1], ['ge75', '≥ 75', 2]].map(([v, l, p]) => (
-              <button key={v} className={`seg ${age === v ? 'is-on' : ''}`} onClick={() => setAge(v)}>
-                {l} <span className="seg__pts">+{p}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <SegGroup
+          label="Age"
+          value={age}
+          options={[['lt65', '< 65', 0], ['65to74', '65 to 74', 1], ['ge75', '≥ 75', 2]]}
+          onChange={setAge}
+        />
         <Toggle on={female} points={1} label="Sex category: female" onClick={() => setFemale((v) => !v)} />
       </div>
-      <div className={`calc__result calc__result--${level}`}>
+      <div className={`calc__result calc__result--${level}`} role="status" aria-live="polite">
         <span className="calc__score">{score}</span>
         <span className="calc__interp">{text}</span>
       </div>
@@ -96,7 +128,7 @@ export function HasBledCalc() {
         <Toggle on={f.drugs} points={1} label="Drugs that predispose to bleeding" onClick={() => t('drugs')} />
         <Toggle on={f.alcohol} points={1} label="Alcohol excess" onClick={() => t('alcohol')} />
       </div>
-      <div className={`calc__result calc__result--${level}`}>
+      <div className={`calc__result calc__result--${level}`} role="status" aria-live="polite">
         <span className="calc__score">{score}</span>
         <span className="calc__interp">{text}</span>
       </div>

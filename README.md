@@ -25,13 +25,10 @@ Learning tools inspired by Amboss and Osmosis:
 - **Command palette:** Cmd/Ctrl+K searches conditions, drugs, and terms.
 - **Progress:** mark a condition as learned and keep your best test score
   (stored in `localStorage`), surfaced on the overview.
-- **Spaced-repetition review deck** (`/review`): an SM-2-flavoured scheduler with
-  Again/Hard/Good/Easy grading, seeded from every flashcard. Missed test
-  questions are added automatically. Logic lives in `src/lib/srs.js`.
 - **Guided path:** a continue banner on the overview and a Learn/Practise/Test
   stepper with a next-condition link on each Learn page.
 - **Confidence rating** on timed-test questions; wrong-but-confident answers are
-  surfaced as a priority bucket and fed into the review deck.
+  surfaced on the results screen as a priority "review these first" bucket.
 - **Comparison tables** (`/compare`): high-yield side-by-side matrices, also
   embedded on the relevant Learn pages (`src/data/comparisons.js`).
 - **Mechanism diagrams:** theme-aware inline SVGs (oxygen supply/demand, RAAS,

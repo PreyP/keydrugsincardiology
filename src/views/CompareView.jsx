@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { comparisons } from '../data/comparisons.js'
 import ComparisonTable from '../components/ComparisonTable.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
+import { scrollBehavior } from '../lib/motion.js'
 
 export default function CompareView() {
   const location = useLocation()
@@ -13,7 +14,7 @@ export default function CompareView() {
     const t = setTimeout(() => {
       const el = document.getElementById(id)
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        el.scrollIntoView({ behavior: scrollBehavior(), block: 'start' })
         el.classList.add('flash-highlight')
         setTimeout(() => el.classList.remove('flash-highlight'), 1600)
       }

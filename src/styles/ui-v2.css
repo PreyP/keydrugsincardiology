@@ -1,10 +1,13 @@
 /*
  * UI refresh (v2) for Key Drugs in Cardiology.
  *
- * A pure override layer: no JSX changes required. Import LAST in global.css.
- * Keeps the navy / sky palette and Newsreader type; tightens hierarchy,
- * widens the reading column, restyles drug cards, trials, accordions,
- * the stepper and tables.
+ * A largely typographic override layer imported last: keeps the navy / sky
+ * palette and Newsreader type; tightens hierarchy, widens the reading column,
+ * and restyles the stepper, section labels, trials, and tables.
+ *
+ * NOTE: this still sits on top of global.css rather than being merged into it.
+ * A `$impeccable document` + consolidation pass should fold the two into one
+ * source of truth.
  */
 
 :root {
@@ -26,8 +29,7 @@ p { text-wrap: pretty; }
 /* Author byline under the module title */
 .byline {
   font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-soft);
-  margin: -0.4rem 0 1.4rem; padding-left: 0.9rem; border-left: 3px solid var(--brand-500);
-  max-width: 62ch;
+  margin: -0.2rem 0 1.5rem; max-width: 62ch;
 }
 
 /* ---------- Sidebar ---------- */
@@ -61,73 +63,45 @@ p { text-wrap: pretty; }
   background: var(--surface); margin-bottom: 1.9rem;
 }
 .stepper__line { display: none; }
-.stepper__step { padding: 0.4rem 0.9rem; border-radius: 999px; font-family: var(--font-serif); font-size: 0.92rem; font-weight: 400; }
+.stepper__step { padding: 0.4rem 0.9rem; border-radius: 999px; font-family: var(--font-serif); font-size: 0.92rem; font-weight: 400; min-height: 34px; }
 .stepper__step:hover { background: var(--surface-2); }
 .stepper__step.is-current {
   background: linear-gradient(150deg, var(--navy-500), var(--navy-700));
-  color: #fff;
+  color: var(--on-accent);
 }
 .stepper__step.is-current:hover { background: linear-gradient(150deg, var(--navy-500), var(--navy-700)); }
 .stepper__dot { background: none; border: none; width: auto; height: auto; font-family: var(--font-sans); font-size: 0.72rem; opacity: 0.75; }
-.stepper__step.is-current .stepper__dot { background: none; color: #fff; }
+.stepper__step.is-current .stepper__dot { background: none; color: var(--on-accent); }
 
-/* ---------- Drug cards ---------- */
-.card__head { padding: 1.35rem 1.5rem 1.1rem; gap: 1rem; align-items: center; }
-.card__title { font-size: 1.35rem; letter-spacing: -0.012em; }
-.card__sub { font-size: 0.94rem; margin-top: 0.15rem; }
+/* ---------- Drug badge (inside the disclosure toggle) ---------- */
 .drug-badge {
   min-width: 54px; height: 54px; border-radius: 15px;
   font-family: var(--font-sans); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.02em;
 }
 
-/* Indications and mechanism read side by side on wide screens. */
-@supports selector(:has(*)) {
-  @media (min-width: 900px) {
-    .card:has(> .card__head > .drug-badge) {
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
-    .card:has(> .card__head > .drug-badge) > * { grid-column: 1 / -1; }
-    .card:has(> .card__head > .drug-badge) > .section--indication {
-      grid-column: 1 / 2; border-right: 1px solid var(--border);
-    }
-    .card:has(> .card__head > .drug-badge) > .section--indication + .section { grid-column: 2 / 3; }
-  }
-}
-
+/* ---------- Sections ---------- */
 .section { padding: 1.15rem 1.5rem 1.25rem; }
 .section__label {
   font-family: var(--font-sans); font-size: 0.655rem; letter-spacing: 0.1em;
-  padding: 0; background: none !important; margin-bottom: 0.7rem;
+  padding: 0; background: none; margin-bottom: 0.7rem;
 }
 .section--indication .section__label { color: var(--indication); }
+.section--dosing .section__label { color: var(--dosing); }
+.section--side .section__label { color: var(--sideeffect); }
+.section--trial .section__label { color: var(--trial); }
+.section__label--plain { color: var(--text-mute); }
 .section ul { padding-left: 1.15rem; }
 .section li { margin-bottom: 0.4rem; }
-
-/* Cautions read as a marker, not shouted text. */
-.section li[style*='caution'], .accordion__panel li { position: relative; }
 .tag--caution { font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
 
-/* ---------- Accordion rows ---------- */
-.accordion__btn { padding: 0.9rem 1.5rem; font-size: 1.02rem; font-weight: 600; }
-.accordion__btn:hover { background: color-mix(in srgb, var(--surface-2) 55%, var(--surface)); }
-.accordion__chev { opacity: 0.8; }
-.accordion__panel { padding: 0.2rem 1.5rem 1.3rem; }
-
-/* ---------- Trials as bordered mini-cards ---------- */
-.accordion__panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem; }
-.accordion__panel > ul, .accordion__panel > p, .accordion__panel > .section--dosing { grid-column: 1 / -1; }
-.trial {
-  margin: 0; border-left: none; border: 1px solid var(--sky-200);
-  border-radius: 14px; background: var(--trial-bg); padding: 0.9rem 1rem;
-}
-:root[data-theme='dark'] .trial { border-color: var(--border-strong); }
+/* ---------- Trials ---------- */
 .trial__name { font-family: var(--font-sans); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .trial__take { font-size: 0.96rem; color: var(--text-soft); }
 .trial .tag { font-size: 0.62rem; }
 
 /* ---------- Cross-reference footer ---------- */
 .crossref { background: color-mix(in srgb, var(--surface-2) 45%, var(--surface)); }
-.chip-link { font-size: 0.76rem; padding: 0.3rem 0.7rem; }
+.chip-link { font-size: 0.76rem; padding: 0.34rem 0.7rem; }
 
 /* ---------- Tables ---------- */
 .compare { padding: 1.25rem 1.5rem 1.4rem; }
@@ -144,11 +118,9 @@ p { text-wrap: pretty; }
 .btn { font-size: 0.96rem; }
 .btn--sm { font-size: 0.86rem; padding: 0.42rem 0.9rem; }
 .btn--ghost:hover { background: color-mix(in srgb, var(--sky-100) 45%, var(--surface)); }
-.icon-btn { width: 34px; height: 34px; }
 
 /* ---------- Cards, banners, misc ---------- */
 .next-condition { padding: 1.25rem 1.5rem; }
 .progress-strip { padding: 1.2rem 1.5rem; }
-.stat-num { font-variant-numeric: tabular-nums; }
 .continue-banner { padding: 1.2rem 1.4rem; }
 .empty-note { border-radius: var(--radius-lg); }

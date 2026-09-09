@@ -1,24 +1,62 @@
+import { useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { conditions, categories } from '../data/conditions.js'
-import { useSRS } from '../hooks/useSRS.js'
-import { HeartPulse, Home, Book, ClipboardCheck, Timer, Pill, Cards, Compare } from './Icons.jsx'
+import { HeartPulse, Home, Book, ClipboardCheck, Timer, Pill, Compare } from './Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
-const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
+const isMac =
+  typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || '')
 
 export default function Sidebar({ open, onNavigate, onOpenSearch }) {
-  const { dueCount } = useSRS()
+  const navRef = useRef(null)
   const byCat = catOrder.map((cat) => ({
     cat,
     label: categories[cat].label,
     items: conditions.filter((c) => c.category === cat),
   }))
 
+  // When the drawer is closed on a narrow screen it is translated off-canvas but
+  // still in the DOM; `inert` keeps its links out of the tab order and the
+  // accessibility tree until it opens.
+  useEffect(() => {
+    const el = navRef.current
+    if (!el) return
+    const apply = () => {
+      const offCanvas = window.matchMedia('(max-width: 860px)').matches && !open
+      el.inert = offCanvas
+    }
+    apply()
+    window.addEventListener('resize', apply)
+    return () => window.removeEventListener('resize', apply)
+  }, [open])
+
+  // Keep focus inside the drawer while it is open on mobile.
+  function trapFocus(e) {
+    if (e.key !== 'Tab' || !window.matchMedia('(max-width: 860px)').matches) return
+    const focusable = navRef.current?.querySelectorAll('a[href], button:not([disabled])')
+    if (!focusable || focusable.length === 0) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
+
   return (
-    <aside className={`sidebar ${open ? 'open' : ''}`} onClick={onNavigate}>
+    <nav
+      ref={navRef}
+      className={`sidebar ${open ? 'open' : ''}`}
+      aria-label="Primary"
+      onClick={onNavigate}
+      onKeyDown={trapFocus}
+    >
       <div className="sidebar__brand">
-        <span className="sidebar__logo">
+        <span className="sidebar__logo" aria-hidden="true">
           <HeartPulse size={20} />
         </span>
         <span>
@@ -37,20 +75,16 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
       </button>
 
       <NavLink to="/" end className="nav-link">
-        <span className="nav-link__icon"><Home size={17} /></span> Overview
+        <span className="nav-link__icon" aria-hidden="true"><Home size={17} /></span> Overview
       </NavLink>
       <NavLink to="/drugs" className="nav-link">
-        <span className="nav-link__icon"><Pill size={17} /></span> Drug library
+        <span className="nav-link__icon" aria-hidden="true"><Pill size={17} /></span> Drug library
       </NavLink>
       <NavLink to="/compare" className="nav-link">
-        <span className="nav-link__icon"><Compare size={17} /></span> Comparisons
-      </NavLink>
-      <NavLink to="/review" className="nav-link">
-        <span className="nav-link__icon"><Cards size={17} /></span> Review deck
-        {dueCount > 0 && <span className="nav-badge">{dueCount}</span>}
+        <span className="nav-link__icon" aria-hidden="true"><Compare size={17} /></span> Comparisons
       </NavLink>
       <NavLink to="/test" className="nav-link">
-        <span className="nav-link__icon"><Timer size={17} /></span> Test my knowledge
+        <span className="nav-link__icon" aria-hidden="true"><Timer size={17} /></span> Test my knowledge
       </NavLink>
 
       {byCat.map(({ cat, label, items }) => (
@@ -58,7 +92,7 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
           <div className="nav-section-label">{label}</div>
           {items.map((c) => (
             <NavLink key={c.id} to={`/learn/${c.id}`} className="nav-link">
-              <span className="nav-link__icon"><Book size={16} /></span>
+              <span className="nav-link__icon" aria-hidden="true"><Book size={16} /></span>
               {c.shortName}
             </NavLink>
           ))}
@@ -67,8 +101,8 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
 
       <div className="nav-section-label">Practice</div>
       <NavLink to="/practice" className="nav-link">
-        <span className="nav-link__icon"><ClipboardCheck size={16} /></span> Work through cases
+        <span className="nav-link__icon" aria-hidden="true"><ClipboardCheck size={16} /></span> Work through cases
       </NavLink>
-    </aside>
+    </nav>
   )
 }
