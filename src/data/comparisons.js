@@ -30,14 +30,14 @@ export const comparisons = [
   {
     id: 'hfref-pillars',
     title: 'The four survival pillars of HFrEF',
-    blurb: 'Guideline-directed therapy that improves mortality, separate from diuretics for symptoms.',
+    blurb: 'Guideline-directed therapy for heart failure with reduced ejection fraction (EF under 40 with symptoms), separate from diuretics for symptoms. Start all four at minimal doses and introduce them rapidly, rather than the older stepwise approach.',
     related: ['heart-failure'],
     headers: ['Pillar', 'Example', 'Key benefit', 'Watch for'],
     rows: [
-      ['ACE inhibitor or ARNI', 'Ramipril; sacubitril/valsartan', 'Afterload reduction, positive remodeling; ARNI adds natriuresis', 'Hyperkalemia, cough (ACEi), angioedema; 36 h washout when switching to ARNI'],
+      ['ARNI or ACE inhibitor', 'Sacubitril/valsartan (first-line); ramipril', 'Afterload reduction, positive remodeling; ARNI adds natriuresis', 'Hyperkalemia, cough (ACEi), angioedema; 36 h washout when switching to ARNI'],
       ['Beta blocker', 'Bisoprolol, metoprolol, carvedilol', 'Neurohormonal blockade, less adverse remodeling', 'Bradycardia, hypotension, fatigue'],
-      ['MRA', 'Spironolactone, eplerenone', 'Anti-remodeling, mortality benefit at EF < 35%', 'Hyperkalemia, gynecomastia'],
-      ['SGLT2 inhibitor', 'Dapagliflozin, empagliflozin', 'Diuresis plus mortality reduction beyond glucose lowering', 'Genital infections, volume depletion'],
+      ['MRA', 'Spironolactone, eplerenone', 'Anti-remodeling, mortality benefit at EF under 40% with symptoms', 'Hyperkalemia, gynecomastia'],
+      ['SGLT2 inhibitor', 'Dapagliflozin, empagliflozin', 'Diuresis, weight loss, renal protection, mortality reduction beyond glucose lowering', 'Genital infections, volume depletion'],
     ],
   },
   {
@@ -67,14 +67,13 @@ export const comparisons = [
   },
   {
     id: 'antiplatelets',
-    title: 'Antiplatelets: aspirin versus P2Y12 inhibitors',
+    title: 'Antiplatelets: aspirin versus a second antiplatelet',
     blurb: 'The two arms of dual antiplatelet therapy in ACS.',
     related: ['acs', 'stable-angina'],
-    headers: ['', 'Aspirin', 'P2Y12 inhibitors'],
+    headers: ['', 'Aspirin', 'Second antiplatelet (P2Y₁₂ inhibitor)'],
     rows: [
       ['Examples', 'Acetylsalicylic acid', 'Clopidogrel, prasugrel, ticagrelor'],
-      ['Target', 'Cyclooxygenase (blocks thromboxane A2)', 'P2Y12 ADP receptor'],
-      ['Reversibility', 'Irreversible', 'Irreversible (clopidogrel, prasugrel), reversible (ticagrelor)'],
+      ['Target', 'Cyclooxygenase (blocks thromboxane A2)', 'P2Y₁₂ ADP receptor'],
       ['Loading dose', '160 mg chewed', 'Yes, agent-specific'],
       ['Notable adverse effect', 'GI bleeding', 'Bleeding; dyspnea with ticagrelor'],
     ],

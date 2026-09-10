@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 import ChoiceButton from './ChoiceButton.jsx'
+import EcgFigure from './EcgFigure.jsx'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -79,6 +80,21 @@ export function FreeText({ q }) {
         <div className="explain" role="status" aria-live="polite">
           <div className="explain__label">Model answer</div>
           {q.modelAnswer}
+        </div>
+      )}
+      {revealed && q.video && (
+        <div className="qvideo">
+          <div className="qvideo__label">{q.video.title || 'Video'}</div>
+          {q.video.src ? (
+            <video className="qvideo__player" src={q.video.src} controls playsInline />
+          ) : (
+            <div className="qvideo__placeholder">{q.video.note || 'Video to be added.'}</div>
+          )}
+        </div>
+      )}
+      {revealed && q.ecg && (
+        <div style={{ marginTop: '0.7rem' }}>
+          <EcgFigure title={q.ecg.title || 'ECG'} src={q.ecg.src} note={q.ecg.note} interpretation={q.ecg.interpretation} />
         </div>
       )}
     </div>

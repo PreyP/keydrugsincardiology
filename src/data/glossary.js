@@ -151,16 +151,16 @@ export const glossary = [
   },
   {
     id: 'p2y12r',
-    term: 'P2Y12 purinoreceptor',
-    aliases: ['P2Y12 receptor', 'P2Y12'],
-    def: 'The platelet ADP receptor blocked by clopidogrel, prasugrel (irreversibly), and ticagrelor (reversibly).',
+    term: 'P2Y₁₂ purinoreceptor',
+    aliases: ['P2Y₁₂ purinoreceptor', 'P2Y₁₂ receptor', 'P2Y₁₂', 'P2Y12 purinoreceptor', 'P2Y12 receptor', 'P2Y12'],
+    def: 'The platelet ADP receptor blocked by clopidogrel, prasugrel, and ticagrelor (the second antiplatelet given with aspirin).',
     link: { type: 'drug', id: 'p2y12' },
   },
   {
     id: 'dapt',
     term: 'dual antiplatelet therapy',
     aliases: ['DAPT'],
-    def: 'Aspirin combined with a P2Y12 inhibitor, used in ACS and around coronary revascularization.',
+    def: 'Aspirin combined with a second antiplatelet (a P2Y₁₂ inhibitor), used in ACS and around coronary revascularization.',
     link: { type: 'drug', id: 'p2y12' },
   },
   {
@@ -254,7 +254,7 @@ export const glossary = [
   {
     id: 'loading',
     term: 'loading dose',
-    def: 'A large first dose used to reach a therapeutic effect quickly, as required for the P2Y12 inhibitors in ACS.',
+    def: 'A large first dose used to reach a therapeutic effect quickly, as required for the second antiplatelet (P2Y₁₂ inhibitor) in ACS.',
   },
 
   // Adverse effects worth a bubble

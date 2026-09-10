@@ -5,6 +5,7 @@ import DrugClassCard from '../components/DrugClassCard.jsx'
 import ComparisonTable from '../components/ComparisonTable.jsx'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import RichText from '../components/RichText.jsx'
+import EcgFigure from '../components/EcgFigure.jsx'
 import { comparisonsForCondition } from '../data/comparisons.js'
 import { conditionDiagrams } from '../components/Diagrams.jsx'
 import { Cha2ds2VascCalc, HasBledCalc } from '../components/Calculators.jsx'
@@ -96,6 +97,15 @@ export default function LearnView() {
               <div className="case-vignette__label">Exam and workup</div>
               <RichText>{condition.sampleCase.exam}</RichText>
             </div>
+          )}
+          {condition.sampleCase.ecg && (
+            <EcgFigure
+              title="12-lead ECG"
+              src={condition.sampleCase.ecg.src}
+              interpretation={condition.sampleCase.ecg.interpretation}
+              note={condition.sampleCase.ecg.note}
+              caption={condition.sampleCase.ecg.caption}
+            />
           )}
           <div className="stack">
             {condition.sampleCase.walkthrough.map((step, i) => (

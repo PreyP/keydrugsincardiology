@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { conditions, categories } from '../data/conditions.js'
-import { HeartPulse, Home, Book, ClipboardCheck, Timer, Pill, Compare } from './Icons.jsx'
+import HowToUse from './HowToUse.jsx'
+import { Home, Book, ClipboardCheck, Timer, Pill, Compare } from './Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
@@ -56,15 +57,13 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
       onKeyDown={trapFocus}
     >
       <div className="sidebar__brand">
-        <span className="sidebar__logo" aria-hidden="true">
-          <HeartPulse size={20} />
-        </span>
         <span>
           <span className="sidebar__title">Key Drugs in Cardiology</span>
           <br />
           <span className="sidebar__subtitle">Learning module</span>
         </span>
       </div>
+      <HowToUse />
 
       <button
         className="search-trigger"

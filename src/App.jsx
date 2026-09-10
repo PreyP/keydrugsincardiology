@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Sidebar from './components/Sidebar.jsx'
 import ThemeToggle from './components/ThemeToggle.jsx'
 import SearchPalette from './components/SearchPalette.jsx'
-import { Menu, HeartPulse } from './components/Icons.jsx'
+import { Menu } from './components/Icons.jsx'
 import HomeView from './views/HomeView.jsx'
 import LearnView from './views/LearnView.jsx'
 import PracticeView from './views/PracticeView.jsx'
@@ -56,6 +56,18 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: scrollBehavior() })
   }, [location])
 
+  // A-02: remember the last learn/practice page so "Continue learning" resumes it.
+  useEffect(() => {
+    const p = location.pathname
+    if (/^\/(learn|practice)\/.+/.test(p)) {
+      try {
+        localStorage.setItem('kdc-last', JSON.stringify({ path: p + location.hash, at: Date.now() }))
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [location])
+
   // Global keyboard: Cmd/Ctrl+K toggles search, Escape closes any open overlay.
   useEffect(() => {
     const onKey = (e) => {
@@ -95,9 +107,6 @@ export default function App() {
         >
           <Menu />
         </button>
-        <span className="sidebar__logo" style={{ width: 30, height: 30 }} aria-hidden="true">
-          <HeartPulse size={18} />
-        </span>
         <strong style={{ fontSize: '0.9rem' }}>Key Drugs in Cardiology</strong>
         <div style={{ marginLeft: 'auto' }}>
           <ThemeToggle />

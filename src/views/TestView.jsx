@@ -5,6 +5,7 @@ import ThemeToggle from '../components/ThemeToggle.jsx'
 import ChoiceButton from '../components/ChoiceButton.jsx'
 import { useProgress } from '../hooks/useProgress.js'
 import { Link } from 'react-router-dom'
+import FeedbackForm from '../components/FeedbackForm.jsx'
 import { Timer, ClipboardCheck } from '../components/Icons.jsx'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -83,6 +84,13 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
     .map((q, i) => ({ q, i }))
     .filter(({ i }) => answers[i] !== undefined && answers[i] !== questions[i].answer && confidence[i] === true)
 
+  // A-04 calibration counts.
+  const confidentWrong = wrongConfident.length
+  const unsureRight = questions.filter(
+    (q, i) => answers[i] === q.answer && confidence[i] === false,
+  ).length
+  const ratedCount = questions.filter((q, i) => confidence[i] !== undefined).length
+
   return (
     <div>
       <div className="card" style={{ padding: '1.75rem', textAlign: 'center', marginBottom: '1.5rem' }}>
@@ -106,6 +114,25 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
           <Link to="/practice" className="btn btn--ghost"><ClipboardCheck size={16} /> Practise the cases</Link>
         </div>
       </div>
+
+      {ratedCount > 0 && (
+        <div className="card" style={{ padding: '1.2rem 1.4rem', marginBottom: '1.5rem' }}>
+          <div className="explain__label" style={{ marginBottom: '0.5rem' }}>Confidence calibration</div>
+          <div className="row" style={{ gap: '2rem' }}>
+            <div>
+              <div style={{ fontSize: '1.6rem', fontWeight: 600, color: 'var(--caution)' }}>{confidentWrong}</div>
+              <div className="muted" style={{ fontSize: '0.85rem' }}>sure, but wrong</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '1.6rem', fontWeight: 600, color: 'var(--correct)' }}>{unsureRight}</div>
+              <div className="muted" style={{ fontSize: '0.85rem' }}>unsure, but right</div>
+            </div>
+          </div>
+          <p className="muted" style={{ fontSize: '0.88rem', margin: '0.7rem 0 0' }}>
+            "Sure but wrong" are blind spots to prioritize; "unsure but right" are things you know better than you think.
+          </p>
+        </div>
+      )}
 
       {wrongConfident.length > 0 && (
         <div className="card priority-card" style={{ padding: '1.2rem 1.4rem', marginBottom: '1.5rem' }}>
@@ -155,6 +182,10 @@ function Results({ questions, answers, confidence, onRestart, timeUp }) {
           </div>
         )
       })}
+
+      <div style={{ marginTop: '1.5rem' }}>
+        <FeedbackForm context="test" />
+      </div>
     </div>
   )
 }
@@ -216,6 +247,10 @@ function Active({ questions, seconds, onFinish }) {
     }
   }
 
+  function prev() {
+    if (idx > 0) setIdx(idx - 1)
+  }
+
   const answeredCount = Object.keys(answers).length
   const fraction = answeredCount / questions.length
   const timerCls = remaining <= 30 ? 'timer danger' : remaining <= 60 ? 'timer warn' : 'timer'
@@ -243,6 +278,28 @@ function Active({ questions, seconds, onFinish }) {
       <div className="card" style={{ padding: '1.35rem' }}>
         <span className="tag">{conditionById[q.conditionId]?.shortName || q.conditionId}</span>
         <p className="question__stem" style={{ marginTop: '0.7rem' }}>{q.stem}</p>
+
+        {/* A-04: rate confidence before submitting the answer */}
+        <div className="row conf-row" style={{ margin: '0 0 1rem' }} role="group" aria-labelledby={confGroupId}>
+          <span className="muted" id={confGroupId} style={{ fontSize: '0.85rem' }}>
+            {answered ? 'You said you were' : 'Before you answer, how sure are you?'}
+          </span>
+          <button
+            type="button"
+            className={`conf-chip ${confidence[idx] === true ? 'is-on' : ''}`}
+            aria-pressed={confidence[idx] === true}
+            onClick={() => setConf(true)}
+            disabled={answered}
+          >Sure</button>
+          <button
+            type="button"
+            className={`conf-chip ${confidence[idx] === false ? 'is-on conf-chip--unsure' : ''}`}
+            aria-pressed={confidence[idx] === false}
+            onClick={() => setConf(false)}
+            disabled={answered}
+          >Unsure</button>
+        </div>
+
         {q.choices.map((choice, i) => {
           const state = !answered
             ? 'idle'
@@ -271,25 +328,9 @@ function Active({ questions, seconds, onFinish }) {
         )}
       </div>
 
-      {answered && (
-        <div className="row conf-row" style={{ marginTop: '0.9rem' }} role="group" aria-labelledby={confGroupId}>
-          <span className="muted" id={confGroupId} style={{ fontSize: '0.85rem' }}>How sure were you?</span>
-          <button
-            type="button"
-            className={`conf-chip ${confidence[idx] === true ? 'is-on' : ''}`}
-            aria-pressed={confidence[idx] === true}
-            onClick={() => setConf(true)}
-          >Sure</button>
-          <button
-            type="button"
-            className={`conf-chip conf-chip--unsure ${confidence[idx] === false ? 'is-on' : ''}`}
-            aria-pressed={confidence[idx] === false}
-            onClick={() => setConf(false)}
-          >Unsure</button>
-        </div>
-      )}
-
-      <div className="row" style={{ justifyContent: 'flex-end', marginTop: '1rem' }}>
+      <div className="row" style={{ marginTop: '1rem' }}>
+        <button type="button" className="btn btn--ghost btn--sm" onClick={prev} disabled={idx === 0}>Back</button>
+        <div style={{ flex: 1 }} />
         <button type="button" className="btn btn--ghost btn--sm" onClick={next}>Skip</button>
         <button type="button" className="btn btn--primary" onClick={next} disabled={!answered}>
           {idx + 1 === questions.length ? 'Finish' : 'Next'}

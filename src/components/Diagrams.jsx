@@ -10,11 +10,12 @@
  * Figure chrome lives in src/styles/diagrams.css.
  */
 
-function Figure({ title, caption, wide = true, children }) {
+function Figure({ title, caption, badge, wide = true, children }) {
   return (
     <figure className={`figure card${wide ? ' figure--wide' : ''}`}>
       <figcaption className="figure__cap">
         <span className="figure__title">{title}</span>
+        {badge && <span className="figure__badge">{badge}</span>}
         {caption && <span className="figure__sub">{caption}</span>}
       </figcaption>
       <div className="figure__svg">{children}</div>
@@ -100,7 +101,7 @@ export function RaasDiagram() {
       title="Renin-angiotensin-aldosterone system"
       caption="ACE inhibitors block the conversion to angiotensin II; ARBs and ARNIs block the receptor."
     >
-      <svg data-diagram="raas" viewBox="0 0 960 700" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-raas-t dx-raas-d">
+      <svg data-diagram="raas" viewBox="0 0 960 800" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-raas-t dx-raas-d" fontFamily="var(--font-sans)">
         <title id="dx-raas-t">The renin-angiotensin-aldosterone system and where its drugs act</title>
         <desc id="dx-raas-d">
           Angiotensinogen from the liver is cleaved by renin to angiotensin I, then by ACE in the
@@ -109,7 +110,8 @@ export function RaasDiagram() {
           afterload and blood pressure), aldosterone release (sodium and water retention, fibrosis),
           and sympathetic activation. The MRA spironolactone blocks the aldosterone step. An ARNI,
           sacubitril with valsartan, blocks the receptor while also inhibiting neprilysin so
-          natriuretic peptides rise.
+          natriuretic peptides rise. ACE also breaks down bradykinin, so ACE inhibitors let it build
+          up and cause a dry cough.
         </desc>
         <defs>
         <marker id="raas-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -169,9 +171,23 @@ export function RaasDiagram() {
 
         <g>
         <rect x="30" y="596" width="900" height="80" rx="14" fill="var(--trial-bg)" stroke="var(--trial)" strokeOpacity=".35"></rect>
-        <text x="54" y="624" fontSize="13" fontWeight="700" fill="var(--indication)">ARNI — sacubitril / valsartan</text>
+        <text x="54" y="624" fontSize="13" fontWeight="700" fill="var(--indication)">ARNI: sacubitril / valsartan</text>
         <text x="54" y="646" fontSize="12.5" fill="var(--text-soft)">Valsartan blocks the angiotensin II receptor while sacubitril inhibits neprilysin, so natriuretic</text>
         <text x="54" y="666" fontSize="12.5" fill="var(--text-soft)">peptides rise: natriuresis, diuresis, vasodilation, and less fibrosis.</text>
+        </g>
+
+        <g>
+        <rect x="30" y="692" width="435" height="92" rx="14" fill="var(--sideeffect-bg)" stroke="var(--sideeffect)" strokeOpacity=".35"></rect>
+        <text x="54" y="720" fontSize="13" fontWeight="700" fill="var(--sideeffect)">Bradykinin and cough (unintended)</text>
+        <text x="54" y="742" fontSize="12.5" fill="var(--text-soft)">ACE also breaks down bradykinin. Blocking ACE lets</text>
+        <text x="54" y="762" fontSize="12.5" fill="var(--text-soft)">bradykinin build up, which causes the classic dry cough.</text>
+        </g>
+
+        <g>
+        <rect x="495" y="692" width="435" height="92" rx="14" fill="var(--surface-2)" stroke="var(--border-strong)"></rect>
+        <text x="519" y="720" fontSize="13" fontWeight="700" fill="var(--dosing)">Neprilysin</text>
+        <text x="519" y="742" fontSize="12.5" fill="var(--text-soft)">Neprilysin normally degrades natriuretic peptides. Sacubitril</text>
+        <text x="519" y="762" fontSize="12.5" fill="var(--text-soft)">(in the ARNI) blocks it, so those peptides rise: natriuresis, diuresis.</text>
         </g>
         </svg>
     </Figure>
@@ -263,6 +279,7 @@ export function ActionPotentialDiagram() {
     <Figure
       title="Cardiac action potential and antiarrhythmic classes"
       caption="Each Vaughan-Williams class targets a different phase or current."
+      badge="For your reference: non-testable material"
     >
       <svg data-diagram="ap" viewBox="0 0 960 560" width="100%" style={{ display: 'block', minWidth: 620 }} role="img" aria-labelledby="dx-ap-t dx-ap-d">
         <title id="dx-ap-t">The cardiac action potential and the Vaughan-Williams classes</title>

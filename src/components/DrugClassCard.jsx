@@ -57,6 +57,13 @@ export default function DrugClassCard({ drug, currentConditionId, initialOpen = 
           <span className="drug-card__id">
             <span className="drug-card__name">{drug.name}</span>
             <span className="drug-card__examples">{drug.examples.join(' · ')}</span>
+            {drug.badges && drug.badges.length > 0 && (
+              <span className="drug-card__badges">
+                {drug.badges.map((b) => (
+                  <span key={b} className="pillar-badge">{b}</span>
+                ))}
+              </span>
+            )}
             <span className="drug-card__summary" hidden={open}>{drug.indications[0]}</span>
           </span>
           <span className="drug-card__chev" aria-hidden="true"><ChevronRight size={20} /></span>

@@ -31,7 +31,7 @@ export const conditions = [
       'Acute coronary syndrome spans unstable angina, NSTEMI, and STEMI. On top of reperfusion, the acute pharmacologic approach layers antithrombotic therapy onto measures that reduce myocardial oxygen demand. A useful framework is the initial "A, B, C, IV" plus morphine, oxygen (if hypoxic), and an anticoagulant, followed by the ongoing regimen captured in the mnemonic ASA / APA / BETA / STATA / PRIL.',
     mnemonic: {
       label: 'ASA / APA / BETA / STATA / PRIL',
-      expansion: 'Aspirin, a P2Y12 antiplatelet (APA), Beta blocker, Statin, and an ACE inhibitor (PRIL).',
+      expansion: 'Aspirin, a second antiplatelet (APA), Beta blocker, Statin, and an ACE inhibitor (PRIL).',
     },
     drugClassIds: ['asa', 'p2y12', 'beta-blocker', 'statin', 'ace-inhibitor', 'nitrate', 'morphine', 'anticoagulant-acs'],
     sampleCase: {
@@ -40,11 +40,19 @@ export const conditions = [
         'A 45 year old man presents with retrosternal heaviness radiating to his left arm, with diaphoresis and feeling generally unwell. He has "borderline" cholesterol, is otherwise well aside from a remote appendectomy, takes no medications, and is an active smoker (20 pack-year history).',
       exam:
         'BP 165/82 (equal in both arms), RR 16, HR 80 and regular. Appears ashen grey, pale, and diaphoretic. JVP not elevated, brisk carotid upstroke. Chest clear, S1 and S2 normal with no extra sounds or murmur. Peripheral pulses normal, no edema.',
+      ecg: {
+        interpretation: [
+          'Anterolateral STEMI: ST elevation V1 to V4 with Q waves, plus ST elevation in I and aVL',
+          'Reciprocal change inferiorly',
+          'Sinus arrhythmia; baseline wander',
+          'Age of the MI: acute, hours to days, based on Q-wave development',
+        ],
+      },
       walkthrough: [
         {
           prompt: 'What is the working diagnosis, and what drives the pharmacology?',
           answer:
-            'Acute coronary syndrome. The presentation is an ischemic one from plaque rupture with thrombus, so therapy targets the thrombus (antiplatelets and an anticoagulant) while also reducing myocardial oxygen demand (beta blocker, nitrate) and setting up secondary prevention (statin, ACE inhibitor).',
+            'Acute coronary syndrome (STEMI). The presentation is an ischemic one from plaque rupture with thrombus, so therapy targets the thrombus (antiplatelets and an anticoagulant) while also reducing myocardial oxygen demand (beta blocker, nitrate) and setting up secondary prevention (statin, ACE inhibitor).',
         },
         {
           prompt: 'What are the immediate measures?',
@@ -52,9 +60,14 @@ export const conditions = [
             'A, B, C and IV access. Consider morphine for pain and anxiety, oxygen if hypoxic, and an anticoagulant (low molecular weight heparin or fondaparinux). Morphine is increasingly de-emphasized because it slows gastric emptying and delays oral antiplatelet absorption.',
         },
         {
-          prompt: 'What ongoing regimen is started?',
+          prompt: 'What ongoing regimen is started, and when?',
           answer:
-            'ASA / APA / BETA / STATA / PRIL: aspirin (160 mg chewed then 81 mg daily), a P2Y12 inhibitor with a loading dose, a beta blocker, a high-intensity statin, and an ACE inhibitor. Nitroglycerin is added for ongoing ischemic symptoms.',
+            'ASA / APA / BETA / STATA / PRIL: aspirin (160 mg chewed then 81 mg daily), a second antiplatelet with a loading dose, a beta blocker, a high-intensity statin, and an ACE inhibitor. Nitroglycerin is added for ongoing ischemic symptoms. Timing: aspirin, the second antiplatelet, and heparin are immediate; the beta blocker, statin, and ACE inhibitor are usually started within 24 hours of admission, though often begun in the emergency room.',
+        },
+        {
+          prompt: 'Who starts each medication?',
+          answer:
+            'The emergency department starts the heparin, the aspirin, and the second antiplatelet. The beta blocker, statin, and ACE inhibitor are usually started by the resident admitting the patient rather than the emergency physician.',
         },
       ],
     },
@@ -69,7 +82,7 @@ export const conditions = [
             type: 'mc',
             stem: 'Aspirin is given as 160 mg chewed and swallowed. What is its mechanism?',
             choices: [
-              'Reversibly blocks the P2Y12 ADP receptor',
+              'Reversibly blocks the P2Y₁₂ ADP receptor',
               'Irreversibly acetylates cyclooxygenase, blocking thromboxane A2 synthesis',
               'Directly inhibits factor Xa',
               'Blocks the funny (If) current in the sinus node',
@@ -84,7 +97,7 @@ export const conditions = [
             choices: ['Dyspnea', 'Xanthopsia', 'Gynecomastia', 'Dry cough'],
             answer: 0,
             explanation:
-              'Dyspnea is a recognized effect specific to ticagrelor among the P2Y12 inhibitors. Bleeding is common to the whole class.',
+              'Dyspnea is a recognized effect specific to ticagrelor. Bleeding is common to the whole antiplatelet class.',
           },
           {
             type: 'free',
@@ -114,7 +127,7 @@ export const conditions = [
           {
             type: 'flash',
             front: 'Expand the ACS mnemonic ASA / APA / BETA / STATA / PRIL.',
-            back: 'Aspirin, a P2Y12 antiplatelet agent, Beta blocker, Statin, and an ACE inhibitor. These form the ongoing secondary-prevention regimen after acute measures.',
+            back: 'Aspirin, a second antiplatelet agent, Beta blocker, Statin, and an ACE inhibitor. These form the ongoing secondary-prevention regimen after acute measures.',
           },
         ],
       },
@@ -137,6 +150,9 @@ export const conditions = [
         'A 77 year old family physician has 6 months of stable exertional chest discomfort climbing two flights of stairs. It resolves with rest and was prevented by his partner’s nitroglycerin before stairs. Risk factors: pipe smoking and hypertension. He has no allergies and takes no medications.',
       exam:
         'Well appearing, comfortable. Pulse 75, BP 140/90. JVP 3 cm above the sternal angle, normal apex beat, normal S1 and S2, no murmurs. Protuberant abdomen. Chest clear, no edema. Baseline ECG and fasting bloodwork normal. Diagnosis: typical (CCS class II) angina.',
+      ecg: {
+        note: 'Stable angina can present with a normal resting ECG. Changes appear only when you ask the heart for additional power or oxygen demand, for example during a stress test.',
+      },
       walkthrough: [
         {
           prompt: 'Write a three-drug antianginal prescription and give a one-line rationale for each.',
@@ -168,7 +184,7 @@ export const conditions = [
             choices: [
               'By increasing heart rate and contractility',
               'By venodilation that reduces preload and myocardial oxygen demand',
-              'By blocking the P2Y12 receptor',
+              'By blocking the P2Y₁₂ receptor',
               'By inhibiting HMG-CoA reductase',
             ],
             answer: 1,
@@ -224,9 +240,9 @@ export const conditions = [
     name: 'Atrial Fibrillation',
     shortName: 'Atrial fibrillation',
     category: 'rhythm',
-    oneLiner: 'Two decisions: anticoagulate for stroke prevention, then rate versus rhythm control.',
+    oneLiner: 'Three goals: don’t have a stroke, prevent symptoms, and don’t wreck the heart.',
     overview:
-      'Atrial fibrillation carries a risk of intracardiac thrombus, usually in the left atrial appendage, which can embolize and cause stroke, often affecting multiple territories. Management involves two separate decisions: whether to anticoagulate for stroke prevention (driven by risk factors, not by symptoms), and how to control the arrhythmia, by rate control or rhythm control. Antiarrhythmic choice is constrained by structural heart disease, a lesson taught by the CAST trial.',
+      'There are three goals in atrial fibrillation: (1) don’t have a stroke, (2) prevent symptoms, and (3) don’t wreck the heart. Concretely, management is whether to anticoagulate for stroke prevention (driven by risk factors, not by symptoms), and how to control the arrhythmia by rate control or rhythm control, to prevent tachycardia-induced cardiomyopathy and symptoms. The stroke risk comes from intracardiac thrombus, usually in the left atrial appendage, which can embolize and cause stroke, often affecting multiple territories. "Don’t wreck the heart" refers to tachycardia-induced cardiomyopathy: when the heart runs fast for a sustained period it dilates, like running a marathon and creating a big baggy sack. Antiarrhythmic choice is constrained by structural heart disease, a lesson taught by the CAST trial.',
     drugClassIds: ['doac', 'warfarin', 'ccb', 'beta-blocker', 'digoxin', 'class-ic', 'class-iii'],
     sampleCase: {
       title: 'Mrs. AF, 67, paroxysmal atrial fibrillation',
@@ -238,7 +254,7 @@ export const conditions = [
         {
           prompt: 'Is anticoagulation indicated, and which agent?',
           answer:
-            'Yes. She is over 65 and the ECG suggests LVH from likely undiagnosed hypertension, both raising stroke risk. Given her ulcerative colitis and higher GI bleeding risk, the gastroenterology team was more comfortable with warfarin, which is reversible and monitorable, rather than a DOAC. Warfarin was targeted to an INR of 2 to 3.',
+            'Yes. She is over 65 and the ECG suggests LVH from likely undiagnosed hypertension, both raising stroke risk. Given her ulcerative colitis and higher GI bleeding risk, the gastroenterology team was more comfortable with warfarin, which is reversible and monitorable, rather than a DOAC. Warfarin was targeted to an INR of 2 to 3. Note this is uncommon: roughly 95% of the time a DOAC would be chosen. This was an individualized decision driven by her colitis.',
         },
         {
           prompt: 'Rate control or rhythm control, and which drug?',
@@ -263,14 +279,14 @@ export const conditions = [
             type: 'mc',
             stem: 'Why was warfarin chosen over a DOAC in this patient?',
             choices: [
-              'DOACs are ineffective in atrial fibrillation',
-              'Her ulcerative colitis raises GI bleeding risk, and warfarin is reversible and monitorable',
-              'Warfarin has a faster onset',
+              'DOACs carry a lower GI bleeding risk than warfarin',
+              'Her colitis raises GI bleeding risk, and warfarin has a lower GI bleeding risk than a DOAC (and is reversible and monitorable)',
+              'Warfarin carries a lower risk of intracranial hemorrhage than a DOAC',
               'DOACs are contraindicated in all patients over 65',
             ],
             answer: 1,
             explanation:
-              'With her colitis and elevated GI bleeding risk, a reversible, INR-monitored agent was preferred. DOACs are generally first-line in non-valvular AF, but individual bleeding considerations can favour warfarin.',
+              'The bleeding profiles are the opposite of what many assume: DOACs have a HIGHER GI bleeding risk but a LOWER intracranial hemorrhage risk than warfarin, while warfarin has a higher intracranial but a lower GI bleeding risk. With her colitis (GI bleeding risk), warfarin’s lower GI bleeding, reversibility, and INR monitoring made it the individualized choice, though a DOAC is first-line in most non-valvular AF.',
           },
           {
             type: 'mc',
@@ -321,8 +337,8 @@ export const conditions = [
           },
           {
             type: 'flash',
-            front: 'What are the two independent decisions in managing atrial fibrillation?',
-            back: 'First, whether to anticoagulate for stroke prevention (driven by risk factors, not symptoms). Second, rate control versus rhythm control.',
+            front: 'How many independent decisions are there in managing atrial fibrillation, and what are they?',
+            back: 'Three. (1) Anticoagulate to prevent stroke (driven by risk factors, not symptoms). (2) Rate versus rhythm control for symptoms. (3) Don’t wreck the heart: prevent tachycardia-induced cardiomyopathy.',
           },
           {
             type: 'flash',
@@ -354,7 +370,7 @@ export const conditions = [
         {
           prompt: 'Prescribe a single agent. How does the edema influence the choice?',
           answer:
-            'Reasonable single agents are a rate-limiting calcium channel blocker (diltiazem long-acting 240 mg daily or verapamil 80 mg three times daily) or a beta blocker (metoprolol 25 mg twice daily). Because calcium channel blockers commonly cause peripheral edema and she already has minor edema, a beta blocker may be the more comfortable choice. Note that in a young normotensive patient either can cause orthostasis or presyncope.',
+            'Reasonable single agents are a rate-limiting calcium channel blocker (diltiazem long-acting 240 mg daily or verapamil 80 mg three times daily) or a beta blocker (metoprolol 25 mg twice daily). Because calcium channel blockers commonly cause peripheral edema and she already has minor edema, a beta blocker may be the better choice. Note that in a young normotensive patient either can cause orthostasis or presyncope.',
         },
         {
           prompt: 'Does she need anticoagulation?',
@@ -372,7 +388,7 @@ export const conditions = [
         questions: [
           {
             type: 'mc',
-            stem: 'Given her minor peripheral edema, which agent is arguably the more comfortable single choice?',
+            stem: 'Given her minor peripheral edema, which agent is arguably the best single choice?',
             choices: [
               'A beta blocker, since calcium channel blockers commonly cause edema',
               'A dihydropyridine calcium channel blocker',
@@ -402,6 +418,11 @@ export const conditions = [
             modelAnswer:
               'They increase vagal (parasympathetic) tone, which slows AV-node conduction. Because AVNRT and AVRT depend on the AV node, slowing it can break the reentrant circuit.',
             hint: 'Think about what the AV node does in the reentry circuit.',
+            video: {
+              src: null,
+              title: 'Vagal maneuvers',
+              note: 'Video to be added (Dr. Thakrar’s vagal maneuvers video).',
+            },
           },
           {
             type: 'flash',
@@ -443,7 +464,7 @@ export const conditions = [
         {
           prompt: 'What is the practical caution when switching to an ARNI?',
           answer:
-            'Discontinue the ACE inhibitor for at least 36 hours before starting the ARNI to avoid serious hypotension and angioedema. A history of angioedema is a contraindication.',
+            'Discontinue the ACE inhibitor for at least 36 hours before starting the ARNI to avoid serious hypotension and angioedema. A history of angioedema is a contraindication. During those 36 hours, monitoring is simply watching the blood pressure, since this patient is an inpatient. At home you would just stop the ACE inhibitor and expect the blood pressure to rise, which is why clinicians are reluctant to start these at home and part of what heart failure clinics are for.',
         },
       ],
     },
@@ -456,7 +477,7 @@ export const conditions = [
         questions: [
           {
             type: 'mc',
-            stem: 'Which therapy relieves his congestion but does not improve mortality?',
+            stem: 'Which therapy provides symptomatic benefit for his congestion?',
             choices: [
               'A loop diuretic (furosemide)',
               'An ACE inhibitor',
@@ -465,7 +486,7 @@ export const conditions = [
             ],
             answer: 0,
             explanation:
-              'Loop diuretics provide symptomatic relief of congestion and edema but do not confer a mortality benefit. The ACE inhibitor, MRA, and SGLT2 inhibitor are the survival therapies.',
+              'Loop diuretics provide symptomatic relief of congestion and edema. They may improve mortality but this is not proven, so they are used for symptom relief, while the ACE inhibitor (or ARNI), MRA, and SGLT2 inhibitor are the survival therapies.',
           },
           {
             type: 'mc',
@@ -486,7 +507,7 @@ export const conditions = [
             choices: [
               'Give both together for a week',
               'Discontinue the ACE inhibitor for at least 36 hours',
-              'Load a P2Y12 inhibitor',
+              'Load a P2Y₁₂ inhibitor',
               'Check the INR',
             ],
             answer: 1,
@@ -499,6 +520,11 @@ export const conditions = [
             modelAnswer:
               'Hyperkalemia is the life-threatening adverse effect and requires monitoring of potassium and renal function. Gynecomastia and menstrual irregularities are also common because it is a steroid that competes at the aldosterone receptor.',
             hint: 'One is an electrolyte emergency; the other relates to its steroid structure.',
+            ecg: {
+              src: null,
+              title: 'ECG of hyperkalemia',
+              note: 'Progresses from peaked T waves through to a sine-wave pattern as potassium rises.',
+            },
           },
           {
             type: 'flash',

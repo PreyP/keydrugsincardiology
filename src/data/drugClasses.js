@@ -44,12 +44,12 @@ export const drugClasses = [
   },
   {
     id: 'p2y12',
-    name: 'P2Y12 inhibitors',
-    shortName: 'P2Y12',
-    monogram: 'P2Y',
+    name: 'Antiplatelet agents (P2Y₁₂ inhibitors)',
+    shortName: 'Antiplatelet',
+    monogram: 'AP',
     examples: ['Clopidogrel', 'Prasugrel', 'Ticagrelor'],
     mechanism:
-      'Inhibit ADP-mediated platelet activation by blocking the P2Y12 purinoreceptor. Clopidogrel and prasugrel bind irreversibly; ticagrelor binds reversibly. Given with aspirin as dual antiplatelet therapy.',
+      'Inhibit ADP-mediated platelet activation by blocking the P2Y₁₂ purinoreceptor. Given with aspirin as a second antiplatelet (dual antiplatelet therapy).',
     indications: [
       'ACS across the spectrum: unstable angina, NSTEMI, STEMI',
       'Significant reduction in adverse cardiovascular outcomes at the cost of increased bleeding',
@@ -74,9 +74,10 @@ export const drugClasses = [
     examples: ['Bisoprolol', 'Metoprolol', 'Carvedilol', 'Labetalol', 'Acebutolol'],
     mechanism:
       'Block beta-adrenergic receptors: decrease chronotropy, inotropy, and conduction velocity, and reduce adverse remodeling from chronic beta-adrenergic stimulation in heart failure. By lowering heart rate, contractility, and arterial pressure they reduce myocardial oxygen demand, improving the supply/demand ratio in angina. Subtypes differ: some add vasodilation (labetalol, carvedilol), some have intrinsic sympathomimetic activity that lowers heart rate less (acebutolol), and some are beta-1 selective (less bronchoconstriction, useful in asthmatics).',
+    badges: ['GDMT pillar'],
     indications: [
       'Acute coronary syndrome and post-MI (mortality reduction, less remodeling and arrhythmia)',
-      'Congestive heart failure (HFrEF)',
+      'Congestive heart failure (HFrEF): one of the four pillars of guideline-directed medical therapy (GDMT)',
       'Tachyarrhythmias, including rate control',
       'Hypertrophic cardiomyopathy',
       'Angina',
@@ -85,6 +86,7 @@ export const drugClasses = [
     dosing: [
       'Bisoprolol 2.5 mg orally once daily',
       'Metoprolol 25 mg orally twice daily, up to 100 mg twice daily',
+      'Labetalol is the beta blocker of choice in pregnancy: 100 mg orally twice daily, up to 400 mg orally three times daily',
     ],
     sideEffects: [
       { text: 'Bradycardia', caution: true },
@@ -126,9 +128,10 @@ export const drugClasses = [
     examples: ['Enalapril', 'Ramipril', 'Perindopril'],
     mechanism:
       'Inhibit angiotensin-converting enzyme, preventing conversion of angiotensin I to angiotensin II. This decreases vasoconstriction, decreases sodium retention (via less aldosterone), and decreases sympathetic activity. Afterload reduction raises cardiac output and drives favourable remodeling.',
+    badges: ['GDMT pillar (RAAS)'],
     indications: [
       'Improve survival after myocardial infarction',
-      'Congestive heart failure (HFrEF), a cornerstone therapy',
+      'Heart failure (HFrEF): now second-line to the ARNI, which is started first for EF under 40%. Use an ACE inhibitor if the ARNI is unaffordable, unavailable, or not tolerated.',
       'Excellent antihypertensives',
     ],
     dosing: ['e.g. Ramipril 2.5-10 mg daily; titrate to target as tolerated'],
@@ -156,7 +159,7 @@ export const drugClasses = [
     ],
     dosing: [
       'Patch 0.4 mg/hr, on at 0800 and off at 2200 to give a nitrate-free interval and avoid tolerance',
-      'Sublingual for acute episodes; IV acutely; oral or paste chronically',
+      'Sublingual for acute episodes; IV acutely; oral chronically',
     ],
     sideEffects: [
       { text: 'Headache' },
@@ -197,6 +200,7 @@ export const drugClasses = [
       'Angina',
       'Supraventricular tachycardia and rate control (non-dihydropyridines, via AV-node slowing)',
       'Atrial fibrillation rate control (the non-dihydropyridines act as Class IV antiarrhythmics)',
+      'Drug of choice for atrial fibrillation in young patients, because it avoids the sexual side effects of beta blockers (impotence, poor libido, poor energy)',
       'Hypertension',
       'Coronary vasospasm',
     ],
@@ -240,8 +244,9 @@ export const drugClasses = [
     examples: ['Spironolactone', 'Eplerenone'],
     mechanism:
       'A synthetic steroid that competes for the aldosterone receptor (a potassium-sparing aldosterone blocker). Inhibits sodium reabsorption in the distal tubule (a weak diuretic) while retaining potassium, and has cardiac anti-remodeling effects.',
+    badges: ['GDMT pillar'],
     indications: [
-      'HFrEF with EF < 35% and NYHA class II-IV, with a mortality benefit',
+      'HFrEF with EF < 35% and NYHA class II-IV, with a mortality benefit: one of the four pillars of GDMT',
     ],
     dosing: ['e.g. Spironolactone 12.5-25 mg daily; monitor potassium and renal function'],
     sideEffects: [
@@ -278,9 +283,10 @@ export const drugClasses = [
     monogram: 'ARNI',
     examples: ['Sacubitril / Valsartan (Entresto)'],
     mechanism:
-      'Combines an ARB with neprilysin inhibition. Neprilysin inhibition raises natriuretic peptides, producing natriuresis, diuresis, aldosterone suppression, vasodilation, and inhibition of fibrosis.',
+      'A combination pill of an ARB and a neprilysin inhibitor. Because it is a combo, the two components do different things: neprilysin inhibition raises natriuretic peptides, giving natriuresis and diuresis, while the ARB component provides aldosterone suppression, vasodilation, and inhibition of fibrosis.',
+    badges: ['GDMT pillar (RAAS)'],
     indications: [
-      'HFrEF, NYHA class II-IV',
+      'HFrEF, NYHA class II-IV: started first for EF under 40% (first-line RAAS pillar, ahead of an ACE inhibitor)',
       'Replaces the ACE inhibitor when a patient remains symptomatic on an ACE inhibitor plus beta blocker',
     ],
     dosing: [
@@ -302,6 +308,8 @@ export const drugClasses = [
       'Selective inhibitor of the "funny" (If) current in the sinus node, slowing the sinus rate without affecting contractility. It does not work in atrial fibrillation because it acts on the SA node.',
     indications: [
       'HFrEF with LVEF <= 35% in sinus rhythm and resting heart rate > 70 bpm, when a patient cannot tolerate a goal beta-blocker dose or has worsening symptoms',
+      'New: rate control in the CT scanner, to bring patients to a target heart rate before imaging',
+      'Post-COVID inappropriate sinus tachycardia (autonomic dysfunction with sinus tachycardia)',
     ],
     dosing: ['Titrated to a target resting heart rate'],
     sideEffects: [
@@ -317,9 +325,11 @@ export const drugClasses = [
     monogram: 'SGLT',
     examples: ['Dapagliflozin', 'Empagliflozin', 'Canagliflozin'],
     mechanism:
-      'Block the sodium-glucose cotransporter 2 in the proximal tubule, which normally reabsorbs about 90% of filtered glucose. This increases urinary glucose excretion and produces a diuretic effect, along with mortality reduction in heart failure through mechanisms beyond glucose lowering.',
+      'Block the sodium-glucose cotransporter 2 in the proximal tubule, which normally reabsorbs about 90% of filtered glucose. This increases urinary glucose excretion and produces a diuretic effect, along with weight loss, renal (kidney) protection, and mortality reduction in heart failure through mechanisms beyond glucose lowering.',
+    badges: ['GDMT pillar'],
     indications: [
-      'HFrEF, with additional mortality reduction',
+      'HFrEF, with additional mortality reduction: one of the four pillars of GDMT',
+      'Heart failure with non-reduced (preserved) ejection fraction. The non-reduced regimen is an MRA, an SGLT2 inhibitor, a GLP-1 agonist, plus blood-pressure control.',
       'Type 2 diabetes',
     ],
     dosing: ['Once daily, fixed dose'],
@@ -367,7 +377,10 @@ export const drugClasses = [
         caution: true,
       },
     ],
-    pearls: ['Preferred over warfarin in most non-valvular AF, but warfarin may be chosen when bleeding risk needs a reversible, monitorable agent.'],
+    pearls: [
+      'Preferred over warfarin in most non-valvular AF, but warfarin may be chosen when bleeding risk needs a reversible, monitorable agent.',
+      'Naming mnemonic: the -xaban stem encodes the mechanism, since Xa = factor Xa inhibitor (edoxaban: "Edo," made in Japan). All the DOACs follow the -xaban pattern except dabigatran.',
+    ],
   },
   {
     id: 'warfarin',
@@ -432,9 +445,58 @@ export const drugClasses = [
     dosing: ['Amiodarone is not eliminated by the kidney; requires ongoing organ monitoring'],
     sideEffects: [
       { text: 'Amiodarone has multiple tissue toxicities: monitor TSH, chest X-ray, LFTs, and ECG for QT prolongation', caution: true },
+      { text: 'Amiodarone affects the skin, liver, thyroid, lung (pulmonary fibrosis), heart, and eye (corneal deposits)', caution: true },
       { text: 'QT prolongation (both agents)', caution: true },
     ],
-    pearls: ['Amiodarone is effective across a broad range of arrhythmias but its long-term toxicity profile demands regular monitoring.'],
+    pearls: [
+      'Amiodarone is effective across a broad range of arrhythmias but its long-term toxicity profile demands regular monitoring.',
+      'It is not eliminated by the kidney: the classic exam point. Everything else clears it, which is why so many organ systems are affected.',
+    ],
+  },
+  {
+    id: 'tafamidis',
+    name: 'Tafamidis',
+    shortName: 'Tafamidis',
+    monogram: 'TAF',
+    examples: ['Tafamidis'],
+    badges: ['New / emerging'],
+    mechanism:
+      'A transthyretin (TTR) stabilizer: binds TTR and keeps it from misfolding and depositing as amyloid in the heart.',
+    indications: [
+      'Transthyretin amyloid cardiomyopathy (ATTR amyloidosis)',
+    ],
+    dosing: ['Once daily, oral'],
+    sideEffects: [
+      { text: 'Generally well tolerated' },
+    ],
+    pearls: [
+      'New and up-and-coming treatment for cardiac amyloidosis. (Gene silencers for amyloid also exist but are beyond the scope of this module.)',
+    ],
+  },
+  {
+    id: 'myosin-inhibitor',
+    name: 'Cardiac myosin inhibitors',
+    shortName: 'Myosin inhibitors',
+    monogram: 'CMI',
+    examples: ['Mavacamten', 'Aficamten'],
+    badges: ['New / emerging'],
+    mechanism:
+      'A cardiac myosin inhibitor that prevents excess actin-myosin cross-bridge formation, reducing hypercontractility and relieving left ventricular outflow tract obstruction.',
+    indications: [
+      'Obstructive hypertrophic cardiomyopathy (HCM) only, not non-obstructive HCM',
+      'Works regardless of gene-positive or gene-negative status',
+    ],
+    dosing: ['Titrated with echo monitoring of EF and of the outflow tract obstruction'],
+    sideEffects: [
+      { text: 'Drops the ejection fraction (a negative inotrope): requires EF monitoring by echo. The interval was every 3 months, now up to 6 months, and is currently unsettled.', caution: true },
+      { text: 'Monitor the left ventricular outflow tract obstruction', caution: true },
+      { text: 'Few other side effects' },
+    ],
+    pearls: [
+      'The first genuinely engineered drug for a cardiac illness; it can spare patients open-heart surgery to resect septal muscle.',
+      'It is not yet known whether the muscle itself shrinks. Only 2 to 3 years on the market, it appears to affect contraction only for now.',
+      'Aficamten: approved in the EU in 2026; under review and not yet approved in Canada.',
+    ],
   },
 ]
 

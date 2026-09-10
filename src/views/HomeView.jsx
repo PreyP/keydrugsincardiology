@@ -1,16 +1,42 @@
 import { Link } from 'react-router-dom'
-import { conditions, categories } from '../data/conditions.js'
+import { conditions, conditionById, categories } from '../data/conditions.js'
 import { drugClasses } from '../data/drugClasses.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
+import FeedbackForm from '../components/FeedbackForm.jsx'
 import { useProgress } from '../hooks/useProgress.js'
 import { Book, ClipboardCheck, Timer, ChevronRight, Pill, Route, Check } from '../components/Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
+function readLast() {
+  try {
+    const v = JSON.parse(localStorage.getItem('kdc-last'))
+    return v && v.path ? v : null
+  } catch {
+    return null
+  }
+}
+
+function conditionFromPath(path) {
+  const m = /^\/(?:learn|practice)\/([^#/]+)/.exec(path || '')
+  return m ? conditionById[m[1]] : null
+}
+
 export default function HomeView() {
   const { learnedCount, bestScore, isLearned } = useProgress()
   const pct = Math.round((learnedCount / conditions.length) * 100)
   const nextUp = conditions.find((c) => !isLearned(c.id))
+
+  // A-02: resume the last learn/practice page if there is one.
+  const last = readLast()
+  const lastCond = last && conditionFromPath(last.path)
+  const resumeTo = last ? last.path : nextUp ? `/learn/${nextUp.id}` : '/test'
+  const resumeEyebrow = last ? 'Continue where you left off' : nextUp ? 'Continue learning' : 'All conditions learned'
+  const resumeLabel = last
+    ? (lastCond ? lastCond.name : 'Resume')
+    : nextUp
+    ? nextUp.name
+    : 'Put it to the test'
 
   return (
     <div className="content">
@@ -22,8 +48,8 @@ export default function HomeView() {
 
       <h1>Key Drugs in Cardiology</h1>
       <p className="byline">
-        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with content
-        and support from Dr. Thakrar.
+        This module was created by Prey Patel and Md Riaz Mahmud (MD Class of 2028) with support
+        from Dr. Amar Thakrar.
       </p>
       <p className="lead">
         An interactive module for learning cardiology pharmacotherapy the way it is prescribed:
@@ -33,14 +59,14 @@ export default function HomeView() {
       </p>
 
       {/* Continue / up-next banner */}
-      <Link to={nextUp ? `/learn/${nextUp.id}` : '/test'} className="continue-banner card">
+      <Link to={resumeTo} className="continue-banner card">
         <span className="continue-banner__icon" aria-hidden="true"><Route size={20} /></span>
         <span className="continue-banner__text">
-          <span className="continue-banner__eyebrow">{nextUp ? 'Continue learning' : 'All conditions learned'}</span>
-          <strong>{nextUp ? nextUp.name : 'Put it to the test'}</strong>
+          <span className="continue-banner__eyebrow">{resumeEyebrow}</span>
+          <strong>{resumeLabel}</strong>
         </span>
         <span className="continue-banner__go">
-          {nextUp ? 'Start' : 'Test'} <ChevronRight size={16} aria-hidden="true" />
+          {last ? 'Resume' : nextUp ? 'Start' : 'Test'} <ChevronRight size={16} aria-hidden="true" />
         </span>
       </Link>
 
@@ -121,6 +147,10 @@ export default function HomeView() {
           <li><strong>Practice:</strong> work through the cases with multiple choice, short-answer, and flashcard questions.</li>
           <li><strong>Test:</strong> set a timer and answer a shuffled mix, then review your score by topic.</li>
         </ol>
+      </div>
+
+      <div style={{ marginTop: '1.75rem' }}>
+        <FeedbackForm context="module" />
       </div>
 
       <p className="muted" style={{ fontSize: '0.82rem', marginTop: '1.5rem' }}>
