@@ -100,7 +100,7 @@ export default function LearnView() {
           )}
           {condition.sampleCase.ecg && (
             <EcgFigure
-              title="12-lead ECG"
+              title={condition.sampleCase.ecg.title || '12-lead ECG'}
               src={condition.sampleCase.ecg.src}
               interpretation={condition.sampleCase.ecg.interpretation}
               note={condition.sampleCase.ecg.note}

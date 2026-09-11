@@ -41,6 +41,9 @@ export const conditions = [
       exam:
         'BP 165/82 (equal in both arms), RR 16, HR 80 and regular. Appears ashen grey, pale, and diaphoretic. JVP not elevated, brisk carotid upstroke. Chest clear, S1 and S2 normal with no extra sounds or murmur. Peripheral pulses normal, no edema.',
       ecg: {
+        title: 'Mr. CP, 12-lead ECG',
+        src: 'ecgs/cp-acs.webp',
+        caption: 'De-identified from the source deck',
         interpretation: [
           'Anterolateral STEMI: ST elevation V1 to V4 with Q waves, plus ST elevation in I and aVL',
           'Reciprocal change inferiorly',

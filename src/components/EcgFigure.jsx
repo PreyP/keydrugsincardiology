@@ -15,7 +15,7 @@ export default function EcgFigure({ title = 'ECG', src, alt, interpretation, not
       </figcaption>
 
       {src ? (
-        <img className="ecg__img" src={src} alt={alt || title} />
+        <img className="ecg__img" src={`${import.meta.env.BASE_URL}${src}`} alt={alt || title} />
       ) : (
         <div className="ecg__placeholder" role="img" aria-label={`${title} placeholder`}>
           <span className="ecg__placeholder-line">ECG image to be added</span>
