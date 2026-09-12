@@ -76,19 +76,11 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
       <NavLink to="/" end className="nav-link">
         <span className="nav-link__icon" aria-hidden="true"><Home size={17} /></span> Overview
       </NavLink>
-      <NavLink to="/drugs" className="nav-link">
-        <span className="nav-link__icon" aria-hidden="true"><Pill size={17} /></span> Drug library
-      </NavLink>
-      <NavLink to="/compare" className="nav-link">
-        <span className="nav-link__icon" aria-hidden="true"><Compare size={17} /></span> Comparisons
-      </NavLink>
-      <NavLink to="/test" className="nav-link">
-        <span className="nav-link__icon" aria-hidden="true"><Timer size={17} /></span> Test my knowledge
-      </NavLink>
 
+      <div className="nav-section-label">Learn by condition</div>
       {byCat.map(({ cat, label, items }) => (
         <div key={cat}>
-          <div className="nav-section-label">{label}</div>
+          <div className="nav-section-label nav-section-label--sub">{label}</div>
           {items.map((c) => (
             <NavLink key={c.id} to={`/learn/${c.id}`} className="nav-link">
               <span className="nav-link__icon" aria-hidden="true"><Book size={16} /></span>
@@ -98,9 +90,22 @@ export default function Sidebar({ open, onNavigate, onOpenSearch }) {
         </div>
       ))}
 
-      <div className="nav-section-label">Practice</div>
+      <div className="nav-section-label">Practice & test</div>
       <NavLink to="/practice" className="nav-link">
         <span className="nav-link__icon" aria-hidden="true"><ClipboardCheck size={16} /></span> Work through cases
+      </NavLink>
+      <NavLink to="/test" className="nav-link">
+        <span className="nav-link__icon" aria-hidden="true"><Timer size={17} /></span> Test my knowledge
+      </NavLink>
+
+      <div className="nav-section-label">Reference index</div>
+      <NavLink to="/drugs" className="nav-link">
+        <span className="nav-link__icon" aria-hidden="true"><Pill size={17} /></span> Drug library
+        <span className="nav-link__meta">A–Z</span>
+      </NavLink>
+      <NavLink to="/compare" className="nav-link">
+        <span className="nav-link__icon" aria-hidden="true"><Compare size={17} /></span> Comparisons
+        <span className="nav-link__meta">A–Z</span>
       </NavLink>
     </nav>
   )

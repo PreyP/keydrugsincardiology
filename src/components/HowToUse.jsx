@@ -33,20 +33,27 @@ export default function HowToUse() {
               <h3 style={{ margin: 0 }}>How to use this module</h3>
               <button className="icon-btn" onClick={() => setOpen(false)} aria-label="Close">✕</button>
             </div>
-            <p className="muted" style={{ marginTop: 0 }}>There are two ways in. Use whichever fits what you need right now.</p>
+            <p className="muted" style={{ marginTop: 0 }}>
+              One set of content, organized two ways. Start with a condition — that's where the teaching happens.
+            </p>
             <ol className="howto__list">
               <li>
-                <strong>Go straight to a drug.</strong> Open the Drug library (or press Cmd/Ctrl+K to search)
-                and jump to any drug class to read its indications, mechanism, dosing, side effects, and trials.
+                <strong>Learn by condition (start here).</strong> Pick a condition in the sidebar. Its page has
+                everything for that condition in one place: the drug classes to use, the relevant comparison
+                tables, and a worked sample case.
               </li>
               <li>
-                <strong>Follow the learning journey.</strong> Pick a condition in the sidebar and work through it
-                the way it is prescribed, with the relevant drugs shown inside each condition, then practise the
-                cases and test yourself against the clock.
+                <strong>Practise, then test.</strong> Work graded cases for that condition, then use the timed
+                test to check yourself across everything and see what to revisit.
+              </li>
+              <li>
+                <strong>Drug library and Comparisons are a lookup, not new content.</strong> They hold the exact
+                same drug cards and tables already shown on the condition pages — just A–Z instead of by
+                condition, for when you already know what you want and don't need the clinical context around it.
               </li>
             </ol>
             <p className="muted" style={{ fontSize: '0.86rem', marginBottom: 0 }}>
-              Hover the highlighted terms anywhere for quick definitions, and use the review deck to lock in what you learn.
+              Hover the highlighted terms anywhere for quick definitions.
             </p>
           </div>
         </div>

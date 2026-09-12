@@ -524,8 +524,9 @@ export const conditions = [
               'Hyperkalemia is the life-threatening adverse effect and requires monitoring of potassium and renal function. Gynecomastia and menstrual irregularities are also common because it is a steroid that competes at the aldosterone receptor.',
             hint: 'One is an electrolyte emergency; the other relates to its steroid structure.',
             ecg: {
-              src: null,
+              src: 'ecgs/hyperkalemia-progression.jpg',
               title: 'ECG of hyperkalemia',
+              caption: 'Image: Geeky Medics (geekymedics.com)',
               note: 'Progresses from peaked T waves through to a sine-wave pattern as potassium rises.',
             },
           },

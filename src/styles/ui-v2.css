@@ -42,6 +42,8 @@ p { text-wrap: pretty; }
   font-size: 0.625rem; letter-spacing: 0.14em; margin: 1.1rem 0.6rem 0.4rem;
 }
 .nav-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.nav-section-label--sub { margin: 0.7rem 0.6rem 0.35rem 1.05rem; opacity: 0.72; }
+.nav-section-label--sub::after { display: none; }
 .search-trigger { border-radius: 12px; }
 
 /* ---------- Sticky content header ---------- */

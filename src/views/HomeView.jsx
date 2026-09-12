@@ -140,12 +140,28 @@ export default function HomeView() {
       <div className="card" style={{ padding: '1.35rem 1.5rem', marginTop: '1rem' }}>
         <div className="row" style={{ gap: '0.6rem' }}>
           <Book size={18} aria-hidden="true" />
-          <strong>How to use this module</strong>
+          <strong>How this module fits together</strong>
         </div>
-        <ol style={{ marginTop: '0.75rem', marginBottom: 0 }}>
-          <li><strong>Learn:</strong> pick a condition to read its drug classes and a worked sample case. Hover the highlighted terms for instant definitions.</li>
-          <li><strong>Practice:</strong> work through the cases with multiple choice, short-answer, and flashcard questions.</li>
-          <li><strong>Test:</strong> set a timer and answer a shuffled mix, then review your score by topic.</li>
+        <p className="muted" style={{ margin: '0.6rem 0 0' }}>
+          It's one set of content, organized two ways. The condition pages are where the teaching
+          happens; the sidebar mirrors that below.
+        </p>
+        <ol style={{ marginTop: '0.9rem', marginBottom: 0 }}>
+          <li>
+            <strong>Learn by condition</strong> — start here. Open a condition and its page has
+            everything for it in one place: the drug classes to use, the relevant comparison
+            tables, and a worked sample case. Hover the highlighted terms for instant definitions.
+          </li>
+          <li>
+            <strong>Practice & test</strong> — work graded cases for that condition, then use
+            the timed test to check yourself across everything and see what to revisit.
+          </li>
+          <li>
+            <strong>Drug library & Comparisons are a lookup, not new content</strong> — they
+            hold the exact same drug cards and tables already shown on the condition pages, just
+            A–Z instead of by condition. Use them when you already know what you want and don't
+            need the clinical context around it.
+          </li>
         </ol>
       </div>
 

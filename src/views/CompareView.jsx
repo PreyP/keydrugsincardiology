@@ -32,8 +32,10 @@ export default function CompareView() {
 
       <h1>Comparisons</h1>
       <p className="lead">
-        High-yield side-by-side tables for the decisions that trip students up: which anticoagulant,
-        which calcium channel blocker, rate versus rhythm, and the pillars of heart failure therapy.
+        The same tables already shown inline on the relevant condition pages, collected here for
+        the decisions that trip students up: which anticoagulant, which calcium channel blocker,
+        rate versus rhythm, and the pillars of heart failure therapy. Each table links back to the
+        conditions it belongs to.
       </p>
 
       {comparisons.map((t) => (

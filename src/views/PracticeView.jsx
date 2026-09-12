@@ -73,8 +73,8 @@ export default function PracticeView() {
       <h1>{active ? `Practice: ${active.name}` : 'Work through the cases'}</h1>
       <p className="lead">
         {active
-          ? `Apply the ${active.shortName} pharmacology. Multiple choice questions grade instantly; short-answer and flashcard prompts let you self-check.`
-          : 'Every condition has a case with mixed question formats. Multiple choice grades instantly; short-answer and flashcards are for self-assessment.'}
+          ? `Graded practice for ${active.shortName}, separate from the sample case on its Learn page. Multiple choice questions grade instantly; short-answer and flashcard prompts let you self-check.`
+          : 'Every condition has graded cases here, separate from the walked-through sample case on its Learn page. Multiple choice grades instantly; short-answer and flashcards are for self-assessment.'}
       </p>
 
       {!active && (

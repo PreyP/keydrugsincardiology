@@ -26,8 +26,9 @@ export default function DrugLibraryView() {
 
       <h1>Drug library</h1>
       <p className="lead">
-        Every drug class in the module, A to Z. Each card links to the conditions where it is used,
-        so you can move between the pharmacology and the clinical context.
+        The same drug cards already shown on each condition's Learn page, collected here A to Z for
+        when you already know which drug you want. Each card links back to the conditions where it
+        is used, so you can move between the pharmacology and the clinical context.
       </p>
 
       <label className="sr-only" htmlFor={fieldId}>Filter drugs by name or example agent</label>

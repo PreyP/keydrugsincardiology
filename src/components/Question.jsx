@@ -94,7 +94,7 @@ export function FreeText({ q }) {
       )}
       {revealed && q.ecg && (
         <div style={{ marginTop: '0.7rem' }}>
-          <EcgFigure title={q.ecg.title || 'ECG'} src={q.ecg.src} note={q.ecg.note} interpretation={q.ecg.interpretation} />
+          <EcgFigure title={q.ecg.title || 'ECG'} src={q.ecg.src} caption={q.ecg.caption} note={q.ecg.note} interpretation={q.ecg.interpretation} />
         </div>
       )}
     </div>
