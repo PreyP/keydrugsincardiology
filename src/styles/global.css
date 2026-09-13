@@ -577,6 +577,68 @@ kbd {
 .howto__list { margin: 0.6rem 0 1rem; padding-left: 1.2rem; }
 .howto__list li { margin-bottom: 0.7rem; }
 
+/* ---------- Module map (Overview schematic) ----------
+   Three numbered steps in a row plus a dashed "shortcut" node under step 2.
+   Connector lines reuse the stepper look (1.5px --border-strong); badges reuse
+   the active-stepper navy gradient. Below 700px the steps stack into a
+   timeline and the branch sits under step 2 with a ↳ glyph instead of a drop. */
+.module-map { padding: 1.35rem 1.5rem 1.4rem; margin: 1.6rem 0 1.25rem; }
+.module-map__steps {
+  --mm-gap: 1.25rem;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--mm-gap);
+  align-items: start;
+}
+.module-map__step {
+  margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr);
+  align-items: center; row-gap: 0.55rem;
+}
+.module-map__badge {
+  width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(150deg, var(--navy-500), var(--navy-700)); color: var(--on-accent);
+  font-family: var(--font-sans); font-size: 0.74rem; font-weight: 700;
+}
+.module-map__line {
+  height: 1.5px; background: var(--border-strong);
+  margin-left: 0.6rem; margin-right: calc(0.6rem - var(--mm-gap));
+}
+.module-map__text { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.15rem; }
+.module-map__label { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 1rem; line-height: 1.3; }
+.module-map__label svg { flex-shrink: 0; color: var(--accent-600); }
+.module-map__desc { font-size: 0.9rem; line-height: 1.5; }
+.module-map__drop {
+  grid-column: 1; justify-self: center; width: 1.5px; height: 1.1rem;
+  background: var(--border-strong); margin: -0.2rem 0;
+}
+.module-map__branch {
+  grid-column: 1 / -1; display: flex; gap: 0.45rem; align-items: flex-start;
+  padding: 0.7rem 0.85rem 0.75rem; border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-strong); background: var(--sky-100);
+}
+/* --sky-100 stays light in the dark theme, so swap in the dark surface. */
+:root[data-theme='dark'] .module-map__branch { background: var(--surface-2); }
+.module-map__branch .module-map__label { font-size: 0.94rem; }
+.module-map__branch .module-map__desc { font-size: 0.84rem; }
+.module-map__turn { display: none; font-family: var(--font-sans); color: var(--text-mute); line-height: 1.3; }
+
+@media (max-width: 700px) {
+  .module-map__steps { grid-template-columns: minmax(0, 1fr); row-gap: var(--mm-gap); }
+  .module-map__step {
+    position: relative; grid-template-columns: 26px minmax(0, 1fr);
+    column-gap: 0.8rem; row-gap: 0.6rem; align-items: start;
+  }
+  /* Horizontal connector becomes a vertical timeline line under the badge,
+     running through the row gap to the next badge. */
+  .module-map__line {
+    position: absolute; left: 12.25px; top: 30px; bottom: calc(4px - var(--mm-gap));
+    width: 1.5px; height: auto; margin: 0;
+  }
+  .module-map__text { grid-column: 2; }
+  .module-map__drop { display: none; }
+  .module-map__branch { grid-column: 2; }
+  .module-map__turn { display: inline; }
+}
+
 /* ---------- Feedback form ---------- */
 .feedback { padding: 1.25rem 1.4rem; }
 .feedback__label { font-family: var(--font-sans); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy-600); margin-bottom: 0.35rem; }
