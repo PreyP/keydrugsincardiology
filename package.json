@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Key Drugs in Cardiology — an interactive learning module for cardiology pharmacotherapy.",
+  "description": "Key Drugs in Cardiology - an interactive learning module for cardiology pharmacotherapy.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -17,12 +17,12 @@ phone, often cluster around assessment deadlines, and sometimes happen offline.
 
 The stated intent is for later MEDS230 cohorts to keep using it as a maintained,
 course-endorsed resource, so "the whole cohort, year after year" is the audience
-future work should design for — not just the two authors.
+future work should design for - not just the two authors.
 
 ## Product Purpose
 
 Teach the high-yield cardiology drug classes the way they are actually
-prescribed — grouped by the condition being treated — and give students one place
+prescribed - grouped by the condition being treated - and give students one place
 to **learn** each class (indication, mechanism, dosing, adverse effects, and the
 landmark trial behind the decision), **work cases**, and **test** themselves
 under time pressure, with the results pointing at the blind spots to go back to.
@@ -52,11 +52,11 @@ cases), is what a generic pharmacology resource cannot truthfully copy.
 - **Mnemonics are part of the teaching** (e.g. ASA / APA / BETA / STATA / PRIL
   for ACS) and appear inline with their expansions.
 - **Source traceability:** the module carries only what the MEDS230 lectures and
-  DIL cases cover — the one landmark trial included (CAST) is the one the slides
+  DIL cases cover - the one landmark trial included (CAST) is the one the slides
   name. The `/about` page lists the source materials.
 - A "for education only, not clinical guidance" disclaimer currently appears on
   the home page and `/about`. (Not selected as a hard commitment in the init
-  interview — see wrap-up note — but it is the present state and matters more, not
+  interview - see wrap-up note - but it is the present state and matters more, not
   less, for a course-endorsed medical resource.)
 
 ## Capabilities and Constraints
@@ -100,7 +100,7 @@ cases), is what a generic pharmacology resource cannot truthfully copy.
   (`drugClasses.js`, `conditions.js`, `glossary.js`, `comparisons.js`,
   `simulations.js`), so content can be extended without UI changes.
 
-**Undecided / not yet established — do not invent**
+**Undecided / not yet established - do not invent**
 
 - Formal permission or licensing status for adapting the MEDS230 material.
 - Whether the module becomes officially course-owned, and who maintains it
@@ -123,7 +123,7 @@ cases), is what a generic pharmacology resource cannot truthfully copy.
   data-integrity tests.
 - Teaching content adapted from the Queen's MEDS230 "Key Drugs in Cardiology"
   lectures and DIL cases (Dr. Amar Thakrar). Provenance is stated in `README.md`
-  and `/about`; there is no formal licensing or permission text in the repo — do
+  and `/about`; there is no formal licensing or permission text in the repo - do
   not fabricate one.
 - Author bylines and the Dr. Thakrar acknowledgement are real and already in the
   UI.

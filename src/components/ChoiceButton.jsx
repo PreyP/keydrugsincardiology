@@ -21,13 +21,13 @@ export default function ChoiceButton({ letter, children, state = 'idle', disable
       {state === 'correct' && (
         <span className="choice__mark choice__mark--correct">
           <Check size={18} />
-          <span className="sr-only"> — correct answer</span>
+          <span className="sr-only"> - correct answer</span>
         </span>
       )}
       {state === 'incorrect' && (
         <span className="choice__mark choice__mark--incorrect">
           <X size={18} />
-          <span className="sr-only"> — your answer, incorrect</span>
+          <span className="sr-only"> - your answer, incorrect</span>
         </span>
       )}
     </button>

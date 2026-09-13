@@ -87,7 +87,7 @@ export function OxygenBalanceDiagram() {
 
         <g>
         <rect x="60" y="440" width="882" height="58" rx="14" fill="var(--surface)" stroke="var(--border-strong)"></rect>
-        <text x="84" y="476" fontSize="13.5" fill="var(--text-soft)">Ischemia appears when demand outruns supply — antianginal drugs work on whichever pan is loaded.</text>
+        <text x="84" y="476" fontSize="13.5" fill="var(--text-soft)">Ischemia appears when demand outruns supply - antianginal drugs work on whichever pan is loaded.</text>
         </g>
         </svg>
     </Figure>
@@ -329,19 +329,19 @@ export function ActionPotentialDiagram() {
         <text x="722" y="92" fontSize="10" fontWeight="700" letterSpacing="1.3" fill="var(--text-mute)">VAUGHAN-WILLIAMS</text>
 
         <rect x="722" y="112" width="4" height="26" rx="2" fill="var(--caution)"></rect>
-        <text x="738" y="122" fontSize="13.5" fontWeight="600" fill="var(--text)">Class I — Na⁺ channels</text>
+        <text x="738" y="122" fontSize="13.5" fontWeight="600" fill="var(--text)">Class I - Na⁺ channels</text>
         <text x="738" y="140" fontSize="11.5" fill="var(--text-soft)">Flecainide · phase 0 upstroke</text>
 
         <rect x="722" y="168" width="4" height="26" rx="2" fill="var(--teal-500)"></rect>
-        <text x="738" y="178" fontSize="13.5" fontWeight="600" fill="var(--text)">Class II — beta blockade</text>
+        <text x="738" y="178" fontSize="13.5" fontWeight="600" fill="var(--text)">Class II - beta blockade</text>
         <text x="738" y="196" fontSize="11.5" fill="var(--text-soft)">Metoprolol · phase 4, nodes</text>
 
         <rect x="722" y="224" width="4" height="26" rx="2" fill="var(--trial)"></rect>
-        <text x="738" y="234" fontSize="13.5" fontWeight="600" fill="var(--text)">Class III — K⁺ channels</text>
+        <text x="738" y="234" fontSize="13.5" fontWeight="600" fill="var(--text)">Class III - K⁺ channels</text>
         <text x="738" y="252" fontSize="11.5" fill="var(--text-soft)">Amiodarone · phase 3</text>
 
         <rect x="722" y="280" width="4" height="26" rx="2" fill="var(--dosing)"></rect>
-        <text x="738" y="290" fontSize="13.5" fontWeight="600" fill="var(--text)">Class IV — Ca²⁺ channels</text>
+        <text x="738" y="290" fontSize="13.5" fontWeight="600" fill="var(--text)">Class IV - Ca²⁺ channels</text>
         <text x="738" y="308" fontSize="11.5" fill="var(--text-soft)">Diltiazem · phase 2, AV node</text>
 
         <g>

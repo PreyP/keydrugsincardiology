@@ -48,7 +48,7 @@ export default function ModuleMap() {
           <div className="module-map__branch">
             <span className="module-map__turn" aria-hidden="true">↳</span>
             <Entry icon={Pill} label="Drug library & Comparisons">
-              Same content as above, indexed A–Z instead of by condition — for when you already
+              Same content as above, indexed A–Z instead of by condition - for when you already
               know what you want.
             </Entry>
           </div>

@@ -253,6 +253,16 @@ export const conditions = [
         'A 67 year old woman has episodic irregular palpitations. When asked to tap out her pulse she taps an irregular rhythm at 180 bpm. She has ulcerative colitis with frequent flares (on methotrexate and Asacol) and asthma (on Flovent and salbutamol).',
       exam:
         'Normal cardiac exam, no signs of hyperthyroidism or valvular disease. Echocardiogram shows mild left atrial dilatation, no valvular abnormality, normal biventricular function. A 24 hour Holter shows 2 to 3 hour runs of symptomatic atrial fibrillation with rates up to 180 bpm.',
+      ecg: {
+        title: 'Mrs. AF, 12-lead ECG',
+        src: 'ecgs/af-onset.jpg',
+        interpretation: [
+          'Sinus rhythm with visible P waves in leads I, II, III, aVR, aVL, aVF, V1 to V3',
+          'Rhythm changes partway through the recording: by V4 to V6, and continuing through the long rhythm strip (V1, II, V5), it becomes a rapid, irregularly irregular narrow-QRS rhythm',
+          'No discernible discrete P waves during the tachyarrhythmia; fine fibrillatory undulation of the baseline, best seen in V1',
+          'Captures the onset of her paroxysmal atrial fibrillation in real time',
+        ],
+      },
       walkthrough: [
         {
           prompt: 'Is anticoagulation indicated, and which agent?',

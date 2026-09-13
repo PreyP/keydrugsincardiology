@@ -29,9 +29,9 @@ export default function AboutView() {
       <div className="card" style={{ padding: '1.35rem 1.5rem', marginBottom: '1.5rem' }}>
         <h3 style={{ marginTop: 0 }}>Source materials</h3>
         <ul style={{ marginBottom: 0 }}>
-          <li>Key Drugs in Cardiology — ischemic disease lecture (MEDS230)</li>
-          <li>Key Drugs in Cardiology — arrhythmia lecture (MEDS230)</li>
-          <li>Key Drugs in Cardiology — heart failure lecture (MEDS230)</li>
+          <li>Key Drugs in Cardiology - ischemic disease lecture (MEDS230)</li>
+          <li>Key Drugs in Cardiology - arrhythmia lecture (MEDS230)</li>
+          <li>Key Drugs in Cardiology - heart failure lecture (MEDS230)</li>
           <li>DIL cases and answer key: stable angina, SVT, and heart failure</li>
         </ul>
       </div>
@@ -43,7 +43,7 @@ export default function AboutView() {
             The trial{trials.length === 1 ? '' : 's'} named in the lecture slides.
           </p>
           <div className="card compare">
-            <div className="compare__scroll" tabIndex={0} role="region" aria-label="Landmark trials — table, scrolls horizontally">
+            <div className="compare__scroll" tabIndex={0} role="region" aria-label="Landmark trials - table, scrolls horizontally">
               <table className="compare__table">
                 <caption className="sr-only">Landmark trials named in the source lecture slides, with the agent and takeaway.</caption>
                 <thead>

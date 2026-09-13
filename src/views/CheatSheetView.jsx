@@ -29,12 +29,12 @@ export default function CheatSheetView() {
 
       <div className="sheet__title">
         <h1 style={{ marginBottom: '0.15rem' }}>{condition.name}</h1>
-        <p className="muted" style={{ margin: 0 }}>Key Drugs in Cardiology — one-page cheat sheet</p>
+        <p className="muted" style={{ margin: 0 }}>Key Drugs in Cardiology - one-page cheat sheet</p>
       </div>
 
       <p>{condition.overview}</p>
       {condition.mnemonic && (
-        <p><strong>{condition.mnemonic.label}</strong> — {condition.mnemonic.expansion}</p>
+        <p><strong>{condition.mnemonic.label}</strong> - {condition.mnemonic.expansion}</p>
       )}
 
       <h2 className="sheet__h2">Drug classes</h2>

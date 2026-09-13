@@ -34,7 +34,7 @@ export default function HowToUse() {
               <button className="icon-btn" onClick={() => setOpen(false)} aria-label="Close">✕</button>
             </div>
             <p className="muted" style={{ marginTop: 0 }}>
-              One set of content, organized two ways. Start with a condition — that's where the teaching happens.
+              One set of content, organized two ways. Start with a condition - that's where the teaching happens.
             </p>
             <ol className="howto__list">
               <li>
@@ -48,7 +48,7 @@ export default function HowToUse() {
               </li>
               <li>
                 <strong>Drug library and Comparisons are a lookup, not new content.</strong> They hold the exact
-                same drug cards and tables already shown on the condition pages — just A–Z instead of by
+                same drug cards and tables already shown on the condition pages - just A–Z instead of by
                 condition, for when you already know what you want and don't need the clinical context around it.
               </li>
             </ol>
