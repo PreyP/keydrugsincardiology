@@ -18,7 +18,7 @@ export default function ComparisonTable({ table, showRelated = false }) {
           </div>
         )}
       </div>
-      <div className="compare__scroll" tabIndex={0} role="region" aria-label={`${table.title} — table, scrolls horizontally`}>
+      <div className="compare__scroll" tabIndex={0} role="region" aria-label={`${table.title} - table, scrolls horizontally`}>
         <table className="compare__table">
           <caption className="sr-only">{table.title}. {table.blurb}</caption>
           <thead>

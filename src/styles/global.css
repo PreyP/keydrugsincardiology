@@ -186,7 +186,7 @@ a.card:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-co
 .side-effects li.is-caution .tag--caution { margin-left: 0.4rem; }
 .trial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.75rem; }
 
-/* Trial callout — a bordered mini-card, no side bar */
+/* Trial callout - a bordered mini-card, no side bar */
 .trial {
   background: var(--trial-bg); border: 1px solid var(--sky-200); border-radius: 14px;
   padding: 0.9rem 1.05rem;
