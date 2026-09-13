@@ -153,9 +153,6 @@ export const conditions = [
         'A 77 year old family physician has 6 months of stable exertional chest discomfort climbing two flights of stairs. It resolves with rest and was prevented by his partner’s nitroglycerin before stairs. Risk factors: pipe smoking and hypertension. He has no allergies and takes no medications.',
       exam:
         'Well appearing, comfortable. Pulse 75, BP 140/90. JVP 3 cm above the sternal angle, normal apex beat, normal S1 and S2, no murmurs. Protuberant abdomen. Chest clear, no edema. Baseline ECG and fasting bloodwork normal. Diagnosis: typical (CCS class II) angina.',
-      ecg: {
-        note: 'Stable angina can present with a normal resting ECG. Changes appear only when you ask the heart for additional power or oxygen demand, for example during a stress test.',
-      },
       walkthrough: [
         {
           prompt: 'Write a three-drug antianginal prescription and give a one-line rationale for each.',
