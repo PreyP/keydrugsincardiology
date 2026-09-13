@@ -3,8 +3,9 @@ import { conditions, conditionById, categories } from '../data/conditions.js'
 import { drugClasses } from '../data/drugClasses.js'
 import ThemeToggle from '../components/ThemeToggle.jsx'
 import FeedbackForm from '../components/FeedbackForm.jsx'
+import ModuleMap from '../components/ModuleMap.jsx'
 import { useProgress } from '../hooks/useProgress.js'
-import { Book, ClipboardCheck, Timer, ChevronRight, Pill, Route, Check } from '../components/Icons.jsx'
+import { ClipboardCheck, Timer, ChevronRight, Pill, Route, Check } from '../components/Icons.jsx'
 
 const catOrder = ['ischemic', 'rhythm', 'pump']
 
@@ -57,6 +58,9 @@ export default function HomeView() {
         dosing, side effects, and the landmark trials behind it, work a sample case, then practise
         on your own and test yourself against the clock.
       </p>
+
+      {/* How the module is organized: always visible, no click required */}
+      <ModuleMap />
 
       {/* Continue / up-next banner */}
       <Link to={resumeTo} className="continue-banner card">
@@ -136,34 +140,6 @@ export default function HomeView() {
           </section>
         )
       })}
-
-      <div className="card" style={{ padding: '1.35rem 1.5rem', marginTop: '1rem' }}>
-        <div className="row" style={{ gap: '0.6rem' }}>
-          <Book size={18} aria-hidden="true" />
-          <strong>How this module fits together</strong>
-        </div>
-        <p className="muted" style={{ margin: '0.6rem 0 0' }}>
-          It's one set of content, organized two ways. The condition pages are where the teaching
-          happens; the sidebar mirrors that below.
-        </p>
-        <ol style={{ marginTop: '0.9rem', marginBottom: 0 }}>
-          <li>
-            <strong>Learn by condition</strong> — start here. Open a condition and its page has
-            everything for it in one place: the drug classes to use, the relevant comparison
-            tables, and a worked sample case. Hover the highlighted terms for instant definitions.
-          </li>
-          <li>
-            <strong>Practice & test</strong> — work graded cases for that condition, then use
-            the timed test to check yourself across everything and see what to revisit.
-          </li>
-          <li>
-            <strong>Drug library & Comparisons are a lookup, not new content</strong> — they
-            hold the exact same drug cards and tables already shown on the condition pages, just
-            A–Z instead of by condition. Use them when you already know what you want and don't
-            need the clinical context around it.
-          </li>
-        </ol>
-      </div>
 
       <div style={{ marginTop: '1.75rem' }}>
         <FeedbackForm context="module" />
