@@ -121,6 +121,33 @@ export const drugClasses = [
     ],
   },
   {
+    id: 'lipid-lowering-nonstatin',
+    name: 'Non-statin lipid lowering (ezetimibe, PCSK9 inhibitors)',
+    shortName: 'Non-statin lipids',
+    monogram: 'LDL',
+    examples: ['Ezetimibe', 'PCSK9 inhibitors: evolocumab, alirocumab', 'Inclisiran'],
+    mechanism:
+      'Two different ways to lower LDL on top of a statin. Ezetimibe blocks the NPC1L1 cholesterol transporter in the small intestine, reducing cholesterol absorption. PCSK9 inhibitors are monoclonal antibodies that stop PCSK9 from degrading the LDL receptor, so more receptors stay on the liver cell surface to clear LDL. Inclisiran silences PCSK9 production and is given twice a year.',
+    indications: [
+      'Secondary prevention after ACS when LDL stays above target on a maximally tolerated statin',
+      'Add ezetimibe first, then a PCSK9 inhibitor if LDL remains above target',
+      'Statin intolerance, as an alternative route to lower LDL',
+      'Familial hypercholesterolemia',
+    ],
+    dosing: [
+      'Ezetimibe 10 mg orally once daily',
+      'PCSK9 inhibitors by subcutaneous injection every 2 to 4 weeks; inclisiran twice yearly',
+    ],
+    sideEffects: [
+      { text: 'Ezetimibe: generally well tolerated; occasional GI upset or myalgia' },
+      { text: 'PCSK9 inhibitors: injection-site reactions' },
+      { text: 'Well tolerated overall, which is part of their appeal as add-on therapy' },
+    ],
+    pearls: [
+      'Think of these as add-ons, not replacements. The statin stays unless it is truly not tolerated; ezetimibe and PCSK9 inhibitors are layered on to drive LDL lower.',
+    ],
+  },
+  {
     id: 'ace-inhibitor',
     name: 'ACE inhibitors',
     shortName: 'ACE inhibitors',
@@ -142,6 +169,32 @@ export const drugClasses = [
       { text: 'Hypotension' },
       { text: 'Dry cough' },
       { text: 'Rare: angioedema, agranulocytosis', caution: true },
+    ],
+  },
+  {
+    id: 'arb',
+    name: 'Angiotensin receptor blockers (ARBs)',
+    shortName: 'ARBs',
+    monogram: 'ARB',
+    examples: ['Candesartan', 'Valsartan', 'Losartan', 'Telmisartan'],
+    mechanism:
+      'Block the angiotensin II type 1 (AT1) receptor directly, preventing angiotensin II from causing vasoconstriction, aldosterone release, and sodium retention. Because they act at the receptor rather than on the converting enzyme, they do not raise bradykinin, so they do not cause the dry cough seen with ACE inhibitors.',
+    indications: [
+      'Alternative to an ACE inhibitor when the cough is not tolerated',
+      'Heart failure (HFrEF), as a RAAS option when an ARNI is not used',
+      'Hypertension',
+      'Post-MI and chronic kidney disease, similar to ACE inhibitors',
+    ],
+    dosing: ['e.g. Candesartan 4 to 32 mg daily; titrate to target as tolerated'],
+    sideEffects: [
+      { text: 'Hyperkalemia', caution: true },
+      { text: 'Renal insufficiency', caution: true },
+      { text: 'Teratogenicity, contraindicated in pregnancy', caution: true },
+      { text: 'Hypotension' },
+      { text: 'Much less cough than ACE inhibitors, though angioedema is still rarely possible', caution: true },
+    ],
+    pearls: [
+      'The "-sartan" stem marks the class. Do not combine an ARB with an ACE inhibitor, since dual RAAS blockade raises the risk of hyperkalemia and kidney injury without added benefit.',
     ],
   },
   {
@@ -235,6 +288,33 @@ export const drugClasses = [
       { text: 'Ototoxicity at high doses' },
     ],
     pearls: ['Symptomatic relief only; loop diuretics do not confer a mortality benefit in heart failure.'],
+  },
+  {
+    id: 'thiazide',
+    name: 'Thiazide and thiazide-like diuretics',
+    shortName: 'Thiazides',
+    monogram: 'THZ',
+    examples: ['Hydrochlorothiazide', 'Chlorthalidone', 'Indapamide'],
+    mechanism:
+      'Block the sodium-chloride cotransporter in the distal convoluted tubule, so less sodium and water are reabsorbed. Over time the blood-pressure effect comes more from lowering vascular resistance than from the early diuresis.',
+    indications: [
+      'Hypertension, one of the first-line drug classes',
+      'Chronic edema and mild volume overload',
+      'Often paired with an ACE inhibitor, ARB, or calcium channel blocker for added blood-pressure control',
+    ],
+    dosing: [
+      'Hydrochlorothiazide 12.5 to 25 mg orally once daily',
+      'Chlorthalidone is longer acting and more potent per milligram',
+    ],
+    sideEffects: [
+      { text: 'Hypokalemia, hyponatremia', caution: true },
+      { text: 'Hyperuricemia, can precipitate gout', caution: true },
+      { text: 'Hyperglycemia and mild lipid changes' },
+      { text: 'Less effective as kidney function declines, where a loop diuretic is preferred' },
+    ],
+    pearls: [
+      'A thiazide lowers potassium while an ACE inhibitor, ARB, or MRA raises it, so these pairings help balance potassium.',
+    ],
   },
   {
     id: 'mra',
@@ -337,6 +417,30 @@ export const drugClasses = [
       { text: 'Genital mycotic infections' },
       { text: 'Volume depletion' },
       { text: 'Euglycemic diabetic ketoacidosis (rare)', caution: true },
+    ],
+  },
+  {
+    id: 'incretin-agonist',
+    name: 'Incretin agonists (GLP-1 and GIP/GLP-1)',
+    shortName: 'GLP-1 / GIP agonists',
+    monogram: 'GLP',
+    examples: ['Semaglutide (GLP-1 agonist)', 'Tirzepatide (dual GIP and GLP-1 agonist)'],
+    badges: ['New / emerging'],
+    mechanism:
+      'Mimic the gut incretin hormones. GLP-1 agonists increase glucose-dependent insulin release, slow gastric emptying, and reduce appetite through the brain, which drives weight loss. Tirzepatide adds GIP receptor activity for a larger metabolic and weight effect. The cardiovascular benefit is thought to come from weight loss, better glycemic control, lower blood pressure, and anti-inflammatory effects on the blood vessels.',
+    indications: [
+      'Type 2 diabetes and obesity, now with recognized cardiovascular benefit',
+      'Part of the regimen for heart failure with non-reduced (preserved) ejection fraction, particularly with obesity',
+      'Reduction in cardiovascular events in patients with established disease, driven by weight loss',
+    ],
+    dosing: ['Weekly subcutaneous injection, titrated up slowly to limit GI effects'],
+    sideEffects: [
+      { text: 'Nausea, vomiting, diarrhea, especially during dose escalation' },
+      { text: 'Pancreatitis, uncommon', caution: true },
+      { text: 'Avoid with a personal or family history of medullary thyroid carcinoma or MEN 2', caution: true },
+    ],
+    pearls: [
+      'These started as diabetes and weight drugs and have moved into cardiology because of their effect on cardiovascular events and on heart failure with preserved ejection fraction.',
     ],
   },
   {
@@ -451,6 +555,30 @@ export const drugClasses = [
     pearls: [
       'Amiodarone is effective across a broad range of arrhythmias but its long-term toxicity profile demands regular monitoring.',
       'It is not eliminated by the kidney: the classic exam point. Everything else clears it, which is why so many organ systems are affected.',
+    ],
+  },
+  {
+    id: 'adenosine',
+    name: 'Adenosine',
+    shortName: 'Adenosine',
+    monogram: 'ADO',
+    examples: ['Adenosine'],
+    mechanism:
+      'Activates cardiac adenosine receptors, briefly hyperpolarizing AV-node tissue and blocking conduction through the AV node. This interrupts reentry circuits that depend on the AV node. The half-life is only seconds, so the effect comes and goes almost immediately.',
+    indications: [
+      'Acute termination of AV-node-dependent SVT when vagal maneuvers fail',
+      'Can unmask atrial flutter or atrial fibrillation by transiently slowing the ventricular rate, which helps diagnosis',
+    ],
+    dosing: [
+      '6 mg rapid IV push followed immediately by a saline flush; if no effect, 12 mg; give through a large proximal vein',
+    ],
+    sideEffects: [
+      { text: 'A brief but very unpleasant chest pressure, flushing, and sense of doom; warn the patient first', caution: true },
+      { text: 'Transient sinus pause or AV block, expected and self-limited' },
+      { text: 'Can provoke bronchospasm; use caution in asthma', caution: true },
+    ],
+    pearls: [
+      'Give it fast and flush fast, because the drug is gone within seconds. It is the drug step after vagal maneuvers in regular narrow-complex SVT.',
     ],
   },
   {

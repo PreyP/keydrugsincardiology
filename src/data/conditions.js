@@ -33,7 +33,7 @@ export const conditions = [
       label: 'ASA / APA / BETA / STATA / PRIL',
       expansion: 'Aspirin, a second antiplatelet (APA), Beta blocker, Statin, and an ACE inhibitor (PRIL).',
     },
-    drugClassIds: ['asa', 'p2y12', 'beta-blocker', 'statin', 'ace-inhibitor', 'nitrate', 'morphine', 'anticoagulant-acs'],
+    drugClassIds: ['asa', 'p2y12', 'beta-blocker', 'statin', 'lipid-lowering-nonstatin', 'ace-inhibitor', 'nitrate', 'morphine', 'anticoagulant-acs'],
     sampleCase: {
       title: 'Mr. CP, 45, retrosternal chest heaviness',
       vignette:
@@ -369,7 +369,7 @@ export const conditions = [
     oneLiner: 'Regular narrow-complex tachycardia. AV-nodal agents, and no anticoagulation.',
     overview:
       'Paroxysmal SVT (AVNRT or AVRT) is a regular, narrow-complex tachycardia that patients can often terminate with vagal maneuvers. Chronic suppression uses AV-nodal agents (a rate-limiting calcium channel blocker or a beta blocker); refractory cases often proceed to ablation. Unlike atrial fibrillation and flutter, SVT does not carry the same intracardiac thrombus risk, so anticoagulation is not indicated.',
-    drugClassIds: ['ccb', 'beta-blocker', 'digoxin'],
+    drugClassIds: ['ccb', 'beta-blocker', 'adenosine', 'digoxin'],
     sampleCase: {
       title: 'A 37 year old with regular palpitations',
       vignette:
@@ -453,7 +453,7 @@ export const conditions = [
     oneLiner: 'Separate symptom relief from mortality benefit, then build the guideline-directed pillars.',
     overview:
       'Heart failure with reduced ejection fraction is a pump problem. Management separates two goals: symptomatic relief, mainly with diuretics, and mortality benefit from guideline-directed therapy. The survival pillars are an ACE inhibitor (or an ARNI), a beta blocker, a mineralocorticoid receptor antagonist, and an SGLT2 inhibitor. Digoxin and ivabradine have selected roles, and diuretics treat congestion without changing mortality.',
-    drugClassIds: ['loop-diuretic', 'ace-inhibitor', 'beta-blocker', 'mra', 'arni', 'sglt2', 'digoxin', 'ivabradine'],
+    drugClassIds: ['loop-diuretic', 'ace-inhibitor', 'arb', 'beta-blocker', 'mra', 'arni', 'sglt2', 'incretin-agonist', 'digoxin', 'ivabradine'],
     sampleCase: {
       title: 'Mr. MD, 54, new severe systolic dysfunction',
       vignette:
